@@ -29,6 +29,20 @@ public class Operador {
 		this.tipo=tipo;
 	}
 
+	
+	
+	public String getCorreo() {
+		return correo;
+	}
+
+
+
+	public void setCorreo(String correo) {
+		this.correo = correo;
+	}
+
+
+
 	public Integer getId() {
 		return id;
 	}
