@@ -41,7 +41,6 @@ public class ClienteService {
 			AlohAndesTM tm = new AlohAndesTM(getPath());
 			
 			List<Cliente> clientes;
-			//Por simplicidad, solamente se obtienen los primeros 50 resultados de la consulta
 			clientes = tm.getAllClientes();
 			return Response.status(200).entity(clientes).build();
 		} 
