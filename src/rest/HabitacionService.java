@@ -14,12 +14,12 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
-import tm.AlohAndesTM;
-import vos.Cliente;
 
-@Path("clientes")
-public class ClienteService {
-	
+import tm.AlohAndesTM;
+import vos.Habitacion;
+@Path("habitaciones")
+public class HabitacionService {
+
 	@Context
 	private ServletContext context;
 	
@@ -34,14 +34,14 @@ public class ClienteService {
 	
 	@GET
 	@Produces({ MediaType.APPLICATION_JSON })
-	public Response getClientes() {
+	public Response getHabitacions() {
 		
 		try {
 			AlohAndesTM tm = new AlohAndesTM(getPath());
 			
-			List<Cliente> clientes;
-			clientes = tm.getAllClientes();
-			return Response.status(200).entity(clientes).build();
+			List<Habitacion> Habitacions;
+			Habitacions = tm.getAllHabitacions();
+			return Response.status(200).entity(Habitacions).build();
 		} 
 		catch (Exception e) {
 			return Response.status(500).entity(doErrorMessage(e)).build();
@@ -51,14 +51,14 @@ public class ClienteService {
 	@GET
 	@Path( "{id: \\d+}" )
 	@Produces({ MediaType.APPLICATION_JSON })
-	public Response getCliente( @PathParam( "id" )Integer id) {
+	public Response getHabitacion( @PathParam( "id" )Integer id) {
 		
 		try {
 			AlohAndesTM tm = new AlohAndesTM(getPath());
 			
-			Cliente cliente;
-			cliente = tm.getClienteById(id);
-			return Response.status(200).entity(cliente).build();
+			Habitacion Habitacion;
+			Habitacion = tm.getHabitacionById(id);
+			return Response.status(200).entity(Habitacion).build();
 		} 
 		catch (Exception e) {
 			return Response.status(500).entity(doErrorMessage(e)).build();
@@ -68,12 +68,12 @@ public class ClienteService {
 	@POST
 	@Consumes({ MediaType.APPLICATION_JSON })
 	@Produces({ MediaType.APPLICATION_JSON })
-	public Response addCliente(Cliente cliente ) {
+	public Response addHabitacion(Habitacion Habitacion ) {
 		
 		try {
 			AlohAndesTM tm = new AlohAndesTM(getPath());			
-			tm.addCliente(cliente);
-			return Response.status(200).entity(cliente).build();
+			tm.addHabitacion(Habitacion);
+			return Response.status(200).entity(Habitacion).build();
 		} 
 		catch (Exception e) {
 			return Response.status(500).entity(doErrorMessage(e)).build();
@@ -83,12 +83,12 @@ public class ClienteService {
 	@PUT
 	@Consumes({ MediaType.APPLICATION_JSON })
 	@Produces({ MediaType.APPLICATION_JSON })
-	public Response updateCliente(Cliente cliente ) {
+	public Response updateHabitacion(Habitacion Habitacion ) {
 		
 		try {
 			AlohAndesTM tm = new AlohAndesTM(getPath());			
-			tm.updateCliente(cliente);
-			return Response.status(200).entity(cliente).build();
+			tm.updateHabitacion(Habitacion);
+			return Response.status(200).entity(Habitacion).build();
 		} 
 		catch (Exception e) {
 			return Response.status(500).entity(doErrorMessage(e)).build();
@@ -98,15 +98,16 @@ public class ClienteService {
 	@DELETE
 	@Consumes({ MediaType.APPLICATION_JSON })
 	@Produces({ MediaType.APPLICATION_JSON })
-	public Response deleteCliente(Cliente cliente ) {
+	public Response deleteHabitacion(Habitacion Habitacion ) {
 		
 		try {
 			AlohAndesTM tm = new AlohAndesTM(getPath());			
-			tm.deleteCliente(cliente);
-			return Response.status(200).entity(cliente).build();
+			tm.deleteHabitacion(Habitacion);
+			return Response.status(200).entity(Habitacion).build();
 		} 
 		catch (Exception e) {
 			return Response.status(500).entity(doErrorMessage(e)).build();
 		}
 	}
+	
 }

@@ -18,6 +18,7 @@ import javax.ws.rs.core.Response;
 import tm.AlohAndesTM;
 import vos.Apartamento;
 
+@Path("apartamentos")
 public class ApartamentoService {
 	@Context
 	private ServletContext context;
