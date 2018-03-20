@@ -9,11 +9,15 @@ import java.sql.SQLException;
 import java.util.List;
 import java.util.Properties;
 
+import dao.DAOApartamento;
 import dao.DAOCliente;
 import dao.DAOContrato;
+import dao.DAOHabitacion;
 import dao.DAOOperador;
+import vos.Apartamento;
 import vos.Cliente;
 import vos.Contrato;
+import vos.Habitacion;
 import vos.Operador;
 
 
@@ -665,6 +669,408 @@ public class AlohAndesTM {
 			}
 		}
 	}
+	
+	//TODO METODOS RECURSO ||APARTAMENTO||
+	
+	public List<Apartamento> getAllApartamentos() throws Exception
+	{
+		DAOApartamento dao= new DAOApartamento();
+		List<Apartamento> Apartamentos;
+		try
+		{
+			this.conn=darConexion();
+			dao.setConn(conn);
+			Apartamentos=dao.getApartamentos();
+		}
+		catch( SQLException e)
+		{
+			System.err.println("[Excepción!] SQLException "+ e.getMessage());
+			e.printStackTrace();
+			throw e;
+		}
+		catch(Exception e)
+		{
+			System.err.println("[Excepción!] Exception "+ e.getMessage());
+			e.printStackTrace();
+			throw e;
+		}
+		finally
+		{
+			try
+			{
+				dao.cerrarRecursos();
+				if(this.conn!=null)
+					this.conn.close();
+			}
+			catch(SQLException e)
+			{
+				System.err.println(("[Excepción!] SQLException mientras se cerraban los recursos: "+e.getMessage()));
+				e.printStackTrace();
+				throw e;
+			}
+		}
+		return Apartamentos;
+	}
+
+	public Apartamento getApartamentoById(Integer id) throws Exception
+	{
+		DAOApartamento dao=new DAOApartamento();
+		Apartamento Apartamento=null;
+		try
+		{
+			this.conn=darConexion();
+			dao.setConn(conn);
+			Apartamento=dao.findApartamentoById(id);
+		}
+		catch( SQLException e)
+		{
+			System.err.println("[Excepción!] SQLException "+ e.getMessage());
+			e.printStackTrace();
+			throw e;
+		}
+		catch(Exception e)
+		{
+			System.err.println("[Excepción!] Exception "+ e.getMessage());
+			e.printStackTrace();
+			throw e;
+		}
+		finally
+		{
+			try
+			{
+				dao.cerrarRecursos();
+				if(this.conn!=null)
+					this.conn.close();
+			}
+			catch(SQLException e)
+			{
+				System.err.println(("[Excepción!] SQLException mientras se cerraban los recursos: "+e.getMessage()));
+				e.printStackTrace();
+				throw e;
+			}
+		}
+		return Apartamento;
+	}
+	
+	public void addApartamento(Apartamento Apartamento) throws Exception
+	{
+		DAOApartamento dao= new DAOApartamento();
+		try
+		{
+			this.conn=darConexion();
+			dao.setConn(conn);
+			dao.addApartamento(Apartamento);
+		}
+		catch( SQLException e)
+		{
+			System.err.println("[Excepción!] SQLException "+ e.getMessage());
+			e.printStackTrace();
+			throw e;
+		}
+		catch(Exception e)
+		{
+			System.err.println("[Excepción!] Exception "+ e.getMessage());
+			e.printStackTrace();
+			throw e;
+		}
+		finally
+		{
+			try
+			{
+				dao.cerrarRecursos();
+				if(this.conn!=null)
+					this.conn.close();
+			}
+			catch(SQLException e)
+			{
+				System.err.println(("[Excepción!] SQLException mientras se cerraban los recursos: "+e.getMessage()));
+				e.printStackTrace();
+				throw e;
+			}
+		}
+	}
+	
+	public void updateApartamento(Apartamento Apartamento) throws Exception
+	{
+		DAOApartamento dao= new DAOApartamento();
+		try
+		{
+			this.conn=darConexion();
+			dao.setConn(conn);
+			dao.updateApartamento(Apartamento);
+		}
+		catch( SQLException e)
+		{
+			System.err.println("[Excepción!] SQLException "+ e.getMessage());
+			e.printStackTrace();
+			throw e;
+		}
+		catch(Exception e)
+		{
+			System.err.println("[Excepción!] Exception "+ e.getMessage());
+			e.printStackTrace();
+			throw e;
+		}
+		finally
+		{
+			try
+			{
+				dao.cerrarRecursos();
+				if(this.conn!=null)
+					this.conn.close();
+			}
+			catch(SQLException e)
+			{
+				System.err.println(("[Excepción!] SQLException mientras se cerraban los recursos: "+e.getMessage()));
+				e.printStackTrace();
+				throw e;
+			}
+		}
+	}
+	
+	public void deleteApartamento(Apartamento Apartamento) throws Exception
+	{
+		DAOApartamento dao= new DAOApartamento();
+		try
+		{
+			this.conn=darConexion();
+			dao.setConn(conn);
+			Apartamento borrar=dao.findApartamentoById(Apartamento.getId());
+			if(borrar!=null)
+				dao.deleteApartamento(Apartamento);
+			else
+				throw new Exception("ese tal Apartamento no existe!");
+		}
+		catch( SQLException e)
+		{
+			System.err.println("[Excepción!] SQLException "+ e.getMessage());
+			e.printStackTrace();
+			throw e;
+		}
+		catch(Exception e)
+		{
+			System.err.println("[Excepción!] Exception "+ e.getMessage());
+			e.printStackTrace();
+			throw e;
+		}
+		finally
+		{
+			try
+			{
+				dao.cerrarRecursos();
+				if(this.conn!=null)
+					this.conn.close();
+			}
+			catch(SQLException e)
+			{
+				System.err.println(("[Excepción!] SQLException mientras se cerraban los recursos: "+e.getMessage()));
+				e.printStackTrace();
+				throw e;
+			}
+		}
+	}
+	
+	//TODO METODOS RECURSO ||HABITACION||
+	
+	public List<Habitacion> getAllHabitacions() throws Exception
+	{
+		DAOHabitacion dao= new DAOHabitacion();
+		List<Habitacion> Habitacions;
+		try
+		{
+			this.conn=darConexion();
+			dao.setConn(conn);
+			Habitacions=dao.getHabitacions();
+		}
+		catch( SQLException e)
+		{
+			System.err.println("[Excepción!] SQLException "+ e.getMessage());
+			e.printStackTrace();
+			throw e;
+		}
+		catch(Exception e)
+		{
+			System.err.println("[Excepción!] Exception "+ e.getMessage());
+			e.printStackTrace();
+			throw e;
+		}
+		finally
+		{
+			try
+			{
+				dao.cerrarRecursos();
+				if(this.conn!=null)
+					this.conn.close();
+			}
+			catch(SQLException e)
+			{
+				System.err.println(("[Excepción!] SQLException mientras se cerraban los recursos: "+e.getMessage()));
+				e.printStackTrace();
+				throw e;
+			}
+		}
+		return Habitacions;
+	}
+
+	public Habitacion getHabitacionById(Integer id) throws Exception
+	{
+		DAOHabitacion dao=new DAOHabitacion();
+		Habitacion Habitacion=null;
+		try
+		{
+			this.conn=darConexion();
+			dao.setConn(conn);
+			Habitacion=dao.findHabitacionById(id);
+		}
+		catch( SQLException e)
+		{
+			System.err.println("[Excepción!] SQLException "+ e.getMessage());
+			e.printStackTrace();
+			throw e;
+		}
+		catch(Exception e)
+		{
+			System.err.println("[Excepción!] Exception "+ e.getMessage());
+			e.printStackTrace();
+			throw e;
+		}
+		finally
+		{
+			try
+			{
+				dao.cerrarRecursos();
+				if(this.conn!=null)
+					this.conn.close();
+			}
+			catch(SQLException e)
+			{
+				System.err.println(("[Excepción!] SQLException mientras se cerraban los recursos: "+e.getMessage()));
+				e.printStackTrace();
+				throw e;
+			}
+		}
+		return Habitacion;
+	}
+	
+	public void addHabitacion(Habitacion Habitacion) throws Exception
+	{
+		DAOHabitacion dao= new DAOHabitacion();
+		try
+		{
+			this.conn=darConexion();
+			dao.setConn(conn);
+			dao.addHabitacion(Habitacion);
+		}
+		catch( SQLException e)
+		{
+			System.err.println("[Excepción!] SQLException "+ e.getMessage());
+			e.printStackTrace();
+			throw e;
+		}
+		catch(Exception e)
+		{
+			System.err.println("[Excepción!] Exception "+ e.getMessage());
+			e.printStackTrace();
+			throw e;
+		}
+		finally
+		{
+			try
+			{
+				dao.cerrarRecursos();
+				if(this.conn!=null)
+					this.conn.close();
+			}
+			catch(SQLException e)
+			{
+				System.err.println(("[Excepción!] SQLException mientras se cerraban los recursos: "+e.getMessage()));
+				e.printStackTrace();
+				throw e;
+			}
+		}
+	}
+	
+	public void updateHabitacion(Habitacion Habitacion) throws Exception
+	{
+		DAOHabitacion dao= new DAOHabitacion();
+		try
+		{
+			this.conn=darConexion();
+			dao.setConn(conn);
+			dao.updateHabitacion(Habitacion);
+		}
+		catch( SQLException e)
+		{
+			System.err.println("[Excepción!] SQLException "+ e.getMessage());
+			e.printStackTrace();
+			throw e;
+		}
+		catch(Exception e)
+		{
+			System.err.println("[Excepción!] Exception "+ e.getMessage());
+			e.printStackTrace();
+			throw e;
+		}
+		finally
+		{
+			try
+			{
+				dao.cerrarRecursos();
+				if(this.conn!=null)
+					this.conn.close();
+			}
+			catch(SQLException e)
+			{
+				System.err.println(("[Excepción!] SQLException mientras se cerraban los recursos: "+e.getMessage()));
+				e.printStackTrace();
+				throw e;
+			}
+		}
+	}
+	
+	public void deleteHabitacion(Habitacion Habitacion) throws Exception
+	{
+		DAOHabitacion dao= new DAOHabitacion();
+		try
+		{
+			this.conn=darConexion();
+			dao.setConn(conn);
+			Habitacion borrar=dao.findHabitacionById(Habitacion.getId());
+			if(borrar!=null)
+				dao.deleteHabitacion(Habitacion);
+			else
+				throw new Exception("ese tal Habitacion no existe!");
+		}
+		catch( SQLException e)
+		{
+			System.err.println("[Excepción!] SQLException "+ e.getMessage());
+			e.printStackTrace();
+			throw e;
+		}
+		catch(Exception e)
+		{
+			System.err.println("[Excepción!] Exception "+ e.getMessage());
+			e.printStackTrace();
+			throw e;
+		}
+		finally
+		{
+			try
+			{
+				dao.cerrarRecursos();
+				if(this.conn!=null)
+					this.conn.close();
+			}
+			catch(SQLException e)
+			{
+				System.err.println(("[Excepción!] SQLException mientras se cerraban los recursos: "+e.getMessage()));
+				e.printStackTrace();
+				throw e;
+			}
+		}
+	}
+	
+	//TODO METODOS RECURSO ||SERVICIO||
 	
 	
 }
