@@ -20,12 +20,43 @@ public class Contrato {
 	@JsonProperty(value="fechaFin")
 	private Timestamp fechaFin;
 	
-	public Contrato(@JsonProperty(value="id")Integer id, @JsonProperty(value="fechaInicio") Timestamp fechaInicio,@JsonProperty(value="fechaFin") Timestamp fechaFin)
+	@JsonProperty(value="descripcion")
+	private String descripcion;
+	
+	@JsonProperty(value="estado")
+	private Integer estado;
+	
+	public Contrato(@JsonProperty(value="id")Integer id, @JsonProperty(value="fechaInicio") Timestamp fechaInicio,@JsonProperty(value="fechaFin") Timestamp fechaFin, @JsonProperty(value="descripcion") String descripcion, @JsonProperty(value="estado") Integer estado)
 	{
 		this.id=id;
 		this.fechaInicio=fechaInicio;
 		this.fechaFin=fechaFin;
+		this.descripcion=descripcion;
+		this.estado=estado;
 	}
+	
+	
+	public Integer getEstado() {
+		return estado;
+	}
+
+
+	public void setEstado(Integer estado) {
+		this.estado = estado;
+	}
+
+
+	public String getDescripcion() {
+		return descripcion;
+	}
+
+
+
+	public void setDescripcion(String descripcion) {
+		this.descripcion = descripcion;
+	}
+
+
 
 	public Integer getId() {
 		return id;
