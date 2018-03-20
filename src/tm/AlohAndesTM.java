@@ -14,11 +14,13 @@ import dao.DAOCliente;
 import dao.DAOContrato;
 import dao.DAOHabitacion;
 import dao.DAOOperador;
+import dao.DAOServicio;
 import vos.Apartamento;
 import vos.Cliente;
 import vos.Contrato;
 import vos.Habitacion;
 import vos.Operador;
+import vos.Servicio;
 
 
 public class AlohAndesTM {
@@ -1071,6 +1073,202 @@ public class AlohAndesTM {
 	}
 	
 	//TODO METODOS RECURSO ||SERVICIO||
+	public List<Servicio> getAllServicios() throws Exception
+	{
+		DAOServicio dao= new DAOServicio();
+		List<Servicio> Servicios;
+		try 
+		{
+			this.conn=darConexion();
+			dao.setConn(conn);
+			Servicios=dao.getServicios();
+		}
+		catch( SQLException e)
+		{
+			System.err.println("[Excepción!] SQLException "+ e.getMessage());
+			e.printStackTrace();
+			throw e;
+		}
+		catch(Exception e)
+		{
+			System.err.println("[Excepción!] Exception "+ e.getMessage());
+			e.printStackTrace();
+			throw e;
+		}
+		finally
+		{
+			try
+			{
+				dao.cerrarRecursos();
+				if(this.conn!=null)
+					this.conn.close();
+			}
+			catch(SQLException e)
+			{
+				System.err.println(("[Excepción!] SQLException mientras se cerraban los recursos: "+e.getMessage()));
+				e.printStackTrace();
+				throw e;
+			}
+		}
+		return Servicios;
+	}
+
+	public Servicio getServicioById(Integer id) throws Exception
+	{
+		DAOServicio dao=new DAOServicio();
+		Servicio Servicio=null;
+		try
+		{
+			this.conn=darConexion();
+			dao.setConn(conn);
+			Servicio=dao.findServicioById(id);
+		}
+		catch( SQLException e)
+		{
+			System.err.println("[Excepción!] SQLException "+ e.getMessage());
+			e.printStackTrace();
+			throw e;
+		}
+		catch(Exception e)
+		{
+			System.err.println("[Excepción!] Exception "+ e.getMessage());
+			e.printStackTrace();
+			throw e;
+		}
+		finally
+		{
+			try
+			{
+				dao.cerrarRecursos();
+				if(this.conn!=null)
+					this.conn.close();
+			}
+			catch(SQLException e)
+			{
+				System.err.println(("[Excepción!] SQLException mientras se cerraban los recursos: "+e.getMessage()));
+				e.printStackTrace();
+				throw e;
+			}
+		}
+		return Servicio;
+	}
 	
+	public void addServicio(Servicio Servicio) throws Exception
+	{
+		DAOServicio dao= new DAOServicio();
+		try
+		{
+			this.conn=darConexion();
+			dao.setConn(conn);
+			dao.addServicio(Servicio);
+		}
+		catch( SQLException e)
+		{
+			System.err.println("[Excepción!] SQLException "+ e.getMessage());
+			e.printStackTrace();
+			throw e;
+		}
+		catch(Exception e)
+		{
+			System.err.println("[Excepción!] Exception "+ e.getMessage());
+			e.printStackTrace();
+			throw e;
+		}
+		finally
+		{
+			try
+			{
+				dao.cerrarRecursos();
+				if(this.conn!=null)
+					this.conn.close();
+			}
+			catch(SQLException e)
+			{
+				System.err.println(("[Excepción!] SQLException mientras se cerraban los recursos: "+e.getMessage()));
+				e.printStackTrace();
+				throw e;
+			}
+		}
+	}
+	
+	public void updateServicio(Servicio Servicio) throws Exception
+	{
+		DAOServicio dao= new DAOServicio();
+		try
+		{
+			this.conn=darConexion();
+			dao.setConn(conn);
+			dao.updateServicio(Servicio);
+		}
+		catch( SQLException e)
+		{
+			System.err.println("[Excepción!] SQLException "+ e.getMessage());
+			e.printStackTrace();
+			throw e;
+		}
+		catch(Exception e)
+		{
+			System.err.println("[Excepción!] Exception "+ e.getMessage());
+			e.printStackTrace();
+			throw e;
+		}
+		finally
+		{
+			try
+			{
+				dao.cerrarRecursos();
+				if(this.conn!=null)
+					this.conn.close();
+			}
+			catch(SQLException e)
+			{
+				System.err.println(("[Excepción!] SQLException mientras se cerraban los recursos: "+e.getMessage()));
+				e.printStackTrace();
+				throw e;
+			}
+		}
+	}
+	
+	public void deleteServicio(Servicio Servicio) throws Exception
+	{
+		DAOServicio dao= new DAOServicio();
+		try
+		{
+			this.conn=darConexion();
+			dao.setConn(conn);
+			Servicio borrar=dao.findServicioById(Servicio.getId());
+			if(borrar!=null)
+				dao.deleteServicio(Servicio);
+			else
+				throw new Exception("ese tal Servicio no existe!");
+		}
+		catch( SQLException e)
+		{
+			System.err.println("[Excepción!] SQLException "+ e.getMessage());
+			e.printStackTrace();
+			throw e;
+		}
+		catch(Exception e)
+		{
+			System.err.println("[Excepción!] Exception "+ e.getMessage());
+			e.printStackTrace();
+			throw e;
+		}
+		finally
+		{
+			try
+			{
+				dao.cerrarRecursos();
+				if(this.conn!=null)
+					this.conn.close();
+			}
+			catch(SQLException e)
+			{
+				System.err.println(("[Excepción!] SQLException mientras se cerraban los recursos: "+e.getMessage()));
+				e.printStackTrace();
+				throw e;
+			}
+		}
+	}
 	
 }
