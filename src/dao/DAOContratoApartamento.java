@@ -110,6 +110,8 @@ public class DAOContratoApartamento {
 
 	public void setConn(Connection connection){
 		this.conn = connection;
+		this.DaoCon.setConn(connection);
+		this.daoApto.setConn(connection);
 	}
 
 	public void cerrarRecursos() {

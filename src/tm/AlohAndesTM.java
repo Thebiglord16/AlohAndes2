@@ -11,6 +11,7 @@ import java.util.Properties;
 
 import dao.DAOApartamento;
 import dao.DAOCliente;
+import dao.DAOClienteContrato;
 import dao.DAOContrato;
 import dao.DAOContratoApartamento;
 import dao.DAOHabitacion;
@@ -20,6 +21,7 @@ import dao.DAOOperadorHabitacion;
 import dao.DAOServicio;
 import vos.Apartamento;
 import vos.Cliente;
+import vos.ClienteContrato;
 import vos.Contrato;
 import vos.ContratoApartamento;
 import vos.Habitacion;
@@ -1876,4 +1878,206 @@ public class AlohAndesTM {
 			}
 		}
 	}
+	
+	//TODO METODOS DE LA RELACION ||CLIENTE_CONTRATO||
+	
+	
+	public List<ClienteContrato> getAllClienteContratos() throws Exception
+	{
+		DAOClienteContrato dao= new DAOClienteContrato();
+		List<ClienteContrato> ClienteContratos;
+		try 
+		{
+			this.conn=darConexion();
+			dao.setConn(conn);
+			ClienteContratos=dao.getClienteContratos();
+		}
+		catch( SQLException e)
+		{
+			System.err.println("[Excepción!] SQLException "+ e.getMessage());
+			e.printStackTrace();
+			throw e;
+		}
+		catch(Exception e)
+		{
+			System.err.println("[Excepción!] Exception "+ e.getMessage());
+			e.printStackTrace();
+			throw e;
+		}
+		finally
+		{
+			try
+			{
+				dao.cerrarRecursos();
+				if(this.conn!=null)
+					this.conn.close();
+			}
+			catch(SQLException e)
+			{
+				System.err.println(("[Excepción!] SQLException mientras se cerraban los recursos: "+e.getMessage()));
+				e.printStackTrace();
+				throw e;
+			}
+		}
+		return ClienteContratos;
+	}
+
+	public ClienteContrato getClienteContratoById(Integer id) throws Exception
+	{
+		DAOClienteContrato dao=new DAOClienteContrato();
+		ClienteContrato ClienteContrato=null;
+		try
+		{
+			this.conn=darConexion();
+			dao.setConn(conn);
+			ClienteContrato=dao.findClienteContratoById(id);
+		}
+		catch( SQLException e)
+		{
+			System.err.println("[Excepción!] SQLException "+ e.getMessage());
+			e.printStackTrace();
+			throw e;
+		}
+		catch(Exception e)
+		{
+			System.err.println("[Excepción!] Exception "+ e.getMessage());
+			e.printStackTrace();
+			throw e;
+		}
+		finally
+		{
+			try
+			{
+				dao.cerrarRecursos();
+				if(this.conn!=null)
+					this.conn.close();
+			}
+			catch(SQLException e)
+			{
+				System.err.println(("[Excepción!] SQLException mientras se cerraban los recursos: "+e.getMessage()));
+				e.printStackTrace();
+				throw e;
+			}
+		}
+		return ClienteContrato;
+	}
+	
+	public void addClienteContrato(ClienteContrato ClienteContrato) throws Exception
+	{
+		DAOClienteContrato dao= new DAOClienteContrato();
+		try
+		{
+			this.conn=darConexion();
+			dao.setConn(conn);
+			dao.addClienteContrato(ClienteContrato);
+		}
+		catch( SQLException e)
+		{
+			System.err.println("[Excepción!] SQLException "+ e.getMessage());
+			e.printStackTrace();
+			throw e;
+		}
+		catch(Exception e)
+		{
+			System.err.println("[Excepción!] Exception "+ e.getMessage());
+			e.printStackTrace();
+			throw e;
+		}
+		finally
+		{
+			try
+			{
+				dao.cerrarRecursos();
+				if(this.conn!=null)
+					this.conn.close();
+			}
+			catch(SQLException e)
+			{
+				System.err.println(("[Excepción!] SQLException mientras se cerraban los recursos: "+e.getMessage()));
+				e.printStackTrace();
+				throw e;
+			}
+		}
+	}
+	
+	public void updateClienteContrato(ClienteContrato ClienteContrato) throws Exception
+	{
+		DAOClienteContrato dao= new DAOClienteContrato();
+		try
+		{
+			this.conn=darConexion();
+			dao.setConn(conn);
+			dao.updateClienteContrato(ClienteContrato);
+		}
+		catch( SQLException e)
+		{
+			System.err.println("[Excepción!] SQLException "+ e.getMessage());
+			e.printStackTrace();
+			throw e;
+		}
+		catch(Exception e)
+		{
+			System.err.println("[Excepción!] Exception "+ e.getMessage());
+			e.printStackTrace();
+			throw e;
+		}
+		finally
+		{
+			try
+			{
+				dao.cerrarRecursos();
+				if(this.conn!=null)
+					this.conn.close();
+			}
+			catch(SQLException e)
+			{
+				System.err.println(("[Excepción!] SQLException mientras se cerraban los recursos: "+e.getMessage()));
+				e.printStackTrace();
+				throw e;
+			}
+		}
+	}
+	
+	public void deleteClienteContrato(ClienteContrato ClienteContrato) throws Exception
+	{
+		DAOClienteContrato dao= new DAOClienteContrato();
+		try
+		{
+			this.conn=darConexion();
+			dao.setConn(conn);
+			ClienteContrato borrar=dao.findClienteContratoById(ClienteContrato.getCliente().getId());
+			if(borrar!=null)
+				dao.deleteClienteContrato(ClienteContrato);
+			else
+				throw new Exception("ese tal ClienteContrato no existe!");
+		}
+		catch( SQLException e)
+		{
+			System.err.println("[Excepción!] SQLException "+ e.getMessage());
+			e.printStackTrace();
+			throw e;
+		}
+		catch(Exception e)
+		{
+			System.err.println("[Excepción!] Exception "+ e.getMessage());
+			e.printStackTrace();
+			throw e;
+		}
+		finally
+		{
+			try
+			{
+				dao.cerrarRecursos();
+				if(this.conn!=null)
+					this.conn.close();
+			}
+			catch(SQLException e)
+			{
+				System.err.println(("[Excepción!] SQLException mientras se cerraban los recursos: "+e.getMessage()));
+				e.printStackTrace();
+				throw e;
+			}
+		}
+	}
+	
 }
