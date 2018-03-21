@@ -8,6 +8,8 @@ import java.util.ArrayList;
 
 import vos.ContratoApartamento;
 import vos.Contrato;
+
+
 public class DAOContratoApartamento {
 
 	public final static String USUARIO="ISIS2304A541810";
@@ -37,6 +39,7 @@ public class DAOContratoApartamento {
 		ResultSet rs = prepStmt.executeQuery();
 
 		while (rs.next()) {
+
 			ContratoApartamentos.add(convertResultSetToContratoApartamento(rs));
 		}
 		return convertResultSetToContratoApto(ContratoApartamentos);
@@ -48,9 +51,11 @@ public class DAOContratoApartamento {
 		
 		String sql = String.format("SELECT * FROM %1$s.CONTRATO_APARTAMENTO WHERE ID_APARTAMENTO = %2$d", USUARIO, id); 
 
+
 		PreparedStatement prepStmt = conn.prepareStatement(sql);
 		recursos.add(prepStmt);
 		ResultSet rs = prepStmt.executeQuery();
+
 
 		if(rs.next()) {
 			ContratoApartamentos.add( convertResultSetToContratoApartamento(rs));
@@ -117,7 +122,6 @@ public class DAOContratoApartamento {
 				}
 		}
 	}
-
 	public ContratoApartamento convertResultSetToContratoApartamento(ResultSet resultSet) throws Exception {
 
 		Integer id_apartamento=resultSet.getInt("ID_APARTAMENTO");
@@ -148,5 +152,6 @@ public class DAOContratoApartamento {
 		return respuesta;	
 		
 	} 
+
 
 }
