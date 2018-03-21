@@ -45,7 +45,7 @@ public class HabitacionService {
 			Operador op=tm.getOperadorById(operadorId);
 			if(op!=null){
 				List<Habitacion> Habitacions;
-				Habitacions = tm.getAllHabitacions();
+				Habitacions = tm.getOperadorHabitacionById(operadorId).getHabitaciones();
 				return Response.status(200).entity(Habitacions).build();
 			}
 			else

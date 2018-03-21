@@ -56,7 +56,7 @@ public final static String USUARIO="ISIS2304A541810";
 	
 	public void addContrato(Contrato Contrato) throws SQLException, Exception {
 
-		String sql = String.format("INSERT INTO %1$s.Contrato (ID,  FECHA_INICIO, FECHA_FIN,DESCRIPCION,ESTADO) VALUES (%2$s, %3$s, '%4$s', '%5$s',%6$s)", 
+		String sql = String.format("INSERT INTO %1$s.Contrato (ID,  FECHA_INICIO, FECHA_FIN,DESCRIPCION,ESTADO) VALUES (%2$s, '%3$s', '%4$s', '%5$s',%6$s)", 
 									USUARIO, 
 									Contrato.getId(), 
 									Contrato.getFechaInicio(),
@@ -64,7 +64,7 @@ public final static String USUARIO="ISIS2304A541810";
 									Contrato.getDescripcion(),
 									Contrato.getEstado());
 		System.out.println(sql);
-
+	
 		PreparedStatement prepStmt = conn.prepareStatement(sql);
 		recursos.add(prepStmt);
 		prepStmt.executeQuery();
