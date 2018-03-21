@@ -16,48 +16,68 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
 import tm.AlohAndesTM;
+import vos.Apartamento;
+import vos.Cliente;
 import vos.Contrato;
 
-@Path("contratos")
+@Path("/{owner}/{id:\\d+}/contratos")
 public class ContratoService {
 
 	@Context
 	private ServletContext context;
-	
+
 	private String getPath()
 	{
 		return context.getRealPath("WEB-INF/ConnectionData");
 	}
-	
+
 	private String doErrorMessage(Exception e){
 		return "{ \"ERROR\": \""+ e.getMessage() + "\"}" ;
 	}
-	
+
 	@GET
 	@Produces({ MediaType.APPLICATION_JSON })
-	public Response getContratos() {
-		
+	public Response getContratos(@PathParam("owner")String owner, @PathParam("id") Integer idOwner) {
+
 		try {
-			AlohAndesTM tm = new AlohAndesTM(getPath());
-			
-			List<Contrato> Contratos;
-			//Por simplicidad, solamente se obtienen los primeros 50 resultados de la consulta
-			Contratos = tm.getAllContratos();
-			return Response.status(200).entity(Contratos).build();
+			if(owner.equals("apartamentos")){
+				AlohAndesTM tm = new AlohAndesTM(getPath());
+				Apartamento apto=tm.getApartamentoById(idOwner);
+				if(apto!=null){
+					List<Contrato> Contratos;
+					Contratos = tm.getContratoApartamentoById(idOwner).getContratos();
+					return Response.status(200).entity(Contratos).build();
+				}
+				else
+					return Response.status(404).entity("No existe el operador , por lo tanto no existen Contratos de el").build();
+			}
+			else if(owner.equals("clientes")){
+				AlohAndesTM tm = new AlohAndesTM(getPath());
+				Cliente cliente=tm.getClienteById(idOwner);
+				if(cliente!=null){
+					List<Contrato> Contratos;
+					Contratos = tm.getClienteContratoById(idOwner).getContratos();
+					return Response.status(200).entity(Contratos).build();
+				}
+				else
+					return Response.status(404).entity("No existe el operador , por lo tanto no existen Contratos de el").build();
+			}
+			else
+				return Response.status(404).entity("No existe tal entidad capaz de firmar un contrato").build();
 		} 
 		catch (Exception e) {
 			return Response.status(500).entity(doErrorMessage(e)).build();
 		}
 	}
-	
+
 	@GET
 	@Path( "{id: \\d+}" )
 	@Produces({ MediaType.APPLICATION_JSON })
 	public Response getContrato( @PathParam( "id" )Integer id) {
-		
+
 		try {
 			AlohAndesTM tm = new AlohAndesTM(getPath());
-			
+
 			Contrato Contrato;
 			Contrato = tm.getContratoById(id);
 			return Response.status(200).entity(Contrato).build();
@@ -66,12 +86,12 @@ public class ContratoService {
 			return Response.status(500).entity(doErrorMessage(e)).build();
 		}
 	}
-	
+
 	@POST
 	@Consumes({ MediaType.APPLICATION_JSON })
 	@Produces({ MediaType.APPLICATION_JSON })
 	public Response addContrato(Contrato Contrato ) {
-		
+
 		try {
 			AlohAndesTM tm = new AlohAndesTM(getPath());			
 			tm.addContrato(Contrato);
@@ -81,12 +101,12 @@ public class ContratoService {
 			return Response.status(500).entity(doErrorMessage(e)).build();
 		}
 	}
-	
+
 	@PUT
 	@Consumes({ MediaType.APPLICATION_JSON })
 	@Produces({ MediaType.APPLICATION_JSON })
 	public Response updateContrato(Contrato Contrato ) {
-		
+
 		try {
 			AlohAndesTM tm = new AlohAndesTM(getPath());			
 			tm.updateContrato(Contrato);
@@ -96,12 +116,12 @@ public class ContratoService {
 			return Response.status(500).entity(doErrorMessage(e)).build();
 		}
 	}
-	
+
 	@DELETE
 	@Consumes({ MediaType.APPLICATION_JSON })
 	@Produces({ MediaType.APPLICATION_JSON })
 	public Response deleteContrato(Contrato Contrato ) {
-		
+
 		try {
 			AlohAndesTM tm = new AlohAndesTM(getPath());			
 			tm.deleteContrato(Contrato);
@@ -111,5 +131,5 @@ public class ContratoService {
 			return Response.status(500).entity(doErrorMessage(e)).build();
 		}
 	}
-	
+
 }
