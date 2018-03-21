@@ -24,13 +24,38 @@ public class Apartamento {
 	@JsonProperty(value="tipo")
 	private Integer tipo;
 	
-	public Apartamento(@JsonProperty(value="id") Integer id, @JsonProperty(value="direccion") String direccion, @JsonProperty(value="capacidad") Integer capacidad,@JsonProperty(value="descripcion") String descripcion, @JsonProperty(value="tipo") Integer tipo)
+	@JsonProperty(value="vecesSolicitada")
+	private Integer vecesSolicitada;
+	
+	@JsonProperty(value="ofertada")
+	private Boolean ofertada;
+	
+	public Apartamento(@JsonProperty(value="id") Integer id, @JsonProperty(value="direccion") String direccion, @JsonProperty(value="capacidad") Integer capacidad,@JsonProperty(value="descripcion") String descripcion, @JsonProperty(value="tipo") Integer tipo,@JsonProperty(value="vecesSolicitada")Integer vecesSolicitada, @JsonProperty(value="ofertada")Boolean ofertada)
 	{
 		this.id=id;
 		this.direccion=direccion;
 		this.cacpacidad=capacidad;
 		this.descripcion=descripcion;
 		this.direccion=direccion;
+		this.tipo=tipo;
+		this.vecesSolicitada=vecesSolicitada;
+		this.ofertada=ofertada;
+	}
+
+	public Integer getVecesSolicitada() {
+		return vecesSolicitada;
+	}
+
+	public void setVecesSolicitada(Integer vecesSolicitada) {
+		this.vecesSolicitada = vecesSolicitada;
+	}
+
+	public Boolean isOfertada() {
+		return ofertada;
+	}
+
+	public void setOfertada(Boolean ofertada) {
+		this.ofertada = ofertada;
 	}
 
 	public Integer getId() {

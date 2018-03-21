@@ -12,14 +12,20 @@ import java.util.Properties;
 import dao.DAOApartamento;
 import dao.DAOCliente;
 import dao.DAOContrato;
+import dao.DAOContratoApartamento;
 import dao.DAOHabitacion;
 import dao.DAOOperador;
+import dao.DAOOperadorApartamento;
+import dao.DAOOperadorHabitacion;
 import dao.DAOServicio;
 import vos.Apartamento;
 import vos.Cliente;
 import vos.Contrato;
+import vos.ContratoApartamento;
 import vos.Habitacion;
 import vos.Operador;
+import vos.OperadorApartamento;
+import vos.OperadorHabitacion;
 import vos.Servicio;
 
 
@@ -1271,4 +1277,603 @@ public class AlohAndesTM {
 		}
 	}
 	
+	//TODO METODOS RELACION ||CONTRATO_APARTAMENTO||
+	
+	public List<ContratoApartamento> getAllContratoApartamentos() throws Exception
+	{
+		DAOContratoApartamento dao= new DAOContratoApartamento();
+		List<ContratoApartamento> ContratoApartamentos;
+		try 
+		{
+			this.conn=darConexion();
+			dao.setConn(conn);
+			ContratoApartamentos=dao.getContratoApartamentos();
+		}
+		catch( SQLException e)
+		{
+			System.err.println("[Excepción!] SQLException "+ e.getMessage());
+			e.printStackTrace();
+			throw e;
+		}
+		catch(Exception e)
+		{
+			System.err.println("[Excepción!] Exception "+ e.getMessage());
+			e.printStackTrace();
+			throw e;
+		}
+		finally
+		{
+			try
+			{
+				dao.cerrarRecursos();
+				if(this.conn!=null)
+					this.conn.close();
+			}
+			catch(SQLException e)
+			{
+				System.err.println(("[Excepción!] SQLException mientras se cerraban los recursos: "+e.getMessage()));
+				e.printStackTrace();
+				throw e;
+			}
+		}
+		return ContratoApartamentos;
+	}
+
+	public ContratoApartamento getContratoApartamentoById(Integer id) throws Exception
+	{
+		DAOContratoApartamento dao=new DAOContratoApartamento();
+		ContratoApartamento ContratoApartamento=null;
+		try
+		{
+			this.conn=darConexion();
+			dao.setConn(conn);
+			ContratoApartamento=dao.findContratoApartamentoById(id);
+		}
+		catch( SQLException e)
+		{
+			System.err.println("[Excepción!] SQLException "+ e.getMessage());
+			e.printStackTrace();
+			throw e;
+		}
+		catch(Exception e)
+		{
+			System.err.println("[Excepción!] Exception "+ e.getMessage());
+			e.printStackTrace();
+			throw e;
+		}
+		finally
+		{
+			try
+			{
+				dao.cerrarRecursos();
+				if(this.conn!=null)
+					this.conn.close();
+			}
+			catch(SQLException e)
+			{
+				System.err.println(("[Excepción!] SQLException mientras se cerraban los recursos: "+e.getMessage()));
+				e.printStackTrace();
+				throw e;
+			}
+		}
+		return ContratoApartamento;
+	}
+	
+	public void addContratoApartamento(ContratoApartamento ContratoApartamento) throws Exception
+	{
+		DAOContratoApartamento dao= new DAOContratoApartamento();
+		try
+		{
+			this.conn=darConexion();
+			dao.setConn(conn);
+			dao.addContratoApartamento(ContratoApartamento);
+		}
+		catch( SQLException e)
+		{
+			System.err.println("[Excepción!] SQLException "+ e.getMessage());
+			e.printStackTrace();
+			throw e;
+		}
+		catch(Exception e)
+		{
+			System.err.println("[Excepción!] Exception "+ e.getMessage());
+			e.printStackTrace();
+			throw e;
+		}
+		finally
+		{
+			try
+			{
+				dao.cerrarRecursos();
+				if(this.conn!=null)
+					this.conn.close();
+			}
+			catch(SQLException e)
+			{
+				System.err.println(("[Excepción!] SQLException mientras se cerraban los recursos: "+e.getMessage()));
+				e.printStackTrace();
+				throw e;
+			}
+		}
+	}
+	
+	public void updateContratoApartamento(ContratoApartamento ContratoApartamento) throws Exception
+	{
+		DAOContratoApartamento dao= new DAOContratoApartamento();
+		try
+		{
+			this.conn=darConexion();
+			dao.setConn(conn);
+			dao.updateContratoApartamento(ContratoApartamento);
+		}
+		catch( SQLException e)
+		{
+			System.err.println("[Excepción!] SQLException "+ e.getMessage());
+			e.printStackTrace();
+			throw e;
+		}
+		catch(Exception e)
+		{
+			System.err.println("[Excepción!] Exception "+ e.getMessage());
+			e.printStackTrace();
+			throw e;
+		}
+		finally
+		{
+			try
+			{
+				dao.cerrarRecursos();
+				if(this.conn!=null)
+					this.conn.close();
+			}
+			catch(SQLException e)
+			{
+				System.err.println(("[Excepción!] SQLException mientras se cerraban los recursos: "+e.getMessage()));
+				e.printStackTrace();
+				throw e;
+			}
+		}
+	}
+	
+	public void deleteContratoApartamento(ContratoApartamento ContratoApartamento) throws Exception
+	{
+		DAOContratoApartamento dao= new DAOContratoApartamento();
+		try
+		{
+			this.conn=darConexion();
+			dao.setConn(conn);
+			ContratoApartamento borrar=dao.findContratoApartamentoById(ContratoApartamento.getApartamento().getId());
+			if(borrar!=null)
+				dao.deleteContratoApartamento(ContratoApartamento);
+			else
+				throw new Exception("ese tal ContratoApartamento no existe!");
+		}
+		catch( SQLException e)
+		{
+			System.err.println("[Excepción!] SQLException "+ e.getMessage());
+			e.printStackTrace();
+			throw e;
+		}
+		catch(Exception e)
+		{
+			System.err.println("[Excepción!] Exception "+ e.getMessage());
+			e.printStackTrace();
+			throw e;
+		}
+		finally
+		{
+			try
+			{
+				dao.cerrarRecursos();
+				if(this.conn!=null)
+					this.conn.close();
+			}
+			catch(SQLException e)
+			{
+				System.err.println(("[Excepción!] SQLException mientras se cerraban los recursos: "+e.getMessage()));
+				e.printStackTrace();
+				throw e;
+			}
+		}
+	}
+	
+	//TODO METODOS RELACION ||OPERADOR_HABITACION||
+	
+	public List<OperadorHabitacion> getAllOperadorHabitacions() throws Exception
+	{
+		DAOOperadorHabitacion dao= new DAOOperadorHabitacion();
+		List<OperadorHabitacion> OperadorHabitacions;
+		try 
+		{
+			this.conn=darConexion();
+			dao.setConn(conn);
+			OperadorHabitacions=dao.getOperadorHabitacions();
+		}
+		catch( SQLException e)
+		{
+			System.err.println("[Excepción!] SQLException "+ e.getMessage());
+			e.printStackTrace();
+			throw e;
+		}
+		catch(Exception e)
+		{
+			System.err.println("[Excepción!] Exception "+ e.getMessage());
+			e.printStackTrace();
+			throw e;
+		}
+		finally
+		{
+			try
+			{
+				dao.cerrarRecursos();
+				if(this.conn!=null)
+					this.conn.close();
+			}
+			catch(SQLException e)
+			{
+				System.err.println(("[Excepción!] SQLException mientras se cerraban los recursos: "+e.getMessage()));
+				e.printStackTrace();
+				throw e;
+			}
+		}
+		return OperadorHabitacions;
+	}
+
+	public OperadorHabitacion getOperadorHabitacionById(Integer id) throws Exception
+	{
+		DAOOperadorHabitacion dao=new DAOOperadorHabitacion();
+		OperadorHabitacion OperadorHabitacion=null;
+		try
+		{
+			this.conn=darConexion();
+			dao.setConn(conn);
+			OperadorHabitacion=dao.findOperadorHabitacionById(id);
+		}
+		catch( SQLException e)
+		{
+			System.err.println("[Excepción!] SQLException "+ e.getMessage());
+			e.printStackTrace();
+			throw e;
+		}
+		catch(Exception e)
+		{
+			System.err.println("[Excepción!] Exception "+ e.getMessage());
+			e.printStackTrace();
+			throw e;
+		}
+		finally
+		{
+			try
+			{
+				dao.cerrarRecursos();
+				if(this.conn!=null)
+					this.conn.close();
+			}
+			catch(SQLException e)
+			{
+				System.err.println(("[Excepción!] SQLException mientras se cerraban los recursos: "+e.getMessage()));
+				e.printStackTrace();
+				throw e;
+			}
+		}
+		return OperadorHabitacion;
+	}
+	
+	public void addOperadorHabitacion(OperadorHabitacion OperadorHabitacion) throws Exception
+	{
+		DAOOperadorHabitacion dao= new DAOOperadorHabitacion();
+		try
+		{
+			this.conn=darConexion();
+			dao.setConn(conn);
+			dao.addOperadorHabitacion(OperadorHabitacion);
+		}
+		catch( SQLException e)
+		{
+			System.err.println("[Excepción!] SQLException "+ e.getMessage());
+			e.printStackTrace();
+			throw e;
+		}
+		catch(Exception e)
+		{
+			System.err.println("[Excepción!] Exception "+ e.getMessage());
+			e.printStackTrace();
+			throw e;
+		}
+		finally
+		{
+			try
+			{
+				dao.cerrarRecursos();
+				if(this.conn!=null)
+					this.conn.close();
+			}
+			catch(SQLException e)
+			{
+				System.err.println(("[Excepción!] SQLException mientras se cerraban los recursos: "+e.getMessage()));
+				e.printStackTrace();
+				throw e;
+			}
+		}
+	}
+	
+	public void updateOperadorHabitacion(OperadorHabitacion OperadorHabitacion) throws Exception
+	{
+		DAOOperadorHabitacion dao= new DAOOperadorHabitacion();
+		try
+		{
+			this.conn=darConexion();
+			dao.setConn(conn);
+			dao.updateOperadorHabitacion(OperadorHabitacion);
+		}
+		catch( SQLException e)
+		{
+			System.err.println("[Excepción!] SQLException "+ e.getMessage());
+			e.printStackTrace();
+			throw e;
+		}
+		catch(Exception e)
+		{
+			System.err.println("[Excepción!] Exception "+ e.getMessage());
+			e.printStackTrace();
+			throw e;
+		}
+		finally
+		{
+			try
+			{
+				dao.cerrarRecursos();
+				if(this.conn!=null)
+					this.conn.close();
+			}
+			catch(SQLException e)
+			{
+				System.err.println(("[Excepción!] SQLException mientras se cerraban los recursos: "+e.getMessage()));
+				e.printStackTrace();
+				throw e;
+			}
+		}
+	}
+	
+	public void deleteOperadorHabitacion(OperadorHabitacion OperadorHabitacion) throws Exception
+	{
+		DAOOperadorHabitacion dao= new DAOOperadorHabitacion();
+		try
+		{
+			this.conn=darConexion();
+			dao.setConn(conn);
+			OperadorHabitacion borrar=dao.findOperadorHabitacionById(OperadorHabitacion.getOperador().getId());
+			if(borrar!=null)
+				dao.deleteOperadorHabitacion(OperadorHabitacion);
+			else
+				throw new Exception("ese tal OperadorHabitacion no existe!");
+		}
+		catch( SQLException e)
+		{
+			System.err.println("[Excepción!] SQLException "+ e.getMessage());
+			e.printStackTrace();
+			throw e;
+		}
+		catch(Exception e)
+		{
+			System.err.println("[Excepción!] Exception "+ e.getMessage());
+			e.printStackTrace();
+			throw e;
+		}
+		finally
+		{
+			try
+			{
+				dao.cerrarRecursos();
+				if(this.conn!=null)
+					this.conn.close();
+			}
+			catch(SQLException e)
+			{
+				System.err.println(("[Excepción!] SQLException mientras se cerraban los recursos: "+e.getMessage()));
+				e.printStackTrace();
+				throw e;
+			}
+		}
+	}
+	
+	//TODO METODOS RELACION ||OPERADOR_APARTAMENTO||
+	
+	public List<OperadorApartamento> getAllOperadorApartamentos() throws Exception
+	{
+		DAOOperadorApartamento dao= new DAOOperadorApartamento();
+		List<OperadorApartamento> OperadorApartamentos;
+		try 
+		{
+			this.conn=darConexion();
+			dao.setConn(conn);
+			OperadorApartamentos=dao.getOperadorApartamentos();
+		}
+		catch( SQLException e)
+		{
+			System.err.println("[Excepción!] SQLException "+ e.getMessage());
+			e.printStackTrace();
+			throw e;
+		}
+		catch(Exception e)
+		{
+			System.err.println("[Excepción!] Exception "+ e.getMessage());
+			e.printStackTrace();
+			throw e;
+		}
+		finally
+		{
+			try
+			{
+				dao.cerrarRecursos();
+				if(this.conn!=null)
+					this.conn.close();
+			}
+			catch(SQLException e)
+			{
+				System.err.println(("[Excepción!] SQLException mientras se cerraban los recursos: "+e.getMessage()));
+				e.printStackTrace();
+				throw e;
+			}
+		}
+		return OperadorApartamentos;
+	}
+
+	public OperadorApartamento getOperadorApartamentoById(Integer id) throws Exception
+	{
+		DAOOperadorApartamento dao=new DAOOperadorApartamento();
+		OperadorApartamento OperadorApartamento=null;
+		try
+		{
+			this.conn=darConexion();
+			dao.setConn(conn);
+			OperadorApartamento=dao.findOperadorApartamentoById(id);
+		}
+		catch( SQLException e)
+		{
+			System.err.println("[Excepción!] SQLException "+ e.getMessage());
+			e.printStackTrace();
+			throw e;
+		}
+		catch(Exception e)
+		{
+			System.err.println("[Excepción!] Exception "+ e.getMessage());
+			e.printStackTrace();
+			throw e;
+		}
+		finally
+		{
+			try
+			{
+				dao.cerrarRecursos();
+				if(this.conn!=null)
+					this.conn.close();
+			}
+			catch(SQLException e)
+			{
+				System.err.println(("[Excepción!] SQLException mientras se cerraban los recursos: "+e.getMessage()));
+				e.printStackTrace();
+				throw e;
+			}
+		}
+		return OperadorApartamento;
+	}
+	
+	public void addOperadorApartamento(OperadorApartamento OperadorApartamento) throws Exception
+	{
+		DAOOperadorApartamento dao= new DAOOperadorApartamento();
+		try
+		{
+			this.conn=darConexion();
+			dao.setConn(conn);
+			dao.addOperadorApartamento(OperadorApartamento);
+		}
+		catch( SQLException e)
+		{
+			System.err.println("[Excepción!] SQLException "+ e.getMessage());
+			e.printStackTrace();
+			throw e;
+		}
+		catch(Exception e)
+		{
+			System.err.println("[Excepción!] Exception "+ e.getMessage());
+			e.printStackTrace();
+			throw e;
+		}
+		finally
+		{
+			try
+			{
+				dao.cerrarRecursos();
+				if(this.conn!=null)
+					this.conn.close();
+			}
+			catch(SQLException e)
+			{
+				System.err.println(("[Excepción!] SQLException mientras se cerraban los recursos: "+e.getMessage()));
+				e.printStackTrace();
+				throw e;
+			}
+		}
+	}
+	
+	public void updateOperadorApartamento(OperadorApartamento OperadorApartamento) throws Exception
+	{
+		DAOOperadorApartamento dao= new DAOOperadorApartamento();
+		try
+		{
+			this.conn=darConexion();
+			dao.setConn(conn);
+			dao.updateOperadorApartamento(OperadorApartamento);
+		}
+		catch( SQLException e)
+		{
+			System.err.println("[Excepción!] SQLException "+ e.getMessage());
+			e.printStackTrace();
+			throw e;
+		}
+		catch(Exception e)
+		{
+			System.err.println("[Excepción!] Exception "+ e.getMessage());
+			e.printStackTrace();
+			throw e;
+		}
+		finally
+		{
+			try
+			{
+				dao.cerrarRecursos();
+				if(this.conn!=null)
+					this.conn.close();
+			}
+			catch(SQLException e)
+			{
+				System.err.println(("[Excepción!] SQLException mientras se cerraban los recursos: "+e.getMessage()));
+				e.printStackTrace();
+				throw e;
+			}
+		}
+	}
+	
+	public void deleteOperadorApartamento(OperadorApartamento OperadorApartamento) throws Exception
+	{
+		DAOOperadorApartamento dao= new DAOOperadorApartamento();
+		try
+		{
+			this.conn=darConexion();
+			dao.setConn(conn);
+			OperadorApartamento borrar=dao.findOperadorApartamentoById(OperadorApartamento.getOperador().getId());
+			if(borrar!=null)
+				dao.deleteOperadorApartamento(OperadorApartamento);
+			else
+				throw new Exception("ese tal OperadorApartamento no existe!");
+		}
+		catch( SQLException e)
+		{
+			System.err.println("[Excepción!] SQLException "+ e.getMessage());
+			e.printStackTrace();
+			throw e;
+		}
+		catch(Exception e)
+		{
+			System.err.println("[Excepción!] Exception "+ e.getMessage());
+			e.printStackTrace();
+			throw e;
+		}
+		finally
+		{
+			try
+			{
+				dao.cerrarRecursos();
+				if(this.conn!=null)
+					this.conn.close();
+			}
+			catch(SQLException e)
+			{
+				System.err.println(("[Excepción!] SQLException mientras se cerraban los recursos: "+e.getMessage()));
+				e.printStackTrace();
+				throw e;
+			}
+		}
+	}
 }

@@ -54,7 +54,7 @@ public final static String USUARIO="ISIS2304A541810";
 	
 	public void addOperador(Operador Operador) throws SQLException, Exception {
 
-		String sql = String.format("INSERT INTO %1$s.OPERADOR (ID,  NOMBRE, CORREO,IDENTIFICACION,TIPO) VALUES (%2$s, %3$s, '%4$s', '%5$s',%6$s)", 
+		String sql = String.format("INSERT INTO %1$s.OPERADOR (ID,  IDENTIFICACION, NOMBRE,CORREO,TIPO) VALUES (%2$d, %3$d, '%4$s', '%5$s',%6$d)", 
 									USUARIO, 
 									Operador.getId(), 
 									Operador.getIdentificacion(),
