@@ -1,5 +1,6 @@
 package rest;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.ServletContext;
@@ -17,93 +18,131 @@ import javax.ws.rs.core.Response;
 
 import tm.AlohAndesTM;
 import vos.Apartamento;
+import vos.Operador;
+import vos.OperadorApartamento;
 
-@Path("apartamentos")
+@Path("operadores/{operadorId:\\d+}/apartamentos")
 public class ApartamentoService {
 	@Context
 	private ServletContext context;
-	
+
 	private String getPath()
 	{
 		return context.getRealPath("WEB-INF/ConnectionData");
 	}
-	
+
 	private String doErrorMessage(Exception e){
 		return "{ \"ERROR\": \""+ e.getMessage() + "\"}" ;
 	}
-	
+
 	@GET
 	@Produces({ MediaType.APPLICATION_JSON })
-	public Response getApartamentos() {
-		
+	public Response getApartamentos(@PathParam("operadorId") Integer operadorId) {
+
 		try {
+
 			AlohAndesTM tm = new AlohAndesTM(getPath());
-			
-			List<Apartamento> Apartamentos;
-			Apartamentos = tm.getAllApartamentos();
-			return Response.status(200).entity(Apartamentos).build();
+			Operador op=tm.getOperadorById(operadorId);
+			if(op!=null){
+				List<Apartamento> Apartamentos;
+				Apartamentos = tm.getOperadorApartamentoById(operadorId).getApartamentos();
+				return Response.status(200).entity(Apartamentos).build();
+			}
+			else
+				return Response.status(404).entity("No existe el operador , por lo tanto no existen Apartamentoes de el").build();
 		} 
 		catch (Exception e) {
 			return Response.status(500).entity(doErrorMessage(e)).build();
 		}
 	}
-	
+
 	@GET
 	@Path( "{id: \\d+}" )
 	@Produces({ MediaType.APPLICATION_JSON })
-	public Response getApartamento( @PathParam( "id" )Integer id) {
-		
+	public Response getApartamento(@PathParam("operadorId") Integer operadorId, @PathParam( "id" )Integer id) {
+
 		try {
 			AlohAndesTM tm = new AlohAndesTM(getPath());
-			
-			Apartamento Apartamento;
-			Apartamento = tm.getApartamentoById(id);
-			return Response.status(200).entity(Apartamento).build();
+			Operador op=tm.getOperadorById(operadorId);
+			if(op!=null){
+				Apartamento Apartamento;
+				Apartamento = tm.getApartamentoById(id);
+				return Response.status(200).entity(Apartamento).build();
+			}
+			else
+				return Response.status(404).entity("No existe el operador , por lo tanto no existen Apartamentoes de el").build();
 		} 
 		catch (Exception e) {
 			return Response.status(500).entity(doErrorMessage(e)).build();
 		}
 	}
-	
+
 	@POST
 	@Consumes({ MediaType.APPLICATION_JSON })
 	@Produces({ MediaType.APPLICATION_JSON })
-	public Response addApartamento(Apartamento Apartamento ) {
-		
+	public Response addApartamento(Apartamento Apartamento , @PathParam("operadorId") Integer operadorId) {
+
 		try {
-			AlohAndesTM tm = new AlohAndesTM(getPath());			
-			tm.addApartamento(Apartamento);
-			return Response.status(200).entity(Apartamento).build();
+			AlohAndesTM tm = new AlohAndesTM(getPath());
+			Operador op=tm.getOperadorById(operadorId);
+			if(op!=null){
+				
+				//TODO Crea la relacion
+				ArrayList<Apartamento> aptos=new ArrayList<>();
+				aptos.add(Apartamento);
+				OperadorApartamento oh=new OperadorApartamento(op, aptos);
+				tm.addApartamento(Apartamento);
+				tm.addOperadorApartamento(oh);
+				return Response.status(200).entity(Apartamento).build();
+			}
+			else
+				return Response.status(404).entity("No existe el operador , por lo tanto no existen habitaciones de el").build();
 		} 
 		catch (Exception e) {
 			return Response.status(500).entity(doErrorMessage(e)).build();
 		}
 	}
-	
+
 	@PUT
 	@Consumes({ MediaType.APPLICATION_JSON })
 	@Produces({ MediaType.APPLICATION_JSON })
-	public Response updateApartamento(Apartamento Apartamento ) {
-		
+	public Response updateApartamento(Apartamento Apartamento, @PathParam("operadorId") Integer operadorId ) {
+
 		try {
-			AlohAndesTM tm = new AlohAndesTM(getPath());			
-			tm.updateApartamento(Apartamento);
-			return Response.status(200).entity(Apartamento).build();
+			AlohAndesTM tm = new AlohAndesTM(getPath());
+			Operador op=tm.getOperadorById(operadorId);
+			if(op!=null){			
+				tm.updateApartamento(Apartamento);
+				return Response.status(200).entity(Apartamento).build();
+
+			}
+			else
+				return Response.status(404).entity("No existe el operador , por lo tanto no existen Apartamentoes de el").build();
 		} 
 		catch (Exception e) {
 			return Response.status(500).entity(doErrorMessage(e)).build();
 		}
 	}
-	
+
 	@DELETE
 	@Consumes({ MediaType.APPLICATION_JSON })
 	@Produces({ MediaType.APPLICATION_JSON })
-	public Response deleteApartamento(Apartamento Apartamento ) {
-		
+	public Response deleteApartamento(Apartamento Apartamento, @PathParam("operadorId") Integer operadorId  ) {
+
 		try {
-			AlohAndesTM tm = new AlohAndesTM(getPath());			
+			AlohAndesTM tm = new AlohAndesTM(getPath());
+			Operador op=tm.getOperadorById(operadorId);
+			if(op!=null){
+			ArrayList<Apartamento> habs=new ArrayList<>();
+			habs.add(Apartamento);
+			OperadorApartamento oh=new OperadorApartamento(op, habs);	
 			tm.deleteApartamento(Apartamento);
+			tm.deleteOperadorApartamento(oh);
+			//TODO borrar de la relacion
 			return Response.status(200).entity(Apartamento).build();
+			}
+			else
+				return Response.status(404).entity("No existe el operador , por lo tanto no existen Apartamentoes de el").build();
 		} 
 		catch (Exception e) {
 			return Response.status(500).entity(doErrorMessage(e)).build();

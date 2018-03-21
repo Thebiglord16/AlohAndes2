@@ -6,7 +6,7 @@ public class Habitacion {
 
 	public enum Tipo 
 	{
-		
+		SUITE
 	}
 	
 	@JsonProperty(value="id")
@@ -24,14 +24,50 @@ public class Habitacion {
 	@JsonProperty(value="tipo")
 	private Integer tipo;
 	
-	public Habitacion(@JsonProperty(value="id") Integer id, @JsonProperty(value="direccion") String direccion, @JsonProperty(value="capacidad") Integer capacidad,@JsonProperty(value="descripcion") String descripcion, @JsonProperty(value="tipo") Integer tipo)
+	@JsonProperty(value="vecesSolicitada")
+	private Integer vecesSolicitada;
+	
+	@JsonProperty(value="ofertada")
+	private boolean ofertada;
+	
+	public Habitacion(@JsonProperty(value="id") Integer id, @JsonProperty(value="direccion") String direccion, @JsonProperty(value="capacidad") Integer capacidad,@JsonProperty(value="descripcion") String descripcion, @JsonProperty(value="tipo") Integer tipo, @JsonProperty(value="vecesSolicitada")Integer vecesSolicitada, @JsonProperty(value="ofertada")boolean ofertada)
 	{
 		this.id=id;
 		this.direccion=direccion;
 		this.cacpacidad=capacidad;
 		this.descripcion=descripcion;
 		this.direccion=direccion;
+		this.tipo=tipo;
+		this.vecesSolicitada=vecesSolicitada;
+		this.ofertada=ofertada;
+	
 	}
+
+	
+	
+	public Integer getVecesSolicitada() {
+		return vecesSolicitada;
+	}
+
+
+
+	public void setVecesSolicitada(Integer vecesSolicitada) {
+		this.vecesSolicitada = vecesSolicitada;
+	}
+
+
+
+	public boolean isOfertada() {
+		return ofertada;
+	}
+
+
+
+	public void setOfertada(boolean ofertada) {
+		this.ofertada = ofertada;
+	}
+
+
 
 	public Integer getId() {
 		return id;

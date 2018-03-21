@@ -24,7 +24,7 @@ public final static String USUARIO="ISIS2304A541810";
 	public ArrayList<Apartamento> getApartamentos() throws SQLException, Exception {
 		ArrayList<Apartamento> Apartamentos = new ArrayList<Apartamento>();
 
-		String sql = String.format("SELECT * FROM %1$s.APARTEMENTO WHERE ROWNUM <= 50", USUARIO);
+		String sql = String.format("SELECT * FROM %1$s.APARTAMENTO WHERE ROWNUM <= 50", USUARIO);
 
 		PreparedStatement prepStmt = conn.prepareStatement(sql);
 		recursos.add(prepStmt);
@@ -39,7 +39,7 @@ public final static String USUARIO="ISIS2304A541810";
 	public Apartamento findApartamentoById(Integer id) throws SQLException, Exception 
 	{
 		Apartamento Apartamento = null;
-
+		System.out.println(id);
 		String sql = String.format("SELECT * FROM %1$s.APARTAMENTO WHERE ID = %2$d", USUARIO, id); 
 
 		PreparedStatement prepStmt = conn.prepareStatement(sql);
@@ -54,14 +54,23 @@ public final static String USUARIO="ISIS2304A541810";
 	}
 	
 	public void addApartamento(Apartamento Apartamento) throws SQLException, Exception {
-
-		String sql = String.format("INSERT INTO %1$s.APARTAMENTO (ID, DIRECCION, CAPACIDAD, DESCRIPCION,TIPO) VALUES (%2$s, %3$s, '%4$s', '%5$s',%6$s)", 
+		
+		Apartamento.setOfertada(true);
+		Apartamento.setVecesSolicitada(0);
+		Integer booleano=0;
+		if(Apartamento.isOfertada())
+			booleano=1;
+		else
+			booleano=0;
+		String sql = String.format("INSERT INTO %1$s.APARTAMENTO (ID, DIRECCION, CAPACIDAD, DESCRIPCION,TIPO,VECES_SOLICITADA,OFERTADA) VALUES (%2$s, '%3$s', '%4$s', '%5$s',%6$s,%7$s,%8$s)", 
 									USUARIO, 
 									Apartamento.getId(), 
 									Apartamento.getDireccion(),
 									Apartamento.getCacpacidad(),
 									Apartamento.getDescripcion(), 
-									Apartamento.getTipo());
+									Apartamento.getTipo(),
+									Apartamento.getVecesSolicitada(),
+									booleano);
 		System.out.println(sql);
 
 		PreparedStatement prepStmt = conn.prepareStatement(sql);
@@ -73,11 +82,16 @@ public final static String USUARIO="ISIS2304A541810";
 	public void updateApartamento(Apartamento Apartamento) throws SQLException, Exception {
 
 		StringBuilder sql = new StringBuilder();
+		Integer booleano=0;
+		if(Apartamento.isOfertada())
+			booleano=1;
+		else
+			booleano=0;
 		sql.append (String.format ("UPDATE %s.APARTAMENTO ", USUARIO));
 		sql.append (String.format (
-				"SET DIRECCION= %1$s, CAPACIDAD = '%2$s', DESCRIPCION = '%3$s', TIPO=%4$s ",
+				"SET DIRECCION= '%1$s', CAPACIDAD = %2$s, DESCRIPCION = '%3$s', TIPO=%4$s, VECES_SOLICITADA=%5$S, OFERTADA=%6$S ",
 				Apartamento.getDireccion(), Apartamento.getCacpacidad(),
-				Apartamento.getDescripcion(), Apartamento.getTipo()));
+				Apartamento.getDescripcion(), Apartamento.getTipo(),Apartamento.getVecesSolicitada(), booleano));
 		sql.append ("WHERE ID = " + Apartamento.getId ());
 		System.out.println(sql);
 		
@@ -119,7 +133,14 @@ public final static String USUARIO="ISIS2304A541810";
 		Integer capacidad=resultSet.getInt("CAPACIDAD");
 		String descripcion=resultSet.getString("DESCRIPCION");
 		Integer tipo=resultSet.getInt("TIPO");
-		Apartamento Apartamento=new Apartamento(id, direccion, capacidad,descripcion,tipo);
+		Integer vecesSolicitada=resultSet.getInt("VECES_SOLICITADA");
+		Integer ofertada=resultSet.getInt("OFERTADA");
+		boolean booleano;
+		if(ofertada==1)
+			booleano=true;
+		else
+			booleano=false;
+		Apartamento Apartamento=new Apartamento(id, direccion, capacidad,descripcion,tipo,vecesSolicitada,booleano);
 		return Apartamento;
 	}
 	
