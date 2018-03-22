@@ -1,5 +1,6 @@
 package rest;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.ServletContext;
@@ -18,7 +19,10 @@ import javax.ws.rs.core.Response;
 import tm.AlohAndesTM;
 import vos.Apartamento;
 import vos.Cliente;
+import vos.ClienteContrato;
 import vos.Contrato;
+import vos.ContratoApartamento;
+
 
 @Path("/{owner}/{id:\\d+}/contratos")
 public class ContratoService {
@@ -77,7 +81,7 @@ public class ContratoService {
 
 		try {
 			AlohAndesTM tm = new AlohAndesTM(getPath());
-
+			
 			Contrato Contrato;
 			Contrato = tm.getContratoById(id);
 			return Response.status(200).entity(Contrato).build();
@@ -90,12 +94,37 @@ public class ContratoService {
 	@POST
 	@Consumes({ MediaType.APPLICATION_JSON })
 	@Produces({ MediaType.APPLICATION_JSON })
-	public Response addContrato(Contrato Contrato ) {
+	public Response addContrato(Contrato Contrato, @PathParam("owner")String  owner, @PathParam("id") Integer idOwner ) {
 
 		try {
-			AlohAndesTM tm = new AlohAndesTM(getPath());			
-			tm.addContrato(Contrato);
-			return Response.status(200).entity(Contrato).build();
+			if(owner.equals("apartamentos")){
+				AlohAndesTM tm = new AlohAndesTM(getPath());
+				Apartamento apto=tm.getApartamentoById(idOwner);
+				if(apto!=null){
+					tm.addContrato(Contrato);
+					ArrayList<Contrato> Contratos= new ArrayList<>();
+					Contratos.add(Contrato);
+					tm.addContratoApartamento(new ContratoApartamento(apto, Contratos));
+					return Response.status(200).entity(Contrato).build();
+				}
+				else
+					return Response.status(404).entity("No existe el operador , por lo tanto no existen Contratos de el").build();
+			}
+			else if(owner.equals("clientes")){
+				AlohAndesTM tm = new AlohAndesTM(getPath());
+				Cliente cliente=tm.getClienteById(idOwner);
+				if(cliente!=null){
+					tm.addContrato(Contrato);
+					ArrayList<Contrato> Contratos= new ArrayList<>();
+					Contratos.add(Contrato);
+					tm.addClienteContrato(new ClienteContrato(cliente, Contratos));
+					return Response.status(200).entity(Contrato).build();
+				}
+				else
+					return Response.status(404).entity("No existe el operador , por lo tanto no existen Contratos de el").build();
+			}
+			else
+				return Response.status(404).entity("No existe tal entidad capaz de firmar un contrato").build();
 		} 
 		catch (Exception e) {
 			return Response.status(500).entity(doErrorMessage(e)).build();
