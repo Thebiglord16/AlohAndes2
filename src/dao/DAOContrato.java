@@ -1,6 +1,7 @@
 package dao;
 
 import java.sql.Connection;
+import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -56,13 +57,14 @@ public final static String USUARIO="ISIS2304A541810";
 	
 	public void addContrato(Contrato Contrato) throws SQLException, Exception {
 
-		String sql = String.format("INSERT INTO %1$s.Contrato (ID,  FECHA_INICIO, FECHA_FIN,DESCRIPCION,ESTADO) VALUES (%2$s, '%3$s', '%4$s', '%5$s',%6$s)", 
+		String sql = String.format("INSERT INTO %1$s.Contrato (ID,  FECHA_INICIO, FECHA_FIN,DESCRIPCION,ESTADO, COSTO) VALUES (%2$s, '%3$s', '%4$s', '%5$s',%6$s,%7$s)", 
 									USUARIO, 
 									Contrato.getId(), 
 									Contrato.getFechaInicio(),
 									Contrato.getFechaFin(),
 									Contrato.getDescripcion(),
-									Contrato.getEstado());
+									Contrato.getEstado(),
+									Contrato.getCosto());
 		System.out.println(sql);
 	
 		PreparedStatement prepStmt = conn.prepareStatement(sql);
@@ -76,9 +78,9 @@ public final static String USUARIO="ISIS2304A541810";
 		StringBuilder sql = new StringBuilder();
 		sql.append (String.format ("UPDATE %s.Contrato ", USUARIO));
 		sql.append (String.format (
-				"SET FECHA_INICIO= %1$s, FECHA_FIN = '%2$s', DESCRIPCION = '%3$s', ESTADO=%4$s ",
+				"SET FECHA_INICIO= %1$s, FECHA_FIN = '%2$s', DESCRIPCION = '%3$s', ESTADO=%4$s, COSTO=%5$S ",
 				Contrato.getFechaInicio(), Contrato.getFechaFin(),
-				Contrato.getDescripcion(), Contrato.getEstado()));
+				Contrato.getDescripcion(), Contrato.getEstado(), Contrato.getCosto()));
 		sql.append ("WHERE ID = " + Contrato.getId ());
 		System.out.println(sql);
 		
@@ -116,11 +118,12 @@ public final static String USUARIO="ISIS2304A541810";
 	public Contrato convertResultSetToContrato(ResultSet resultSet) throws SQLException {
 
 		Integer id=resultSet.getInt("ID");
-		Timestamp fechaInicio=resultSet.getTimestamp("FECHA_INICIO");
-		Timestamp fechaFin=resultSet.getTimestamp("FECHA_FIN");
+		String fechaInicio=resultSet.getDate("FECHA_INICIO").toString();
+		String fechaFin=resultSet.getDate("FECHA_FIN").toString();
 		String descripcion=resultSet.getString("DESCRIPCION");
 		Integer estado=resultSet.getInt("ESTADO");
-		Contrato Contrato=new Contrato(id,fechaInicio, fechaFin, descripcion,estado);
+		Double costo=resultSet.getDouble("COSTO");
+		Contrato Contrato=new Contrato(id,fechaInicio, fechaFin, descripcion,estado,costo);
 		return Contrato;
 	}
 
