@@ -22,6 +22,8 @@ import vos.Cliente;
 import vos.ClienteContrato;
 import vos.Contrato;
 import vos.ContratoApartamento;
+import vos.ContratoHabitacion;
+import vos.Habitacion;
 
 
 @Path("/{owner}/{id:\\d+}/contratos")
@@ -47,6 +49,7 @@ public class ContratoService {
 			if(owner.equals("apartamentos")){
 				AlohAndesTM tm = new AlohAndesTM(getPath());
 				Apartamento apto=tm.getApartamentoById(idOwner);
+				
 				if(apto!=null){
 					List<Contrato> Contratos;
 					Contratos = tm.getContratoApartamentoById(idOwner).getContratos();
@@ -75,7 +78,7 @@ public class ContratoService {
 	}
 
 	@GET
-	@Path( "{id: \\d+}" )
+	@Path( "/{id: \\d+}" )
 	@Produces({ MediaType.APPLICATION_JSON })
 	public Response getContrato( @PathParam( "id" )Integer id) {
 
@@ -92,19 +95,22 @@ public class ContratoService {
 	}
 
 	@POST
+	@Path( "/{id2: \\d+}" )
 	@Consumes({ MediaType.APPLICATION_JSON })
 	@Produces({ MediaType.APPLICATION_JSON })
-	public Response addContrato(Contrato Contrato, @PathParam("owner")String  owner, @PathParam("id") Integer idOwner ) {
+	public Response addContrato(Contrato Contrato, @PathParam("owner")String  owner, @PathParam("id") Integer idOwner,@PathParam("id2") Integer idUser ) {
 
 		try {
 			if(owner.equals("apartamentos")){
 				AlohAndesTM tm = new AlohAndesTM(getPath());
 				Apartamento apto=tm.getApartamentoById(idOwner);
-				if(apto!=null){
+				Cliente cliente=tm.getClienteById(idUser);
+				if(apto!=null&& cliente!=null){
 					tm.addContrato(Contrato);
 					ArrayList<Contrato> Contratos= new ArrayList<>();
 					Contratos.add(Contrato);
 					tm.addContratoApartamento(new ContratoApartamento(apto, Contratos));
+					tm.addClienteContrato(new ClienteContrato(cliente, Contratos));
 					return Response.status(200).entity(Contrato).build();
 				}
 				else
@@ -113,11 +119,29 @@ public class ContratoService {
 			else if(owner.equals("clientes")){
 				AlohAndesTM tm = new AlohAndesTM(getPath());
 				Cliente cliente=tm.getClienteById(idOwner);
-				if(cliente!=null){
+				Apartamento apto=tm.getApartamentoById(idUser);
+				if(cliente!=null && apto!=null){
 					tm.addContrato(Contrato);
 					ArrayList<Contrato> Contratos= new ArrayList<>();
 					Contratos.add(Contrato);
 					tm.addClienteContrato(new ClienteContrato(cliente, Contratos));
+					tm.addContratoApartamento(new ContratoApartamento(apto, Contratos));
+					return Response.status(200).entity(Contrato).build();
+				}
+				else
+					return Response.status(404).entity("No existe el operador , por lo tanto no existen Contratos de el").build();
+			}
+			else if(owner.equals("habitaciones")){
+				AlohAndesTM tm = new AlohAndesTM(getPath());
+				Cliente cliente=tm.getClienteById(idUser);
+				Habitacion hab=tm.getHabitacionById(idOwner);
+				if(cliente!=null && hab!=null){
+					tm.addContrato(Contrato);
+					ArrayList<Contrato> Contratos= new ArrayList<>();
+					Contratos.add(Contrato);
+					tm.addClienteContrato(new ClienteContrato(cliente, Contratos));
+					tm.addContratoHabitacion(new ContratoHabitacion(hab, Contratos));
+
 					return Response.status(200).entity(Contrato).build();
 				}
 				else

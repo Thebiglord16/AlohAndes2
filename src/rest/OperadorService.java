@@ -16,6 +16,7 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
 import tm.AlohAndesTM;
+import vos.ContratoApartamento;
 import vos.Operador;
 
 @Path("operadores")
@@ -42,6 +43,23 @@ public class OperadorService {
 			List<Operador> Operadores;
 			Operadores = tm.getAllOperadores();
 			return Response.status(200).entity(Operadores).build();
+		} 
+		catch (Exception e) {
+			return Response.status(500).entity(doErrorMessage(e)).build();
+		}
+	}
+	
+	@GET
+	@Path("/contratoAptos")
+	@Produces({ MediaType.APPLICATION_JSON })
+	public Response getContratoApartamentos() {
+		
+		try {
+			AlohAndesTM tm = new AlohAndesTM(getPath());
+			
+			List<ContratoApartamento> CAs;
+			CAs = tm.getAllContratoApartamentos();
+			return Response.status(200).entity(CAs).build();
 		} 
 		catch (Exception e) {
 			return Response.status(500).entity(doErrorMessage(e)).build();
