@@ -56,27 +56,6 @@ public class ApartamentoService {
 		}
 	}
 
-	@GET
-	@Path( "{id: \\d+}" )
-	@Produces({ MediaType.APPLICATION_JSON })
-	public Response getApartamento(@PathParam("operadorId") Integer operadorId, @PathParam( "id" )Integer id) {
-
-		try {
-			AlohAndesTM tm = new AlohAndesTM(getPath());
-			Operador op=tm.getOperadorById(operadorId);
-			if(op!=null){
-				Apartamento Apartamento;
-				Apartamento = tm.getApartamentoById(id);
-				return Response.status(200).entity(Apartamento).build();
-			}
-			else
-				return Response.status(404).entity("No existe el operador , por lo tanto no existen Apartamentoes de el").build();
-		} 
-		catch (Exception e) {
-			return Response.status(500).entity(doErrorMessage(e)).build();
-		}
-	}
-
 	@POST
 	@Consumes({ MediaType.APPLICATION_JSON })
 	@Produces({ MediaType.APPLICATION_JSON })
