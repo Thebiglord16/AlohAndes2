@@ -101,54 +101,10 @@ public class ContratoService {
 	public Response addContrato(Contrato Contrato, @PathParam("owner")String  owner, @PathParam("id") Integer idOwner,@PathParam("id2") Integer idUser ) {
 
 		try {
-			if(owner.equals("apartamentos")){
-				AlohAndesTM tm = new AlohAndesTM(getPath());
-				Apartamento apto=tm.getApartamentoById(idOwner);
-				Cliente cliente=tm.getClienteById(idUser);
-				if(apto!=null&& cliente!=null){
-					tm.addContrato(Contrato);
-					ArrayList<Contrato> Contratos= new ArrayList<>();
-					Contratos.add(Contrato);
-					tm.addContratoApartamento(new ContratoApartamento(apto, Contratos));
-					tm.addClienteContrato(new ClienteContrato(cliente, Contratos));
-					return Response.status(200).entity(Contrato).build();
-				}
-				else
-					return Response.status(404).entity("No existe el operador , por lo tanto no existen Contratos de el").build();
-			}
-			else if(owner.equals("clientes")){
-				AlohAndesTM tm = new AlohAndesTM(getPath());
-				Cliente cliente=tm.getClienteById(idOwner);
-				Apartamento apto=tm.getApartamentoById(idUser);
-				if(cliente!=null && apto!=null){
-					tm.addContrato(Contrato);
-					ArrayList<Contrato> Contratos= new ArrayList<>();
-					Contratos.add(Contrato);
-					tm.addClienteContrato(new ClienteContrato(cliente, Contratos));
-					tm.addContratoApartamento(new ContratoApartamento(apto, Contratos));
-					return Response.status(200).entity(Contrato).build();
-				}
-				else
-					return Response.status(404).entity("No existe el operador , por lo tanto no existen Contratos de el").build();
-			}
-			else if(owner.equals("habitaciones")){
-				AlohAndesTM tm = new AlohAndesTM(getPath());
-				Cliente cliente=tm.getClienteById(idUser);
-				Habitacion hab=tm.getHabitacionById(idOwner);
-				if(cliente!=null && hab!=null){
-					tm.addContrato(Contrato);
-					ArrayList<Contrato> Contratos= new ArrayList<>();
-					Contratos.add(Contrato);
-					tm.addClienteContrato(new ClienteContrato(cliente, Contratos));
-					tm.addContratoHabitacion(new ContratoHabitacion(hab, Contratos));
-
-					return Response.status(200).entity(Contrato).build();
-				}
-				else
-					return Response.status(404).entity("No existe el operador , por lo tanto no existen Contratos de el").build();
-			}
-			else
-				return Response.status(404).entity("No existe tal entidad capaz de firmar un contrato").build();
+			AlohAndesTM tm=new AlohAndesTM(getPath());
+			tm.generarRelacionContrato(owner, idOwner, idUser, Contrato);
+			return Response.status(200).entity(Contrato).build();
+			
 		} 
 		catch (Exception e) {
 			return Response.status(500).entity(doErrorMessage(e)).build();
