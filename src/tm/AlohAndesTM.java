@@ -2366,15 +2366,11 @@ public class AlohAndesTM {
 	
 	//RF9
 
-	public void deshabilitarOfertaAlojamiento(Integer id) throws Exception
+	public void deshabilitarOfertaAlojamiento(Apartamento apto) throws Exception
 	{
-
 		this.conn=darConexion();
 		conn.setAutoCommit(false);
-		
-		Apartamento apto = getApartamentoById(id);
-		if(apto!=null)
-		{
+
 			//capacidad del apartamento que ya no estará habilitado
 			int capacidad = apto.getCacpacidad();
 
@@ -2440,15 +2436,11 @@ public class AlohAndesTM {
 						//Hasta aquí reasigno el apartamento del contrato en contratoApartamento
 
 						apto.setHabilitada(false);
+						updateApartamento(apto);
 					}
 				}
 			}
-		}
-
-		else
-		{
-			throw new Exception("No existe el apartamento");
-		}
+		
 
 	}
 				
