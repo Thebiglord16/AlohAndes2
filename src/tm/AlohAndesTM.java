@@ -35,6 +35,7 @@ import vos.Contrato;
 import vos.ContratoApartamento;
 import vos.ContratoHabitacion;
 import vos.Habitacion;
+import vos.IndiceOcup;
 import vos.Operador;
 import vos.OperadorApartamento;
 import vos.OperadorHabitacion;
@@ -777,6 +778,7 @@ public class AlohAndesTM {
 	{
 		List<Apartamento> aptos= getAllApartamentos();
 		List<ContratoApartamento> contratos= getAllContratoApartamentos();
+		List<Apartamento> aptosR=new ArrayList<>();
 		for(Apartamento x:aptos)
 		{
 			for(ContratoApartamento y:contratos)
@@ -795,16 +797,52 @@ public class AlohAndesTM {
 						Date fechaInicioR= Date.valueOf(inicioRd);
 						if(fechaInicioC.before(fechaInicioR)&&fechaFinC.after(fechaInicioR))
 						{
-							aptos.remove(x);
+							System.out.println("quite el apto : "+y.getApartamento().getId());
+							aptosR.add(x);
 							break;
 						}
 					}
 			}
 		}
-
+		for(Apartamento x:aptosR)
+			aptos.remove(x);
 		return aptos;
 	}
 
+	public List<Habitacion> getAllHabsDisponibles(String fechaInicio) throws Exception
+	{
+		List<Habitacion> aptos= getAllHabitacions();
+		List<ContratoHabitacion> contratos= getAllContratoHabitacions();
+		List<Habitacion> aptosR=new ArrayList<>();
+		for(Habitacion x:aptos)
+		{
+			for(ContratoHabitacion y:contratos)
+			{
+				if(y.getHabitacion().getId()==x.getId())
+					for(Contrato z: y.getContratos())
+					{	
+						System.out.println(fechaInicio+" esto es en el tm");
+						String[] inicioR=fechaInicio.split("/");
+						String inicioRd="20"+inicioR[2];
+						for(int i=1; i>=0;i--)
+							inicioRd=inicioRd +"-"+inicioR[i];
+
+						Date fechaInicioC= Date.valueOf(z.getFechaInicio());
+						Date fechaFinC=Date.valueOf(z.getFechaFin());
+						Date fechaInicioR= Date.valueOf(inicioRd);
+						if(fechaInicioC.before(fechaInicioR)&&fechaFinC.after(fechaInicioR))
+						{
+							aptosR.add(x);
+							break;
+						}
+					}
+			}
+		}
+		for(Habitacion x:aptosR)
+			aptos.remove(x);
+		return aptos;
+	}
+	
 	public Apartamento getApartamentoById(Integer id) throws Exception
 	{
 		DAOApartamento dao=new DAOApartamento();
@@ -2486,14 +2524,80 @@ public class AlohAndesTM {
 				}
 				conn.commit();
 				conn.setAutoCommit(true);
+				conn.close();
 		}
 		catch(Exception e)
 		{
 			e.printStackTrace();
+			this.conn=darConexion();
 			conn.rollback();
+			conn.close();
 			throw e;
 		}
+		finally
+		{
+			try
+			{
+				if(this.conn!=null)
+					this.conn.close();
+			}
+			catch(SQLException e)
+			{
+				System.err.println(("[Excepción!] SQLException mientras se cerraban los recursos: "+e.getMessage()));
+				e.printStackTrace();
+				throw e;
+			}
+		}
 		
+	}
+	
+	public void superReservarHab(SuperReserva sr, List<Habitacion> aptos) throws Exception
+	{
+		this.conn=darConexion();
+		conn.setAutoCommit(false);
+		try {
+			for(Cliente x:sr.getClientes()) {
+				if(getClienteById(x.getId())==null) {
+
+					addCliente(x);
+					this.conn=darConexion();
+				}
+				else
+					continue;
+			}
+				for(int i=0;i<sr.getCantidad(); i++)
+				{
+					Contrato con=new Contrato(i+sr.hashCode(), sr.getFechaInicio(), sr.getFechaFin(), sr.getDescipcion(), 0 , 25000.0);
+					generarRelacionContrato("habitaciones",aptos.get(i).getId(),sr.getClientes().get(i).getId(),con);
+					this.conn=darConexion();
+
+				}
+				conn.commit();
+				conn.setAutoCommit(true);
+				conn.close();
+		}
+		catch(Exception e)
+		{
+			e.printStackTrace();
+			this.conn=darConexion();
+			conn.rollback();
+			conn.close();
+			throw e;
+		}
+		finally
+		{
+			try
+			{
+				if(this.conn!=null)
+					this.conn.close();
+			}
+			catch(SQLException e)
+			{
+				System.err.println(("[Excepción!] SQLException mientras se cerraban los recursos: "+e.getMessage()));
+				e.printStackTrace();
+				throw e;
+			}
+		}
 		
 	}
 	public Contrato generarRelacionContrato(String owner,Integer idOwner, Integer idUser, Contrato contrato) throws Exception
@@ -2558,7 +2662,26 @@ public class AlohAndesTM {
 			x.setEstado(5);
 			updateContrato(x);
 		}
-			
 
+	}
+	
+	public IndiceOcup indiceOcupacion(Integer aptoId) throws Exception
+	{
+		ContratoApartamento ca=getContratoApartamentoById(aptoId);
+		Double ocupantes=0.0;
+		Date fechaActual=new Date(System.currentTimeMillis());
+		System.out.println(fechaActual);
+		
+		for(Contrato x:ca.getContratos())
+		{
+			System.out.println("fechaInicio: "+x.getFechaFin());
+			System.out.println("fechaInicio: "+x.getFechaFin());
+			if(fechaActual.before(Date.valueOf(x.getFechaFin()))&&fechaActual.after(Date.valueOf(x.getFechaInicio())))
+				ocupantes++;
+			
+		}
+		System.out.println("ocupantes: "+ocupantes);
+		Double indice=ocupantes/ca.getApartamento().getCacpacidad();
+		return new IndiceOcup(aptoId, indice);
 	}
 }

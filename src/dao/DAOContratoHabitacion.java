@@ -30,9 +30,9 @@ public class DAOContratoHabitacion {
 
 	public ArrayList<ContratoHabitacion> getContratoHabitacions() throws SQLException, Exception {
 		ArrayList<ContratoHabitacion> ContratoHabitacions = new ArrayList<ContratoHabitacion>();
-
+		
 		String sql = String.format("SELECT * FROM %1$s.CONTRATO_Habitacion WHERE ROWNUM <= 50", USUARIO);
-
+		
 		PreparedStatement prepStmt = conn.prepareStatement(sql);
 		recursos.add(prepStmt);
 		ResultSet rs = prepStmt.executeQuery();
@@ -41,7 +41,11 @@ public class DAOContratoHabitacion {
 
 			ContratoHabitacions.add(convertResultSetToContratoHabitacion(rs));
 		}
+		if(ContratoHabitacions.size()>0) {
 		return convertResultSetToContratoApto(ContratoHabitacions);
+		}
+		else
+			return ContratoHabitacions;
 	}
 
 	public ContratoHabitacion findContratoHabitacionById(Integer id) throws SQLException, Exception 
@@ -66,7 +70,7 @@ public class DAOContratoHabitacion {
 	public void addContratoHabitacion(ContratoHabitacion ContratoHabitacion) throws SQLException, Exception {
 		for(Contrato x:ContratoHabitacion.getContratos())
 		{
-			String sql = String.format("INSERT INTO %1$s.CONTRATO_Habitacion (CONTRATO_ID, HABITACION_ID ) VALUES (%3$s, %2$s)", 
+			String sql = String.format("INSERT INTO %1$s.CONTRATO_Habitacion (CONTRATO_ID, HABITACION_ID ) VALUES (%2$s, %3$s)", 
 					USUARIO, 
 					 x.getId(),ContratoHabitacion.getHabitacion().getId());
 			System.out.println(sql);

@@ -67,7 +67,7 @@ public final static String USUARIO="ISIS2304A541810";
 			habilitada=1;
 		else
 			habilitada=0;
-		String sql = String.format("INSERT INTO %1$s.HABITACION (ID, DIRECCION, CAPACIDAD, DESCRIPCION,TIPO,VECES_SOLICITADA,OFERTADA, HABILITADA) VALUES (%2$s, '%3$s', '%4$s', '%5$s',%6$s,%7$s,%8$s)", 
+		String sql = String.format("INSERT INTO %1$s.HABITACION (ID, DIRECCION, CAPACIDAD, DESCRIPCION,TIPO,VECES_SOLICITADA,OFERTADA, HABILITADA) VALUES (%2$s, '%3$s', '%4$s', '%5$s',%6$s,%7$s,%8$s,%9$s)", 
 									USUARIO, 
 									Habitacion.getId(), 
 									Habitacion.getDireccion(),

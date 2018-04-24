@@ -65,6 +65,37 @@ public class OperadorService {
 			return Response.status(500).entity(doErrorMessage(e)).build();
 		}
 	}
+	@GET
+	@Path("/ocupacion/{id:\\d+}")
+	@Produces({ MediaType.APPLICATION_JSON })
+	public Response getOcupacion(@PathParam("id") Integer idApto) {
+		
+		try {
+			AlohAndesTM tm = new AlohAndesTM(getPath());
+			
+			return Response.status(200).entity(tm.indiceOcupacion(idApto)).build();
+		} 
+		catch (Exception e) {
+			return Response.status(500).entity(doErrorMessage(e)).build();
+		}
+	}
+	@GET
+	@Path("/contratoAptos/{id:\\d+}")
+	@Produces({ MediaType.APPLICATION_JSON })
+	public Response getContratoApartamento(@PathParam("id") Integer id)
+	{
+		
+		try {
+			AlohAndesTM tm = new AlohAndesTM(getPath());
+			
+			ContratoApartamento CA;
+			CA = tm.getContratoApartamentoById(id);
+			return Response.status(200).entity(CA).build();
+		} 
+		catch (Exception e) {
+			return Response.status(500).entity(doErrorMessage(e)).build();
+		}
+	}
 	
 	@GET
 	@Path( "{id: \\d+}" )
