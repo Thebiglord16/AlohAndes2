@@ -30,7 +30,10 @@ public class Apartamento {
 	@JsonProperty(value="ofertada")
 	private Boolean ofertada;
 	
-	public Apartamento(@JsonProperty(value="id") Integer id, @JsonProperty(value="direccion") String direccion, @JsonProperty(value="capacidad") Integer capacidad,@JsonProperty(value="descripcion") String descripcion, @JsonProperty(value="tipo") Integer tipo,@JsonProperty(value="vecesSolicitada")Integer vecesSolicitada, @JsonProperty(value="ofertada")Boolean ofertada)
+	@JsonProperty(value="habilitada")
+	private Boolean habilitada;
+
+	public Apartamento(@JsonProperty(value="id") Integer id, @JsonProperty(value="direccion") String direccion, @JsonProperty(value="capacidad") Integer capacidad,@JsonProperty(value="descripcion") String descripcion, @JsonProperty(value="tipo") Integer tipo,@JsonProperty(value="vecesSolicitada")Integer vecesSolicitada, @JsonProperty(value="ofertada")Boolean ofertada, @JsonProperty(value="habilitada")boolean habilitada)
 	{
 		this.id=id;
 		this.direccion=direccion;
@@ -40,6 +43,7 @@ public class Apartamento {
 		this.tipo=tipo;
 		this.vecesSolicitada=vecesSolicitada;
 		this.ofertada=ofertada;
+		this.habilitada=habilitada;
 	}
 
 	public Integer getVecesSolicitada() {
@@ -97,6 +101,15 @@ public class Apartamento {
 	public void setTipo(Integer tipo) {
 		this.tipo = tipo;
 	}
+
+	public Boolean isHabilitada() {
+		return habilitada;
+	}
+
+	public void setHabilitada(Boolean habilitada) {
+		this.habilitada = habilitada;
+	}
+
 	
 	
 	

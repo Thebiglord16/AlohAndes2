@@ -2362,6 +2362,110 @@ public class AlohAndesTM {
 			}
 		}
 	}
+
+	
+	//RF9
+
+	public void desahibilitarOfertaAlojamiento(Integer id) throws Exception
+	{
+
+		Apartamento apto = getApartamentoById(id);
+		if(apto!=null)
+		{
+			//capacidad del apartamento que ya no estará habilitado
+			int capacidad = apto.getCacpacidad();
+
+			//contratos del apartamento
+			List<ContratoApartamento> contratoApartamentos = getAllContratoApartamentos();
+
+			//Lista de contratos del apartamento
+			List<Contrato> contratos = new ArrayList<Contrato>();
+
+			if(!contratoApartamentos.isEmpty()){
+				for (ContratoApartamento contratoApartamento : contratoApartamentos) 
+				{
+
+					Apartamento apto2 = contratoApartamento.getApartamento();
+					if(apto2.getId()==apto.getId())
+					{
+						List<Contrato> con = contratoApartamento.getContratos();
+						for (Contrato contrato : con) 
+						{
+							contratos.add(contrato);
+						}
+					}
+				}
+
+				//Hasta aqui saco los contratos del apto
+
+				for (Contrato contrato : contratos) 
+				{
+					//Fecha de inicio de los contratos que se deben modificar
+					String inicio = contrato.getFechaInicio();
+
+					//Apartamentos disponibles en esa fecha
+					List<Apartamento> aptosDisp = getAllAptosDisponibles(inicio);
+					if(!aptosDisp.isEmpty())
+					{
+						for (Apartamento apartamento : aptosDisp) 
+						{
+							if(apartamento.getCacpacidad()==capacidad)
+							{
+								int idContrato = contrato.getId();
+
+								for (ContratoApartamento conn : contratoApartamentos) {
+									List<Contrato> con = conn.getContratos();
+									for (Contrato contrato1 : con) 
+									{
+										if(idContrato==contrato1.getId())
+										{
+											conn.setApartamento(apartamento);
+											updateContratoApartamento(conn);
+										}
+									}
+								}
+							}
+
+							else
+							{
+								//aquí se supone que el estado cambia a inconcluso (o una vaina asi)
+								contrato.setEstado(1);
+							}
+
+						}
+
+						//Hasta aquí reasigno el apartamento del contrato en contratoApartamento
+
+						apto.setHabilitada(false);
+					}
+				}
+			}
+		}
+
+		else
+		{
+			throw new Exception("No existe el apartamento");
+		}
+
+	}
+				
+	//RF10
+
+	public void habilitarOfertaAlojamiento(Integer id) throws Exception
+	{
+		Apartamento apto = getApartamentoById(id);
+		if(apto!=null)
+		{
+			apto.setHabilitada(true);
+			updateApartamento(apto);
+		}
+
+		else
+		{
+			throw new Exception("No existe el apartamento");
+		}
+	}
+
 	//TODO METODOS REQ ||SUPERRESERVA||
 	public void superReservar(SuperReserva sr, List<Apartamento> aptos) throws Exception
 	{
@@ -2382,6 +2486,7 @@ public class AlohAndesTM {
 					Contrato con=new Contrato(i+sr.hashCode(), sr.getFechaInicio(), sr.getFechaFin(), sr.getDescipcion(), 0 , 25000.0);
 					generarRelacionContrato("apartamentos",aptos.get(i).getId(),sr.getClientes().get(i).getId(),con);
 					this.conn=darConexion();
+
 				}
 				conn.commit();
 				conn.setAutoCommit(true);
@@ -2441,6 +2546,11 @@ public class AlohAndesTM {
 			else
 				throw new Exception("No existe el operador , por lo tanto no existen Contratos de el");
 		}
+
+		
+		
+		
+
 		else
 			throw new Exception("No existe el operador , por lo tanto no existen Contratos de el");
 	}
@@ -2453,5 +2563,6 @@ public class AlohAndesTM {
 			updateContrato(x);
 		}
 			
+
 	}
 }
