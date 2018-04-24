@@ -2366,9 +2366,12 @@ public class AlohAndesTM {
 	
 	//RF9
 
-	public void desahibilitarOfertaAlojamiento(Integer id) throws Exception
+	public void deshabilitarOfertaAlojamiento(Integer id) throws Exception
 	{
 
+		this.conn=darConexion();
+		conn.setAutoCommit(false);
+		
 		Apartamento apto = getApartamentoById(id);
 		if(apto!=null)
 		{
@@ -2429,7 +2432,7 @@ public class AlohAndesTM {
 							else
 							{
 								//aquí se supone que el estado cambia a inconcluso (o una vaina asi)
-								contrato.setEstado(1);
+								contrato.setEstado(5);
 							}
 
 						}
@@ -2453,6 +2456,8 @@ public class AlohAndesTM {
 
 	public void habilitarOfertaAlojamiento(Integer id) throws Exception
 	{
+		this.conn=darConexion();
+		conn.setAutoCommit(false);
 		Apartamento apto = getApartamentoById(id);
 		if(apto!=null)
 		{

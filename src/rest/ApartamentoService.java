@@ -20,6 +20,7 @@ import tm.AlohAndesTM;
 import vos.Apartamento;
 import vos.Operador;
 import vos.OperadorApartamento;
+import vos.SuperReserva;
 
 @Path("operadores/{operadorId:\\d+}/apartamentos")
 public class ApartamentoService {
@@ -127,4 +128,46 @@ public class ApartamentoService {
 			return Response.status(500).entity(doErrorMessage(e)).build();
 		}
 	}
+	
+
+	@PUT
+	@Path("/deshabilitar")
+	@Consumes({ MediaType.APPLICATION_JSON })
+	@Produces({ MediaType.APPLICATION_JSON })
+	public Response deshabilitarApartamento(Apartamento apto) 
+	{
+		try 
+		{
+			Integer id = apto.getId();
+			AlohAndesTM tm=new AlohAndesTM(getPath());
+			tm.deshabilitarOfertaAlojamiento(id);
+			return Response.status(200).entity(apto).build();
+		}	
+		catch(Exception e) 
+		{
+			e.printStackTrace();
+			return Response.status(500).entity(doErrorMessage(e)).build();
+		}
+	}
+	
+	@PUT
+	@Path("/habilitar")
+	@Consumes({ MediaType.APPLICATION_JSON })
+	@Produces({ MediaType.APPLICATION_JSON })
+	public Response habilitarApartamento(Apartamento apto) 
+	{
+		try 
+		{
+			Integer id = apto.getId();
+			AlohAndesTM tm=new AlohAndesTM(getPath());
+			tm.habilitarOfertaAlojamiento(id);
+			return Response.status(200).entity(apto).build();
+		}	
+		catch(Exception e) 
+		{
+			e.printStackTrace();
+			return Response.status(500).entity(doErrorMessage(e)).build();
+		}
+	}
+	
 }
