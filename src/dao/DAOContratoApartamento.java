@@ -34,12 +34,12 @@ public class DAOContratoApartamento {
 	public ArrayList<ContratoApartamento> getContratoApartamentos() throws SQLException, Exception {
 		ArrayList<ContratoApartamento> ContratoApartamentos = new ArrayList<ContratoApartamento>();
 
-		String sql = String.format("SELECT * FROM %1$s.CONTRATO_APARTAMENTO WHERE ROWNUM <= 50", USUARIO);
+		String sql = String.format("SELECT * FROM %1$s.CONTRATO_APARTAMENTO WHERE ROWNUM <= 150", USUARIO);
 
 		PreparedStatement prepStmt = conn.prepareStatement(sql);
 		recursos.add(prepStmt);
 		ResultSet rs = prepStmt.executeQuery();
-
+		
 		while (rs.next()) {
 
 			ContratoApartamentos.add(convertResultSetToContratoApartamento(rs));
@@ -58,12 +58,11 @@ public class DAOContratoApartamento {
 		recursos.add(prepStmt);
 		ResultSet rs = prepStmt.executeQuery();
 
-
-		if(rs.next()) {
+		while(rs.next()) {
 			ContratoApartamentos.add( convertResultSetToContratoApartamento(rs));
 		}
-
-		return ContratoApartamentos.get(0);
+		
+		return convertResultSetToContratoApto(ContratoApartamentos).get(0);
 	}
 
 	public void addContratoApartamento(ContratoApartamento ContratoApartamento) throws SQLException, Exception {
@@ -139,6 +138,7 @@ public class DAOContratoApartamento {
 	
 	public ArrayList<ContratoApartamento> convertResultSetToContratoApto(ArrayList<ContratoApartamento> cAptos) throws SQLException, Exception
 	{
+		if(!cAptos.isEmpty()) {
 		ArrayList<ContratoApartamento> respuesta=new ArrayList<>();
 		List<Contrato> cons= new ArrayList<>();
 		int idTemp=cAptos.get(0).getApartamento().getId();
@@ -180,7 +180,9 @@ public class DAOContratoApartamento {
 		{
 			respuesta.add(new ContratoApartamento(daoApto.findApartamentoById(idTemp), cons));
 		}
-		return respuesta;	
+		return respuesta;
+		}
+		return new ArrayList<ContratoApartamento>();
 		
 	} 
 	

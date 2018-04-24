@@ -15,6 +15,7 @@ import javax.ws.rs.core.Response;
 import tm.AlohAndesTM;
 import vos.Apartamento;
 import vos.Cliente;
+import vos.Habitacion;
 import vos.SuperReserva;
 
 @Path("superReservas")
@@ -22,16 +23,16 @@ public class SuperReservaService
 {
 	@Context
 	private ServletContext context;
-	
+
 	private String getPath()
 	{
 		return context.getRealPath("WEB-INF/ConnectionData");
 	}
-	
+
 	private String doErrorMessage(Exception e){
 		return "{ \"ERROR\": \""+ e.getMessage() + "\"}" ;
 	}
-	
+
 	@POST
 	@Consumes({ MediaType.APPLICATION_JSON })
 	@Produces({ MediaType.APPLICATION_JSON })
@@ -40,14 +41,26 @@ public class SuperReservaService
 		try 
 		{
 			AlohAndesTM tm=new AlohAndesTM(getPath());
-			List<Apartamento> aptos=tm.getAllAptosDisponibles(sr.getFechaInicio());
-			if(aptos.size()>sr.getCantidad())				
-			{
-				tm.superReservar(sr,aptos);
-				return Response.status(200).entity(sr).build();
+			if(sr.getTipoAcomodamiento().equals("apartamentos")) {
+				List<Apartamento> aptos=tm.getAllAptosDisponibles(sr.getFechaInicio());
+				if(aptos.size()>sr.getCantidad())				
+				{
+					tm.superReservar(sr,aptos);
+					return Response.status(200).entity(sr).build();
+				}
+				else
+					return Response.status(412).entity(doErrorMessage(new Exception("No es posible ofrecer tal cantidad de aptos"))).build();
 			}
-			else
-				return Response.status(412).entity("En este momento no existe la disponibilidad para tal reserva").build();
+			else {
+				List<Habitacion> habs=tm.getAllHabsDisponibles(sr.getFechaInicio());
+				if(habs.size()>sr.getCantidad())				
+				{
+					tm.superReservarHab(sr,habs);
+					return Response.status(200).entity(sr).build();
+				}
+				else
+					return Response.status(412).entity(doErrorMessage(new Exception("No es posible ofrecer tal cantidad de aptos"))).build();
+			}
 		}	
 		catch(Exception e) 
 		{
@@ -55,7 +68,7 @@ public class SuperReservaService
 			return Response.status(500).entity(doErrorMessage(e)).build();
 		}
 	}
-	
+
 
 	@PUT
 	@Consumes({ MediaType.APPLICATION_JSON })
