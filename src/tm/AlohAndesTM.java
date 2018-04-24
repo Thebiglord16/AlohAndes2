@@ -2404,12 +2404,11 @@ public class AlohAndesTM {
 	
 	//RF9
 
-	public void desahibilitarOfertaAlojamiento(Integer id) throws Exception
+	public void deshabilitarOfertaAlojamiento(Apartamento apto) throws Exception
 	{
+		this.conn=darConexion();
+		conn.setAutoCommit(false);
 
-		Apartamento apto = getApartamentoById(id);
-		if(apto!=null)
-		{
 			//capacidad del apartamento que ya no estará habilitado
 			int capacidad = apto.getCacpacidad();
 
@@ -2467,7 +2466,7 @@ public class AlohAndesTM {
 							else
 							{
 								//aquí se supone que el estado cambia a inconcluso (o una vaina asi)
-								contrato.setEstado(1);
+								contrato.setEstado(5);
 							}
 
 						}
@@ -2475,23 +2474,20 @@ public class AlohAndesTM {
 						//Hasta aquí reasigno el apartamento del contrato en contratoApartamento
 
 						apto.setHabilitada(false);
+						updateApartamento(apto);
 					}
 				}
 			}
-		}
-
-		else
-		{
-			throw new Exception("No existe el apartamento");
-		}
+		
 
 	}
 				
 	//RF10
 
-	public void habilitarOfertaAlojamiento(Integer id) throws Exception
+	public void habilitarOfertaAlojamiento(Apartamento apto) throws Exception
 	{
-		Apartamento apto = getApartamentoById(id);
+		this.conn=darConexion();
+		conn.setAutoCommit(false);
 		if(apto!=null)
 		{
 			apto.setHabilitada(true);
