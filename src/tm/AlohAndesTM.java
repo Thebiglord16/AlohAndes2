@@ -4,16 +4,25 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.sql.Connection;
+import java.sql.Date;
 import java.sql.DriverManager;
 import java.sql.SQLException;
+import java.sql.Savepoint;
+import java.sql.Timestamp;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Properties;
+
+import javax.ws.rs.core.Response;
+
+import org.codehaus.jackson.annotate.JsonProperty;
 
 import dao.DAOApartamento;
 import dao.DAOCliente;
 import dao.DAOClienteContrato;
 import dao.DAOContrato;
 import dao.DAOContratoApartamento;
+import dao.DAOContratoHabitacion;
 import dao.DAOHabitacion;
 import dao.DAOOperador;
 import dao.DAOOperadorApartamento;
@@ -24,11 +33,13 @@ import vos.Cliente;
 import vos.ClienteContrato;
 import vos.Contrato;
 import vos.ContratoApartamento;
+import vos.ContratoHabitacion;
 import vos.Habitacion;
 import vos.Operador;
 import vos.OperadorApartamento;
 import vos.OperadorHabitacion;
 import vos.Servicio;
+import vos.SuperReserva;
 
 
 public class AlohAndesTM {
@@ -61,27 +72,27 @@ public class AlohAndesTM {
 			e.printStackTrace();
 		}
 	}
-	
+
 	private void initializeConnectionData() throws IOException, ClassNotFoundException {
 
 		FileInputStream fileInputStream = new FileInputStream(new File(AlohAndesTM.CONNECTION_DATA_PATH));
 		Properties properties = new Properties();
-		
+
 		properties.load(fileInputStream);
 		fileInputStream.close();
-		
+
 		this.url = properties.getProperty("url");
 		this.user = properties.getProperty("usuario");
 		this.password = properties.getProperty("clave");
 		this.driver = properties.getProperty("driver");
 	}
-	
+
 	private Connection darConexion() throws SQLException {
 		System.out.println("[AlohA APP] Attempting Connection to: " + url + " - By User: " + user);
 		return DriverManager.getConnection(url, user, password);
 	}
-	
-	
+
+
 	//TODO METODOS RECURSO ||CLIENTE||
 	public List<Cliente> getAllClientes() throws Exception
 	{
@@ -162,7 +173,7 @@ public class AlohAndesTM {
 		}
 		return cliente;
 	}
-	
+
 	public void addCliente(Cliente cliente) throws Exception
 	{
 		DAOCliente dao= new DAOCliente();
@@ -200,7 +211,7 @@ public class AlohAndesTM {
 			}
 		}
 	}
-	
+
 	public void updateCliente(Cliente cliente) throws Exception
 	{
 		DAOCliente dao= new DAOCliente();
@@ -238,7 +249,7 @@ public class AlohAndesTM {
 			}
 		}
 	}
-	
+
 	public void deleteCliente(Cliente cliente) throws Exception
 	{
 		DAOCliente dao= new DAOCliente();
@@ -280,7 +291,7 @@ public class AlohAndesTM {
 			}
 		}
 	}
-	
+
 	//TODO METODOS RECURSO ||OPERADOR||
 	public List<Operador> getAllOperadores() throws Exception
 	{
@@ -361,7 +372,7 @@ public class AlohAndesTM {
 		}
 		return Operador;
 	}
-	
+
 	public void addOperador(Operador Operador) throws Exception
 	{
 		DAOOperador dao= new DAOOperador();
@@ -399,7 +410,7 @@ public class AlohAndesTM {
 			}
 		}
 	}
-	
+
 	public void updateOperador(Operador Operador) throws Exception
 	{
 		DAOOperador dao= new DAOOperador();
@@ -437,7 +448,7 @@ public class AlohAndesTM {
 			}
 		}
 	}
-	
+
 	public void deleteOperador(Operador Operador) throws Exception
 	{
 		DAOOperador dao= new DAOOperador();
@@ -479,8 +490,8 @@ public class AlohAndesTM {
 			}
 		}
 	}
-	
-	
+
+
 	//TODO Operaciones del recurso ||CONTRATO||
 	public List<Contrato> getAllContratos() throws Exception
 	{
@@ -521,7 +532,47 @@ public class AlohAndesTM {
 		}
 		return Contratos;
 	}
-
+	
+	public List<Contrato> getContratosDescrpcion(String descripcion) throws Exception
+	{
+		DAOContrato dao= new DAOContrato();
+		List<Contrato> Contratos;
+		try
+		{
+			this.conn=darConexion();
+			dao.setConn(conn);
+			Contratos=dao.getContratosDescripcion(descripcion);
+		}
+		catch( SQLException e)
+		{
+			System.err.println("[Excepción!] SQLException "+ e.getMessage());
+			e.printStackTrace();
+			throw e;
+		}
+		catch(Exception e)
+		{
+			System.err.println("[Excepción!] Exception "+ e.getMessage());
+			e.printStackTrace();
+			throw e;
+		}
+		finally
+		{
+			try
+			{
+				dao.cerrarRecursos();
+				if(this.conn!=null)
+					this.conn.close();
+			}
+			catch(SQLException e)
+			{
+				System.err.println(("[Excepción!] SQLException mientras se cerraban los recursos: "+e.getMessage()));
+				e.printStackTrace();
+				throw e;
+			}
+		}
+		return Contratos;
+	}
+	
 	public Contrato getContratoById(Integer id) throws Exception
 	{
 		DAOContrato dao=new DAOContrato();
@@ -561,7 +612,7 @@ public class AlohAndesTM {
 		}
 		return Contrato;
 	}
-	
+
 	public void addContrato(Contrato Contrato) throws Exception
 	{
 		DAOContrato dao= new DAOContrato();
@@ -599,7 +650,7 @@ public class AlohAndesTM {
 			}
 		}
 	}
-	
+
 	public void updateContrato(Contrato Contrato) throws Exception
 	{
 		DAOContrato dao= new DAOContrato();
@@ -637,7 +688,7 @@ public class AlohAndesTM {
 			}
 		}
 	}
-	
+
 	public void deleteContrato(Contrato Contrato) throws Exception
 	{
 		DAOContrato dao= new DAOContrato();
@@ -679,9 +730,9 @@ public class AlohAndesTM {
 			}
 		}
 	}
-	
+
 	//TODO METODOS RECURSO ||APARTAMENTO||
-	
+
 	public List<Apartamento> getAllApartamentos() throws Exception
 	{
 		DAOApartamento dao= new DAOApartamento();
@@ -720,6 +771,38 @@ public class AlohAndesTM {
 			}
 		}
 		return Apartamentos;
+	}
+
+	public List<Apartamento> getAllAptosDisponibles(String fechaInicio) throws Exception
+	{
+		List<Apartamento> aptos= getAllApartamentos();
+		List<ContratoApartamento> contratos= getAllContratoApartamentos();
+		for(Apartamento x:aptos)
+		{
+			for(ContratoApartamento y:contratos)
+			{
+				if(y.getApartamento().getId()==x.getId())
+					for(Contrato z: y.getContratos())
+					{	
+						System.out.println(fechaInicio+" esto es en el tm");
+						String[] inicioR=fechaInicio.split("/");
+						String inicioRd="20"+inicioR[2];
+						for(int i=1; i>=0;i--)
+							inicioRd=inicioRd +"-"+inicioR[i];
+
+						Date fechaInicioC= Date.valueOf(z.getFechaInicio());
+						Date fechaFinC=Date.valueOf(z.getFechaFin());
+						Date fechaInicioR= Date.valueOf(inicioRd);
+						if(fechaInicioC.before(fechaInicioR)&&fechaFinC.after(fechaInicioR))
+						{
+							aptos.remove(x);
+							break;
+						}
+					}
+			}
+		}
+
+		return aptos;
 	}
 
 	public Apartamento getApartamentoById(Integer id) throws Exception
@@ -761,7 +844,7 @@ public class AlohAndesTM {
 		}
 		return Apartamento;
 	}
-	
+
 	public void addApartamento(Apartamento Apartamento) throws Exception
 	{
 		DAOApartamento dao= new DAOApartamento();
@@ -799,7 +882,7 @@ public class AlohAndesTM {
 			}
 		}
 	}
-	
+
 	public void updateApartamento(Apartamento Apartamento) throws Exception
 	{
 		DAOApartamento dao= new DAOApartamento();
@@ -837,7 +920,7 @@ public class AlohAndesTM {
 			}
 		}
 	}
-	
+
 	public void deleteApartamento(Apartamento Apartamento) throws Exception
 	{
 		DAOApartamento dao= new DAOApartamento();
@@ -879,9 +962,9 @@ public class AlohAndesTM {
 			}
 		}
 	}
-	
+
 	//TODO METODOS RECURSO ||HABITACION||
-	
+
 	public List<Habitacion> getAllHabitacions() throws Exception
 	{
 		DAOHabitacion dao= new DAOHabitacion();
@@ -961,7 +1044,7 @@ public class AlohAndesTM {
 		}
 		return Habitacion;
 	}
-	
+
 	public void addHabitacion(Habitacion Habitacion) throws Exception
 	{
 		DAOHabitacion dao= new DAOHabitacion();
@@ -999,7 +1082,7 @@ public class AlohAndesTM {
 			}
 		}
 	}
-	
+
 	public void updateHabitacion(Habitacion Habitacion) throws Exception
 	{
 		DAOHabitacion dao= new DAOHabitacion();
@@ -1037,7 +1120,7 @@ public class AlohAndesTM {
 			}
 		}
 	}
-	
+
 	public void deleteHabitacion(Habitacion Habitacion) throws Exception
 	{
 		DAOHabitacion dao= new DAOHabitacion();
@@ -1079,7 +1162,7 @@ public class AlohAndesTM {
 			}
 		}
 	}
-	
+
 	//TODO METODOS RECURSO ||SERVICIO||
 	public List<Servicio> getAllServicios() throws Exception
 	{
@@ -1160,7 +1243,7 @@ public class AlohAndesTM {
 		}
 		return Servicio;
 	}
-	
+
 	public void addServicio(Servicio Servicio) throws Exception
 	{
 		DAOServicio dao= new DAOServicio();
@@ -1198,7 +1281,7 @@ public class AlohAndesTM {
 			}
 		}
 	}
-	
+
 	public void updateServicio(Servicio Servicio) throws Exception
 	{
 		DAOServicio dao= new DAOServicio();
@@ -1236,7 +1319,7 @@ public class AlohAndesTM {
 			}
 		}
 	}
-	
+
 	public void deleteServicio(Servicio Servicio) throws Exception
 	{
 		DAOServicio dao= new DAOServicio();
@@ -1278,9 +1361,9 @@ public class AlohAndesTM {
 			}
 		}
 	}
-	
+
 	//TODO METODOS RELACION ||CONTRATO_APARTAMENTO||
-	
+
 	public List<ContratoApartamento> getAllContratoApartamentos() throws Exception
 	{
 		DAOContratoApartamento dao= new DAOContratoApartamento();
@@ -1360,7 +1443,7 @@ public class AlohAndesTM {
 		}
 		return ContratoApartamento;
 	}
-	
+
 	public void addContratoApartamento(ContratoApartamento ContratoApartamento) throws Exception
 	{
 		DAOContratoApartamento dao= new DAOContratoApartamento();
@@ -1398,7 +1481,7 @@ public class AlohAndesTM {
 			}
 		}
 	}
-	
+
 	public void updateContratoApartamento(ContratoApartamento ContratoApartamento) throws Exception
 	{
 		DAOContratoApartamento dao= new DAOContratoApartamento();
@@ -1436,7 +1519,7 @@ public class AlohAndesTM {
 			}
 		}
 	}
-	
+
 	public void deleteContratoApartamento(ContratoApartamento ContratoApartamento) throws Exception
 	{
 		DAOContratoApartamento dao= new DAOContratoApartamento();
@@ -1478,9 +1561,9 @@ public class AlohAndesTM {
 			}
 		}
 	}
-	
+
 	//TODO METODOS RELACION ||OPERADOR_HABITACION||
-	
+
 	public List<OperadorHabitacion> getAllOperadorHabitacions() throws Exception
 	{
 		DAOOperadorHabitacion dao= new DAOOperadorHabitacion();
@@ -1560,7 +1643,7 @@ public class AlohAndesTM {
 		}
 		return OperadorHabitacion;
 	}
-	
+
 	public void addOperadorHabitacion(OperadorHabitacion OperadorHabitacion) throws Exception
 	{
 		DAOOperadorHabitacion dao= new DAOOperadorHabitacion();
@@ -1598,7 +1681,7 @@ public class AlohAndesTM {
 			}
 		}
 	}
-	
+
 	public void updateOperadorHabitacion(OperadorHabitacion OperadorHabitacion) throws Exception
 	{
 		DAOOperadorHabitacion dao= new DAOOperadorHabitacion();
@@ -1636,7 +1719,7 @@ public class AlohAndesTM {
 			}
 		}
 	}
-	
+
 	public void deleteOperadorHabitacion(OperadorHabitacion OperadorHabitacion) throws Exception
 	{
 		DAOOperadorHabitacion dao= new DAOOperadorHabitacion();
@@ -1678,9 +1761,9 @@ public class AlohAndesTM {
 			}
 		}
 	}
-	
+
 	//TODO METODOS RELACION ||OPERADOR_APARTAMENTO||
-	
+
 	public List<OperadorApartamento> getAllOperadorApartamentos() throws Exception
 	{
 		DAOOperadorApartamento dao= new DAOOperadorApartamento();
@@ -1760,7 +1843,7 @@ public class AlohAndesTM {
 		}
 		return OperadorApartamento;
 	}
-	
+
 	public void addOperadorApartamento(OperadorApartamento OperadorApartamento) throws Exception
 	{
 		DAOOperadorApartamento dao= new DAOOperadorApartamento();
@@ -1798,7 +1881,7 @@ public class AlohAndesTM {
 			}
 		}
 	}
-	
+
 	public void updateOperadorApartamento(OperadorApartamento OperadorApartamento) throws Exception
 	{
 		DAOOperadorApartamento dao= new DAOOperadorApartamento();
@@ -1836,7 +1919,7 @@ public class AlohAndesTM {
 			}
 		}
 	}
-	
+
 	public void deleteOperadorApartamento(OperadorApartamento OperadorApartamento) throws Exception
 	{
 		DAOOperadorApartamento dao= new DAOOperadorApartamento();
@@ -1878,10 +1961,10 @@ public class AlohAndesTM {
 			}
 		}
 	}
-	
+
 	//TODO METODOS DE LA RELACION ||CLIENTE_CONTRATO||
-	
-	
+
+
 	public List<ClienteContrato> getAllClienteContratos() throws Exception
 	{
 		DAOClienteContrato dao= new DAOClienteContrato();
@@ -1961,7 +2044,7 @@ public class AlohAndesTM {
 		}
 		return ClienteContrato;
 	}
-	
+
 	public void addClienteContrato(ClienteContrato ClienteContrato) throws Exception
 	{
 		DAOClienteContrato dao= new DAOClienteContrato();
@@ -1999,7 +2082,7 @@ public class AlohAndesTM {
 			}
 		}
 	}
-	
+
 	public void updateClienteContrato(ClienteContrato ClienteContrato) throws Exception
 	{
 		DAOClienteContrato dao= new DAOClienteContrato();
@@ -2037,7 +2120,7 @@ public class AlohAndesTM {
 			}
 		}
 	}
-	
+
 	public void deleteClienteContrato(ClienteContrato ClienteContrato) throws Exception
 	{
 		DAOClienteContrato dao= new DAOClienteContrato();
@@ -2079,5 +2162,296 @@ public class AlohAndesTM {
 			}
 		}
 	}
-	
+
+	//TODO METODOS RELACION ||CONTRATO_HABITACION||
+
+	public List<ContratoHabitacion> getAllContratoHabitacions() throws Exception
+	{
+		DAOContratoHabitacion dao= new DAOContratoHabitacion();
+		List<ContratoHabitacion> ContratoHabitacions;
+		try 
+		{
+			this.conn=darConexion();
+			dao.setConn(conn);
+			ContratoHabitacions=dao.getContratoHabitacions();
+		}
+		catch( SQLException e)
+		{
+			System.err.println("[Excepción!] SQLException "+ e.getMessage());
+			e.printStackTrace();
+			throw e;
+		}
+		catch(Exception e)
+		{
+			System.err.println("[Excepción!] Exception "+ e.getMessage());
+			e.printStackTrace();
+			throw e;
+		}
+		finally
+		{
+			try
+			{
+				dao.cerrarRecursos();
+				if(this.conn!=null)
+					this.conn.close();
+			}
+			catch(SQLException e)
+			{
+				System.err.println(("[Excepción!] SQLException mientras se cerraban los recursos: "+e.getMessage()));
+				e.printStackTrace();
+				throw e;
+			}
+		}
+		return ContratoHabitacions;
+	}
+
+	public ContratoHabitacion getContratoHabitacionById(Integer id) throws Exception
+	{
+		DAOContratoHabitacion dao=new DAOContratoHabitacion();
+		ContratoHabitacion ContratoHabitacion=null;
+		try
+		{
+			this.conn=darConexion();
+			dao.setConn(conn);
+			ContratoHabitacion=dao.findContratoHabitacionById(id);
+		}
+		catch( SQLException e)
+		{
+			System.err.println("[Excepción!] SQLException "+ e.getMessage());
+			e.printStackTrace();
+			throw e;
+		}
+		catch(Exception e)
+		{
+			System.err.println("[Excepción!] Exception "+ e.getMessage());
+			e.printStackTrace();
+			throw e;
+		}
+		finally
+		{
+			try
+			{
+				dao.cerrarRecursos();
+				if(this.conn!=null)
+					this.conn.close();
+			}
+			catch(SQLException e)
+			{
+				System.err.println(("[Excepción!] SQLException mientras se cerraban los recursos: "+e.getMessage()));
+				e.printStackTrace();
+				throw e;
+			}
+		}
+		return ContratoHabitacion;
+	}
+
+	public void addContratoHabitacion(ContratoHabitacion ContratoHabitacion) throws Exception
+	{
+		DAOContratoHabitacion dao= new DAOContratoHabitacion();
+		try
+		{
+			this.conn=darConexion();
+			dao.setConn(conn);
+			dao.addContratoHabitacion(ContratoHabitacion);
+		}
+		catch( SQLException e)
+		{
+			System.err.println("[Excepción!] SQLException "+ e.getMessage());
+			e.printStackTrace();
+			throw e;
+		}
+		catch(Exception e)
+		{
+			System.err.println("[Excepción!] Exception "+ e.getMessage());
+			e.printStackTrace();
+			throw e;
+		}
+		finally
+		{
+			try
+			{
+				dao.cerrarRecursos();
+				if(this.conn!=null)
+					this.conn.close();
+			}
+			catch(SQLException e)
+			{
+				System.err.println(("[Excepción!] SQLException mientras se cerraban los recursos: "+e.getMessage()));
+				e.printStackTrace();
+				throw e;
+			}
+		}
+	}
+
+	public void updateContratoHabitacion(ContratoHabitacion ContratoHabitacion) throws Exception
+	{
+		DAOContratoHabitacion dao= new DAOContratoHabitacion();
+		try
+		{
+			this.conn=darConexion();
+			dao.setConn(conn);
+			dao.updateContratoHabitacion(ContratoHabitacion);
+		}
+		catch( SQLException e)
+		{
+			System.err.println("[Excepción!] SQLException "+ e.getMessage());
+			e.printStackTrace();
+			throw e;
+		}
+		catch(Exception e)
+		{
+			System.err.println("[Excepción!] Exception "+ e.getMessage());
+			e.printStackTrace();
+			throw e;
+		}
+		finally
+		{
+			try
+			{
+				dao.cerrarRecursos();
+				if(this.conn!=null)
+					this.conn.close();
+			}
+			catch(SQLException e)
+			{
+				System.err.println(("[Excepción!] SQLException mientras se cerraban los recursos: "+e.getMessage()));
+				e.printStackTrace();
+				throw e;
+			}
+		}
+	}
+
+	public void deleteContratoHabitacion(ContratoHabitacion ContratoHabitacion) throws Exception
+	{
+		DAOContratoHabitacion dao= new DAOContratoHabitacion();
+		try
+		{
+			this.conn=darConexion();
+			dao.setConn(conn);
+			ContratoHabitacion borrar=dao.findContratoHabitacionById(ContratoHabitacion.getHabitacion().getId());
+			if(borrar!=null)
+				dao.deleteContratoHabitacion(ContratoHabitacion);
+			else
+				throw new Exception("ese tal ContratoHabitacion no existe!");
+		}
+		catch( SQLException e)
+		{
+			System.err.println("[Excepción!] SQLException "+ e.getMessage());
+			e.printStackTrace();
+			throw e;
+		}
+		catch(Exception e)
+		{
+			System.err.println("[Excepción!] Exception "+ e.getMessage());
+			e.printStackTrace();
+			throw e;
+		}
+		finally
+		{
+			try
+			{
+				dao.cerrarRecursos();
+				if(this.conn!=null)
+					this.conn.close();
+			}
+			catch(SQLException e)
+			{
+				System.err.println(("[Excepción!] SQLException mientras se cerraban los recursos: "+e.getMessage()));
+				e.printStackTrace();
+				throw e;
+			}
+		}
+	}
+	//TODO METODOS REQ ||SUPERRESERVA||
+	public void superReservar(SuperReserva sr, List<Apartamento> aptos) throws Exception
+	{
+		this.conn=darConexion();
+		conn.setAutoCommit(false);
+		try {
+			for(Cliente x:sr.getClientes()) {
+				if(getClienteById(x.getId())==null) {
+
+					addCliente(x);
+					this.conn=darConexion();
+				}
+				else
+					continue;
+			}
+				for(int i=0;i<sr.getCantidad(); i++)
+				{
+					Contrato con=new Contrato(i+sr.hashCode(), sr.getFechaInicio(), sr.getFechaFin(), sr.getDescipcion(), 0 , 25000.0);
+					generarRelacionContrato("apartamentos",aptos.get(i).getId(),sr.getClientes().get(i).getId(),con);
+					this.conn=darConexion();
+				}
+				conn.commit();
+				conn.setAutoCommit(true);
+		}
+		catch(Exception e)
+		{
+			e.printStackTrace();
+			conn.rollback();
+			throw e;
+		}
+		
+		
+	}
+	public Contrato generarRelacionContrato(String owner,Integer idOwner, Integer idUser, Contrato contrato) throws Exception
+	{
+		if(owner.equals("apartamentos")){
+			
+			Apartamento apto=getApartamentoById(idOwner);
+			Cliente cliente=getClienteById(idUser);
+			if(apto!=null&& cliente!=null){
+				addContrato(contrato);
+				ArrayList<Contrato> Contratos= new ArrayList<>();
+				Contratos.add(contrato);
+				addContratoApartamento(new ContratoApartamento(apto, Contratos));
+				addClienteContrato(new ClienteContrato(cliente, Contratos));
+				return contrato;
+			}
+			else
+				throw new Exception("No existe el operador , por lo tanto no existen Contratos de el");
+		}
+		else if(owner.equals("clientes")){
+			Cliente cliente=getClienteById(idOwner);
+			Apartamento apto=getApartamentoById(idUser);
+			if(cliente!=null && apto!=null){
+				addContrato(contrato);
+				ArrayList<Contrato> Contratos= new ArrayList<>();
+				Contratos.add(contrato);
+				addClienteContrato(new ClienteContrato(cliente, Contratos));
+				addContratoApartamento(new ContratoApartamento(apto, Contratos));
+				return contrato;
+			}
+			else
+				throw new Exception("No existe el operador , por lo tanto no existen Contratos de el");
+		}
+		else if(owner.equals("habitaciones")){			
+			Cliente cliente=getClienteById(idUser);
+			Habitacion hab=getHabitacionById(idOwner);
+			if(cliente!=null && hab!=null){
+				addContrato(contrato);
+				ArrayList<Contrato> Contratos= new ArrayList<>();
+				Contratos.add(contrato);
+				addClienteContrato(new ClienteContrato(cliente, Contratos));
+				addContratoHabitacion(new ContratoHabitacion(hab, Contratos));
+
+				return contrato;
+			}
+			else
+				throw new Exception("No existe el operador , por lo tanto no existen Contratos de el");
+		}
+		else
+			throw new Exception("No existe el operador , por lo tanto no existen Contratos de el");
+	}
+	public void cancelarSuperReserva(SuperReserva sr) throws Exception
+	{
+		List<Contrato> cons=getContratosDescrpcion(sr.getDescipcion());
+		for(Contrato x:cons)
+		{
+			x.setEstado(5);
+			updateContrato(x);
+		}
+			
+	}
 }

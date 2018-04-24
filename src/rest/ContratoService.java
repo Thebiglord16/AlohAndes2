@@ -1,5 +1,6 @@
 package rest;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.ServletContext;
@@ -18,7 +19,12 @@ import javax.ws.rs.core.Response;
 import tm.AlohAndesTM;
 import vos.Apartamento;
 import vos.Cliente;
+import vos.ClienteContrato;
 import vos.Contrato;
+import vos.ContratoApartamento;
+import vos.ContratoHabitacion;
+import vos.Habitacion;
+
 
 @Path("/{owner}/{id:\\d+}/contratos")
 public class ContratoService {
@@ -43,6 +49,7 @@ public class ContratoService {
 			if(owner.equals("apartamentos")){
 				AlohAndesTM tm = new AlohAndesTM(getPath());
 				Apartamento apto=tm.getApartamentoById(idOwner);
+				
 				if(apto!=null){
 					List<Contrato> Contratos;
 					Contratos = tm.getContratoApartamentoById(idOwner).getContratos();
@@ -71,13 +78,13 @@ public class ContratoService {
 	}
 
 	@GET
-	@Path( "{id: \\d+}" )
+	@Path( "/{id: \\d+}" )
 	@Produces({ MediaType.APPLICATION_JSON })
 	public Response getContrato( @PathParam( "id" )Integer id) {
 
 		try {
 			AlohAndesTM tm = new AlohAndesTM(getPath());
-
+			
 			Contrato Contrato;
 			Contrato = tm.getContratoById(id);
 			return Response.status(200).entity(Contrato).build();
@@ -88,14 +95,16 @@ public class ContratoService {
 	}
 
 	@POST
+	@Path( "/{id2: \\d+}" )
 	@Consumes({ MediaType.APPLICATION_JSON })
 	@Produces({ MediaType.APPLICATION_JSON })
-	public Response addContrato(Contrato Contrato ) {
+	public Response addContrato(Contrato Contrato, @PathParam("owner")String  owner, @PathParam("id") Integer idOwner,@PathParam("id2") Integer idUser ) {
 
 		try {
-			AlohAndesTM tm = new AlohAndesTM(getPath());			
-			tm.addContrato(Contrato);
+			AlohAndesTM tm=new AlohAndesTM(getPath());
+			tm.generarRelacionContrato(owner, idOwner, idUser, Contrato);
 			return Response.status(200).entity(Contrato).build();
+			
 		} 
 		catch (Exception e) {
 			return Response.status(500).entity(doErrorMessage(e)).build();

@@ -5,8 +5,10 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.List;
 
 import vos.ContratoApartamento;
+import vos.Apartamento;
 import vos.Contrato;
 
 
@@ -67,7 +69,7 @@ public class DAOContratoApartamento {
 	public void addContratoApartamento(ContratoApartamento ContratoApartamento) throws SQLException, Exception {
 		for(Contrato x:ContratoApartamento.getContratos())
 		{
-			String sql = String.format("INSERT INTO %1$s.CONTRATO_APARTAMENTO (ID_CONTRATO, ID_APARTAMENTO ) VALUES (%2$s, %3$s)", 
+			String sql = String.format("INSERT INTO %1$s.CONTRATO_APARTAMENTO (ID_CONTRATO, ID_APARTAMENTO ) VALUES (%3$s, %2$s)", 
 					USUARIO, 
 					ContratoApartamento.getApartamento().getId(), x.getId());
 			System.out.println(sql);
@@ -98,7 +100,7 @@ public class DAOContratoApartamento {
 	public void deleteContratoApartamento(ContratoApartamento ContratoApartamento) throws SQLException, Exception {
 
 		for(Contrato x:ContratoApartamento.getContratos()){
-			String sql = String.format("DELETE FROM %1$s.CONTRATO_APARTAMENTO WHERE ID_CONTRATO = %2$d AND ID_APARTAMENTO=%3$d", USUARIO, x.getId(), ContratoApartamento.getApartamento().getId());
+			String sql = String.format("DELETE FROM %1$s.CONTRATO_APARTAMENTO WHERE ID_CONTRATO = %2$d AND ID_APARTAMENTO=%3$d ", USUARIO, x.getId(), ContratoApartamento.getApartamento().getId());
 
 			System.out.println(sql);
 
@@ -130,30 +132,67 @@ public class DAOContratoApartamento {
 		Integer id_contrato=resultSet.getInt("ID_CONTRATO");
 		ArrayList<Contrato> cons=new ArrayList<>();
 		cons.add(DaoCon.findContratoById(id_contrato));
-		ContratoApartamento ContratoApartamento=new ContratoApartamento(daoApto.findApartamentoById(id_apartamento),cons);
+		Apartamento apto=daoApto.findApartamentoById(id_apartamento);
+		ContratoApartamento ContratoApartamento=new ContratoApartamento(apto,cons);
 		return ContratoApartamento;
 	}
 	
 	public ArrayList<ContratoApartamento> convertResultSetToContratoApto(ArrayList<ContratoApartamento> cAptos) throws SQLException, Exception
 	{
 		ArrayList<ContratoApartamento> respuesta=new ArrayList<>();
-		ArrayList<Contrato> cons= new ArrayList<>(); 
+		List<Contrato> cons= new ArrayList<>();
 		int idTemp=cAptos.get(0).getApartamento().getId();
-		for(ContratoApartamento x: cAptos){
+		for(ContratoApartamento x : cAptos)
+		{
 			if(x.getApartamento().getId()!=idTemp)
 			{
-				respuesta.add(new ContratoApartamento(daoApto.findApartamentoById(idTemp), cons));
-				cons=new ArrayList<>();
-				idTemp=x.getApartamento().getId();
+				ContratoApartamento ca=buscar(respuesta,idTemp);
+				if(ca!=null)
+				{					
+					respuesta.remove(ca);
+					for(Contrato y:ca.getContratos())
+						cons.add(y);
+					ca.setContratos(cons);
+					respuesta.add(ca);
+					idTemp=x.getApartamento().getId();
+					cons=new ArrayList<>();
+				}
+				else 
+				{
+					respuesta.add(new ContratoApartamento(daoApto.findApartamentoById(idTemp), cons));
+					idTemp=x.getApartamento().getId();
+					cons=new ArrayList<>();
+				}
 			}
-			for(Contrato a: x.getContratos())
-			{
-				cons.add(a);
-			}
+			for(Contrato z: x.getContratos())
+				cons.add(z);
+		}
+		ContratoApartamento ca=buscar(respuesta,idTemp);
+		if(ca!=null)
+		{					
+			respuesta.remove(ca);
+			for(Contrato y:ca.getContratos())
+				cons.add(y);
+			ca.setContratos(cons);
+			respuesta.add(ca);
+		}
+		else 
+		{
+			respuesta.add(new ContratoApartamento(daoApto.findApartamentoById(idTemp), cons));
 		}
 		return respuesta;	
 		
 	} 
-
+	
+	public ContratoApartamento buscar(ArrayList<ContratoApartamento> lista, Integer id)
+	{
+		for(ContratoApartamento x : lista)
+		{
+			if(x.getApartamento().getId()==id)
+				return x;
+		}
+		
+		return null;
+	}
 
 }
