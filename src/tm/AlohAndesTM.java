@@ -7,10 +7,15 @@ import java.sql.Connection;
 import java.sql.Date;
 import java.sql.DriverManager;
 import java.sql.SQLException;
+import java.sql.Savepoint;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Properties;
+
+import javax.ws.rs.core.Response;
+
+import org.codehaus.jackson.annotate.JsonProperty;
 
 import dao.DAOApartamento;
 import dao.DAOCliente;
@@ -34,6 +39,7 @@ import vos.Operador;
 import vos.OperadorApartamento;
 import vos.OperadorHabitacion;
 import vos.Servicio;
+import vos.SuperReserva;
 
 
 public class AlohAndesTM {
@@ -526,7 +532,47 @@ public class AlohAndesTM {
 		}
 		return Contratos;
 	}
-
+	
+	public List<Contrato> getContratosDescrpcion(String descripcion) throws Exception
+	{
+		DAOContrato dao= new DAOContrato();
+		List<Contrato> Contratos;
+		try
+		{
+			this.conn=darConexion();
+			dao.setConn(conn);
+			Contratos=dao.getContratosDescripcion(descripcion);
+		}
+		catch( SQLException e)
+		{
+			System.err.println("[Excepción!] SQLException "+ e.getMessage());
+			e.printStackTrace();
+			throw e;
+		}
+		catch(Exception e)
+		{
+			System.err.println("[Excepción!] Exception "+ e.getMessage());
+			e.printStackTrace();
+			throw e;
+		}
+		finally
+		{
+			try
+			{
+				dao.cerrarRecursos();
+				if(this.conn!=null)
+					this.conn.close();
+			}
+			catch(SQLException e)
+			{
+				System.err.println(("[Excepción!] SQLException mientras se cerraban los recursos: "+e.getMessage()));
+				e.printStackTrace();
+				throw e;
+			}
+		}
+		return Contratos;
+	}
+	
 	public Contrato getContratoById(Integer id) throws Exception
 	{
 		DAOContrato dao=new DAOContrato();
@@ -737,10 +783,16 @@ public class AlohAndesTM {
 			{
 				if(y.getApartamento().getId()==x.getId())
 					for(Contrato z: y.getContratos())
-					{
-						Timestamp fechaInicioC= Timestamp.valueOf(z.getFechaInicio());
-						Timestamp fechaFinC=Timestamp.valueOf(z.getFechaFin());
-						Timestamp fechaInicioR= Timestamp.valueOf(fechaInicio);
+					{	
+						System.out.println(fechaInicio+" esto es en el tm");
+						String[] inicioR=fechaInicio.split("/");
+						String inicioRd="20"+inicioR[2];
+						for(int i=1; i>=0;i--)
+							inicioRd=inicioRd +"-"+inicioR[i];
+
+						Date fechaInicioC= Date.valueOf(z.getFechaInicio());
+						Date fechaFinC=Date.valueOf(z.getFechaFin());
+						Date fechaInicioR= Date.valueOf(inicioRd);
 						if(fechaInicioC.before(fechaInicioR)&&fechaFinC.after(fechaInicioR))
 						{
 							aptos.remove(x);
@@ -2310,94 +2362,95 @@ public class AlohAndesTM {
 			}
 		}
 	}
+
 	
 	//RF9
 
 	public void desahibilitarOfertaAlojamiento(Integer id) throws Exception
 	{
-		
+
 		Apartamento apto = getApartamentoById(id);
 		if(apto!=null)
 		{
-		//capacidad del apartamento que ya no estará habilitado
-		int capacidad = apto.getCacpacidad();
-		
-		//contratos del apartamento
-		List<ContratoApartamento> contratoApartamentos = getAllContratoApartamentos();
-		
-		//Lista de contratos del apartamento
-		List<Contrato> contratos = new ArrayList<Contrato>();
-		
-		if(!contratoApartamentos.isEmpty()){
-			for (ContratoApartamento contratoApartamento : contratoApartamentos) 
-			{
-				
-				Apartamento apto2 = contratoApartamento.getApartamento();
-				if(apto2.getId()==apto.getId())
+			//capacidad del apartamento que ya no estará habilitado
+			int capacidad = apto.getCacpacidad();
+
+			//contratos del apartamento
+			List<ContratoApartamento> contratoApartamentos = getAllContratoApartamentos();
+
+			//Lista de contratos del apartamento
+			List<Contrato> contratos = new ArrayList<Contrato>();
+
+			if(!contratoApartamentos.isEmpty()){
+				for (ContratoApartamento contratoApartamento : contratoApartamentos) 
 				{
-					List<Contrato> con = contratoApartamento.getContratos();
-					for (Contrato contrato : con) 
+
+					Apartamento apto2 = contratoApartamento.getApartamento();
+					if(apto2.getId()==apto.getId())
 					{
-						contratos.add(contrato);
+						List<Contrato> con = contratoApartamento.getContratos();
+						for (Contrato contrato : con) 
+						{
+							contratos.add(contrato);
+						}
 					}
 				}
-			}
 
-			//Hasta aqui saco los contratos del apto
+				//Hasta aqui saco los contratos del apto
 
-			for (Contrato contrato : contratos) 
-			{
-				//Fecha de inicio de los contratos que se deben modificar
-				String inicio = contrato.getFechaInicio();
-
-				//Apartamentos disponibles en esa fecha
-				List<Apartamento> aptosDisp = getAllAptosDisponibles(inicio);
-				if(!aptosDisp.isEmpty())
+				for (Contrato contrato : contratos) 
 				{
-					for (Apartamento apartamento : aptosDisp) 
-					{
-						if(apartamento.getCacpacidad()==capacidad)
-						{
-							int idContrato = contrato.getId();
+					//Fecha de inicio de los contratos que se deben modificar
+					String inicio = contrato.getFechaInicio();
 
-							for (ContratoApartamento conn : contratoApartamentos) {
-								List<Contrato> con = conn.getContratos();
-								for (Contrato contrato1 : con) 
-								{
-									if(idContrato==contrato1.getId())
+					//Apartamentos disponibles en esa fecha
+					List<Apartamento> aptosDisp = getAllAptosDisponibles(inicio);
+					if(!aptosDisp.isEmpty())
+					{
+						for (Apartamento apartamento : aptosDisp) 
+						{
+							if(apartamento.getCacpacidad()==capacidad)
+							{
+								int idContrato = contrato.getId();
+
+								for (ContratoApartamento conn : contratoApartamentos) {
+									List<Contrato> con = conn.getContratos();
+									for (Contrato contrato1 : con) 
 									{
-										conn.setApartamento(apartamento);
-										updateContratoApartamento(conn);
+										if(idContrato==contrato1.getId())
+										{
+											conn.setApartamento(apartamento);
+											updateContratoApartamento(conn);
+										}
 									}
 								}
 							}
+
+							else
+							{
+								//aquí se supone que el estado cambia a inconcluso (o una vaina asi)
+								contrato.setEstado(1);
+							}
+
 						}
-						
-						else
-						{
-							//aquí se supone que el estado cambia a inconcluso (o una vaina asi)
-							contrato.setEstado(1);
-						}
-						
+
+						//Hasta aquí reasigno el apartamento del contrato en contratoApartamento
+
+						apto.setHabilitada(false);
 					}
 				}
 			}
 		}
-		
-		//Hasta aquí reasigno el apartamento del contrato en contratoApartamento
-		
-		apto.setHabilitada(false);
-		}
-		
+
 		else
 		{
-			
+			throw new Exception("No existe el apartamento");
 		}
 
 	}
-	
+				
 	//RF10
-	
+
 	public void habilitarOfertaAlojamiento(Integer id) throws Exception
 	{
 		Apartamento apto = getApartamentoById(id);
@@ -2406,11 +2459,110 @@ public class AlohAndesTM {
 			apto.setHabilitada(true);
 			updateApartamento(apto);
 		}
-		
+
 		else
 		{
-			
+			throw new Exception("No existe el apartamento");
+		}
+	}
+
+	//TODO METODOS REQ ||SUPERRESERVA||
+	public void superReservar(SuperReserva sr, List<Apartamento> aptos) throws Exception
+	{
+		this.conn=darConexion();
+		conn.setAutoCommit(false);
+		try {
+			for(Cliente x:sr.getClientes()) {
+				if(getClienteById(x.getId())==null) {
+
+					addCliente(x);
+					this.conn=darConexion();
+				}
+				else
+					continue;
+			}
+				for(int i=0;i<sr.getCantidad(); i++)
+				{
+					Contrato con=new Contrato(i+sr.hashCode(), sr.getFechaInicio(), sr.getFechaFin(), sr.getDescipcion(), 0 , 25000.0);
+					generarRelacionContrato("apartamentos",aptos.get(i).getId(),sr.getClientes().get(i).getId(),con);
+					this.conn=darConexion();
+
+				}
+				conn.commit();
+				conn.setAutoCommit(true);
+		}
+		catch(Exception e)
+		{
+			e.printStackTrace();
+			conn.rollback();
+			throw e;
 		}
 		
+		
+	}
+	public Contrato generarRelacionContrato(String owner,Integer idOwner, Integer idUser, Contrato contrato) throws Exception
+	{
+		if(owner.equals("apartamentos")){
+			
+			Apartamento apto=getApartamentoById(idOwner);
+			Cliente cliente=getClienteById(idUser);
+			if(apto!=null&& cliente!=null){
+				addContrato(contrato);
+				ArrayList<Contrato> Contratos= new ArrayList<>();
+				Contratos.add(contrato);
+				addContratoApartamento(new ContratoApartamento(apto, Contratos));
+				addClienteContrato(new ClienteContrato(cliente, Contratos));
+				return contrato;
+			}
+			else
+				throw new Exception("No existe el operador , por lo tanto no existen Contratos de el");
+		}
+		else if(owner.equals("clientes")){
+			Cliente cliente=getClienteById(idOwner);
+			Apartamento apto=getApartamentoById(idUser);
+			if(cliente!=null && apto!=null){
+				addContrato(contrato);
+				ArrayList<Contrato> Contratos= new ArrayList<>();
+				Contratos.add(contrato);
+				addClienteContrato(new ClienteContrato(cliente, Contratos));
+				addContratoApartamento(new ContratoApartamento(apto, Contratos));
+				return contrato;
+			}
+			else
+				throw new Exception("No existe el operador , por lo tanto no existen Contratos de el");
+		}
+		else if(owner.equals("habitaciones")){			
+			Cliente cliente=getClienteById(idUser);
+			Habitacion hab=getHabitacionById(idOwner);
+			if(cliente!=null && hab!=null){
+				addContrato(contrato);
+				ArrayList<Contrato> Contratos= new ArrayList<>();
+				Contratos.add(contrato);
+				addClienteContrato(new ClienteContrato(cliente, Contratos));
+				addContratoHabitacion(new ContratoHabitacion(hab, Contratos));
+
+				return contrato;
+			}
+			else
+				throw new Exception("No existe el operador , por lo tanto no existen Contratos de el");
+		}
+
+		
+		
+		
+
+		else
+			throw new Exception("No existe el operador , por lo tanto no existen Contratos de el");
+	}
+	public void cancelarSuperReserva(SuperReserva sr) throws Exception
+	{
+		List<Contrato> cons=getContratosDescrpcion(sr.getDescipcion());
+		for(Contrato x:cons)
+		{
+			x.setEstado(5);
+			updateContrato(x);
+		}
+			
+
 	}
 }

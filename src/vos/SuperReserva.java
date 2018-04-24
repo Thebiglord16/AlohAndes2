@@ -21,11 +21,17 @@ public class SuperReserva {
 	@JsonProperty("clientes")
 	List<Cliente> clientes;
 	
-	public SuperReserva(@JsonProperty("tipoAcomodamiento")String tipoAcomodamiento, @JsonProperty("fechaInicio") String fechaInicio,	@JsonProperty("fechaFin") String fechaFin,@JsonProperty("cantidad") int cantidad, @JsonProperty("clientes")List<Cliente> clientes)
+	@JsonProperty("descripcion")
+	String descipcion;
+	
+	public SuperReserva(@JsonProperty("tipoAcomodamiento")String tipoAcomodamiento, @JsonProperty("fechaInicio") String fechaInicio,	@JsonProperty("fechaFin") String fechaFin,@JsonProperty("cantidad") int cantidad, @JsonProperty("clientes")List<Cliente> clientes, @JsonProperty("descripcion")String descipcion)
 	{
 		this.cantidad=cantidad;
 		this.clientes=clientes;
 		this.tipoAcomodamiento=tipoAcomodamiento;
+		this.fechaInicio=fechaInicio;
+		this.fechaFin=fechaFin;
+		this.descipcion=descipcion;
 	}
 
 	public int getCantidad() {
@@ -66,6 +72,14 @@ public class SuperReserva {
 
 	public void setFechaFin(String fechaFin) {
 		this.fechaFin = fechaFin;
+	}
+
+	public String getDescipcion() {
+		return descipcion;
+	}
+
+	public void setDescipcion(String descipcion) {
+		this.descipcion = descipcion;
 	}
 	
 	
