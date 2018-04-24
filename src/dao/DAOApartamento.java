@@ -58,11 +58,17 @@ public final static String USUARIO="ISIS2304A541810";
 		Apartamento.setOfertada(true);
 		Apartamento.setVecesSolicitada(0);
 		Integer booleano=0;
+		Integer habilitada=0;
 		if(Apartamento.isOfertada())
 			booleano=1;
 		else
 			booleano=0;
-		String sql = String.format("INSERT INTO %1$s.APARTAMENTO (ID, DIRECCION, CAPACIDAD, DESCRIPCION,TIPO,VECES_SOLICITADA,OFERTADA) VALUES (%2$s, '%3$s', '%4$s', '%5$s',%6$s,%7$s,%8$s)", 
+		
+		if(Apartamento.isHabilitada())
+			habilitada=1;
+		else
+			habilitada=0;
+		String sql = String.format("INSERT INTO %1$s.APARTAMENTO (ID, DIRECCION, CAPACIDAD, DESCRIPCION,TIPO,VECES_SOLICITADA,OFERTADA,HABILITADA) VALUES (%2$s, '%3$s', '%4$s', '%5$s',%6$s,%7$s,%8$s,%9$s)", 
 									USUARIO, 
 									Apartamento.getId(), 
 									Apartamento.getDireccion(),
@@ -70,7 +76,7 @@ public final static String USUARIO="ISIS2304A541810";
 									Apartamento.getDescripcion(), 
 									Apartamento.getTipo(),
 									Apartamento.getVecesSolicitada(),
-									booleano);
+									booleano, habilitada);
 		System.out.println(sql);
 
 		PreparedStatement prepStmt = conn.prepareStatement(sql);
@@ -83,15 +89,20 @@ public final static String USUARIO="ISIS2304A541810";
 
 		StringBuilder sql = new StringBuilder();
 		Integer booleano=0;
+		Integer habilitada=0;
 		if(Apartamento.isOfertada())
 			booleano=1;
 		else
 			booleano=0;
+		if(Apartamento.isHabilitada())
+			habilitada=1;
+		else
+			habilitada=0;
 		sql.append (String.format ("UPDATE %s.APARTAMENTO ", USUARIO));
 		sql.append (String.format (
-				"SET DIRECCION= '%1$s', CAPACIDAD = %2$s, DESCRIPCION = '%3$s', TIPO=%4$s, VECES_SOLICITADA=%5$S, OFERTADA=%6$S ",
+				"SET DIRECCION= '%1$s', CAPACIDAD = %2$s, DESCRIPCION = '%3$s', TIPO=%4$s, VECES_SOLICITADA=%5$S, OFERTADA=%6$S, HABILITADA=%7$S",
 				Apartamento.getDireccion(), Apartamento.getCacpacidad(),
-				Apartamento.getDescripcion(), Apartamento.getTipo(),Apartamento.getVecesSolicitada(), booleano));
+				Apartamento.getDescripcion(), Apartamento.getTipo(),Apartamento.getVecesSolicitada(), booleano, habilitada));
 		sql.append ("WHERE ID = " + Apartamento.getId ());
 		System.out.println(sql);
 		
@@ -135,12 +146,18 @@ public final static String USUARIO="ISIS2304A541810";
 		Integer tipo=resultSet.getInt("TIPO");
 		Integer vecesSolicitada=resultSet.getInt("VECES_SOLICITADA");
 		Integer ofertada=resultSet.getInt("OFERTADA");
+		Integer habilitada=resultSet.getInt("HABILITADA");
 		boolean booleano;
+		boolean habilitadaboo;
 		if(ofertada==1)
 			booleano=true;
 		else
 			booleano=false;
-		Apartamento Apartamento=new Apartamento(id, direccion, capacidad,descripcion,tipo,vecesSolicitada,booleano);
+		if(habilitada==1)
+			habilitadaboo=true;
+		else
+			habilitadaboo=false;
+		Apartamento Apartamento=new Apartamento(id, direccion, capacidad,descripcion,tipo,vecesSolicitada,booleano, habilitadaboo);
 		return Apartamento;
 	}
 	
