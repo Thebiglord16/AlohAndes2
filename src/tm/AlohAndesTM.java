@@ -2389,6 +2389,7 @@ public class AlohAndesTM {
 		catch(Exception e)
 		{
 			e.printStackTrace();
+			this.conn=darConexion();
 			conn.rollback();
 			throw e;
 		}
