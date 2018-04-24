@@ -2446,11 +2446,10 @@ public class AlohAndesTM {
 				
 	//RF10
 
-	public void habilitarOfertaAlojamiento(Integer id) throws Exception
+	public void habilitarOfertaAlojamiento(Apartamento apto) throws Exception
 	{
 		this.conn=darConexion();
 		conn.setAutoCommit(false);
-		Apartamento apto = getApartamentoById(id);
 		if(apto!=null)
 		{
 			apto.setHabilitada(true);

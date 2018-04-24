@@ -138,9 +138,9 @@ public class ApartamentoService {
 	{
 		try 
 		{
-			Integer id = apto.getId();
+
 			AlohAndesTM tm=new AlohAndesTM(getPath());
-			tm.deshabilitarOfertaAlojamiento(id);
+			tm.deshabilitarOfertaAlojamiento(apto);
 			return Response.status(200).entity(apto).build();
 		}	
 		catch(Exception e) 
@@ -158,9 +158,8 @@ public class ApartamentoService {
 	{
 		try 
 		{
-			Integer id = apto.getId();
 			AlohAndesTM tm=new AlohAndesTM(getPath());
-			tm.habilitarOfertaAlojamiento(id);
+			tm.habilitarOfertaAlojamiento(apto);
 			return Response.status(200).entity(apto).build();
 		}	
 		catch(Exception e) 
