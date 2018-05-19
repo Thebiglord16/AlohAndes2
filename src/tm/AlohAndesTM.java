@@ -58,6 +58,8 @@ public class AlohAndesTM {
 
 	private Connection conn;
 
+	private List<Apartamento> masPopulares;
+
 
 	public AlohAndesTM(String contextPathP) {
 
@@ -2560,5 +2562,70 @@ public class AlohAndesTM {
 		}
 			
 
+	}
+	
+	
+	//RFC 2
+	
+	public List<Apartamento> ofertasMasPopulares() throws Exception
+	{
+		DAOApartamento dao= new DAOApartamento();
+		List<Apartamento> apartamentos;
+		masPopulares = null;
+		try 
+		{
+			this.conn=darConexion();
+			dao.setConn(conn);
+			apartamentos=dao.getApartamentos();
+			for (int i=0; i<apartamentos.size()-1; i++)
+			{
+				Apartamento menos = apartamentos.get(i);
+				int menorPosicion = i;
+				for (int j=i+1; j<apartamentos.size(); j++)
+				{
+					if(apartamentos.get(j).getVecesSolicitada()<menos.getVecesSolicitada())
+					{
+						menos = apartamentos.get(j);
+						menorPosicion = j;
+					}
+				}
+				Apartamento temp = apartamentos.get(i);
+				apartamentos.set(i, menos);
+				apartamentos.set(menorPosicion, temp);
+			}
+			
+			for(int k=0; k<19; k++)
+			{
+				masPopulares.add(apartamentos.get(k));
+			}
+		}
+		catch( SQLException e)
+		{
+			System.err.println("[Excepción!] SQLException "+ e.getMessage());
+			e.printStackTrace();
+			throw e;
+		}
+		catch(Exception e)
+		{
+			System.err.println("[Excepción!] Exception "+ e.getMessage());
+			e.printStackTrace();
+			throw e;
+		}
+		finally
+		{
+			try
+			{
+				dao.cerrarRecursos();
+				if(this.conn!=null)
+					this.conn.close();
+			}
+			catch(SQLException e)
+			{
+				System.err.println(("[Excepción!] SQLException mientras se cerraban los recursos: "+e.getMessage()));
+				e.printStackTrace();
+				throw e;
+			}
+		}
+		return masPopulares;
 	}
 }
