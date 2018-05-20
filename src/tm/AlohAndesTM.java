@@ -2564,6 +2564,62 @@ public class AlohAndesTM {
 
 	}
 	
+	//RFC 1
+	
+		public int dineroProveedor(Apartamento apartamento) throws Exception
+		{	
+			DAOApartamento dao = new DAOApartamento();
+			DAOContratoApartamento daoRel = new DAOContratoApartamento();
+			List<ContratoApartamento> contratoApartamento = daoRel.getContratoApartamentos();
+			int dinero = 0;
+			try 
+			{
+				this.conn=darConexion();
+				dao.setConn(conn);
+				daoRel.setConn(conn);
+				for (ContratoApartamento contratoApto : contratoApartamento) {
+					if(contratoApto.getApartamento().equals(apartamento))
+					{
+						List<Contrato> con = contratoApto.getContratos();	
+						for (int j=0; j<con.size(); j++)
+						{
+							dinero+=con.get(j).getCosto();
+						}
+					}
+					
+				}
+				
+			}
+			catch( SQLException e)
+			{
+				System.err.println("[Excepción!] SQLException "+ e.getMessage());
+				e.printStackTrace();
+				throw e;
+			}
+			catch(Exception e)
+			{
+				System.err.println("[Excepción!] Exception "+ e.getMessage());
+				e.printStackTrace();
+				throw e;
+			}
+			finally
+			{
+				try
+				{
+					dao.cerrarRecursos();
+					if(this.conn!=null)
+						this.conn.close();
+				}
+				catch(SQLException e)
+				{
+					System.err.println(("[Excepción!] SQLException mientras se cerraban los recursos: "+e.getMessage()));
+					e.printStackTrace();
+					throw e;
+				}
+			}
+			return dinero;
+		}
+	
 	
 	//RFC 2
 	
