@@ -2570,6 +2570,7 @@ public class AlohAndesTM {
 		{	
 			DAOApartamento dao = new DAOApartamento();
 			DAOContratoApartamento daoRel = new DAOContratoApartamento();
+			DAOContrato daoCon = new DAOContrato();
 			List<ContratoApartamento> contratoApartamento = daoRel.getContratoApartamentos();
 			int dinero = 0;
 			try 
@@ -2577,6 +2578,7 @@ public class AlohAndesTM {
 				this.conn=darConexion();
 				dao.setConn(conn);
 				daoRel.setConn(conn);
+				daoCon.setConn(conn);
 				for (ContratoApartamento contratoApto : contratoApartamento) {
 					if(contratoApto.getApartamento().equals(apartamento))
 					{
@@ -2607,6 +2609,8 @@ public class AlohAndesTM {
 				try
 				{
 					dao.cerrarRecursos();
+					daoRel.cerrarRecursos();
+					daoCon.cerrarRecursos();
 					if(this.conn!=null)
 						this.conn.close();
 				}
@@ -2684,4 +2688,241 @@ public class AlohAndesTM {
 		}
 		return masPopulares;
 	}
+	
+	//RFC 3
+	
+	public int indiceOcupamiento() throws Exception
+	{
+		DAOApartamento dao= new DAOApartamento();
+		List<Apartamento> apartamentos;
+		int indice=0;
+		try 
+		{
+			this.conn=darConexion();
+			dao.setConn(conn);
+			apartamentos=dao.getApartamentos();
+			for (int i=0; i<apartamentos.size(); i++)
+			{
+				if(!apartamentos.get(i).isHabilitada())
+				{
+					indice++;
+				}
+			}
+		}
+		catch( SQLException e)
+		{
+			System.err.println("[Excepción!] SQLException "+ e.getMessage());
+			e.printStackTrace();
+			throw e;
+		}
+		catch(Exception e)
+		{
+			System.err.println("[Excepción!] Exception "+ e.getMessage());
+			e.printStackTrace();
+			throw e;
+		}
+		finally
+		{
+			try
+			{
+				dao.cerrarRecursos();
+				if(this.conn!=null)
+					this.conn.close();
+			}
+			catch(SQLException e)
+			{
+				System.err.println(("[Excepción!] SQLException mientras se cerraban los recursos: "+e.getMessage()));
+				e.printStackTrace();
+				throw e;
+			}
+		}
+		return indice;
+	}
+
+	//RFC 6
+	
+	public List<Contrato> usoAlohandes(Cliente cliente) throws Exception
+	{
+		DAOCliente dao= new DAOCliente();
+		DAOContrato daoCon = new DAOContrato();
+		DAOClienteContrato daoCC = new DAOClienteContrato();
+		List<Contrato> contratosCliente = new ArrayList<>();
+		
+		try 
+		{
+			this.conn=darConexion();
+			dao.setConn(conn);
+			daoCon.setConn(conn);
+			daoCC.setConn(conn);
+			
+			List<ClienteContrato> clienteCon= daoCC.getClienteContratos();
+			for (ClienteContrato clienteContrato : clienteCon) {
+				if(clienteContrato.getCliente().equals(cliente))
+				{
+					for(int j=0; j<clienteContrato.getContratos().size(); j++)
+					{
+						contratosCliente.add(clienteContrato.getContratos().get(j));
+					}
+				}
+				
+			}
+		}
+		catch( SQLException e)
+		{
+			System.err.println("[Excepción!] SQLException "+ e.getMessage());
+			e.printStackTrace();
+			throw e;
+		}
+		catch(Exception e)
+		{
+			System.err.println("[Excepción!] Exception "+ e.getMessage());
+			e.printStackTrace();
+			throw e;
+		}
+		finally
+		{
+			try
+			{
+				dao.cerrarRecursos();
+				daoCC.cerrarRecursos();
+				daoCon.cerrarRecursos();
+				if(this.conn!=null)
+					this.conn.close();
+			}
+			catch(SQLException e)
+			{
+				System.err.println(("[Excepción!] SQLException mientras se cerraban los recursos: "+e.getMessage()));
+				e.printStackTrace();
+				throw e;
+			}
+		}
+		return contratosCliente;
+	}
+	
+	
+	//RFC 8
+	
+	public List<Cliente> clientesFrecuentes() throws Exception
+	{
+		DAOCliente dao= new DAOCliente();
+		DAOContrato daoCon = new DAOContrato();
+		DAOClienteContrato daoCC = new DAOClienteContrato();
+		List<Cliente> clientesFrecuentes = new ArrayList<>();
+		
+		try 
+		{
+			this.conn=darConexion();
+			dao.setConn(conn);
+			daoCon.setConn(conn);
+			daoCC.setConn(conn);
+			
+			List<ClienteContrato> clienteCon= daoCC.getClienteContratos();
+			for (ClienteContrato clienteContrato : clienteCon) {
+				if(clienteContrato.getContratos().size()>=2)
+				{
+					clientesFrecuentes.add(clienteContrato.getCliente());
+				}
+				
+			}
+		}
+		catch( SQLException e)
+		{
+			System.err.println("[Excepción!] SQLException "+ e.getMessage());
+			e.printStackTrace();
+			throw e;
+		}
+		catch(Exception e)
+		{
+			System.err.println("[Excepción!] Exception "+ e.getMessage());
+			e.printStackTrace();
+			throw e;
+		}
+		finally
+		{
+			try
+			{
+				dao.cerrarRecursos();
+				daoCC.cerrarRecursos();
+				daoCon.cerrarRecursos();
+				if(this.conn!=null)
+					this.conn.close();
+			}
+			catch(SQLException e)
+			{
+				System.err.println(("[Excepción!] SQLException mientras se cerraban los recursos: "+e.getMessage()));
+				e.printStackTrace();
+				throw e;
+			}
+		}
+		return clientesFrecuentes;
+	}
+	
+	
+	// RFC 9
+	
+	public List<Apartamento> menosDemanda() throws Exception
+	{
+		DAOApartamento dao= new DAOApartamento();
+		List<Apartamento> apartamentos;
+		List<Apartamento>menosPopulares = new ArrayList<>();
+		try 
+		{
+			this.conn=darConexion();
+			dao.setConn(conn);
+			apartamentos=dao.getApartamentos();
+			for (int i=0; i<apartamentos.size()-1; i++)
+			{
+				Apartamento menos = apartamentos.get(i);
+				int menorPosicion = i;
+				for (int j=i+1; j<apartamentos.size(); j++)
+				{
+					if(apartamentos.get(j).getVecesSolicitada()<menos.getVecesSolicitada())
+					{
+						menos = apartamentos.get(j);
+						menorPosicion = j;
+					}
+				}
+				Apartamento temp = apartamentos.get(i);
+				apartamentos.set(i, menos);
+				apartamentos.set(menorPosicion, temp);
+			}
+			
+			for(int k=apartamentos.size(); k==5; k--)
+			{
+				menosPopulares.add(apartamentos.get(k));
+			}
+		}
+		catch( SQLException e)
+		{
+			System.err.println("[Excepción!] SQLException "+ e.getMessage());
+			e.printStackTrace();
+			throw e;
+		}
+		catch(Exception e)
+		{
+			System.err.println("[Excepción!] Exception "+ e.getMessage());
+			e.printStackTrace();
+			throw e;
+		}
+		finally
+		{
+			try
+			{
+				dao.cerrarRecursos();
+				if(this.conn!=null)
+					this.conn.close();
+			}
+			catch(SQLException e)
+			{
+				System.err.println(("[Excepción!] SQLException mientras se cerraban los recursos: "+e.getMessage()));
+				e.printStackTrace();
+				throw e;
+			}
+		}
+		return menosPopulares;
+	}
+	
+	
 }
+
+

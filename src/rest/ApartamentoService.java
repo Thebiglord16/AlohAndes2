@@ -66,7 +66,7 @@ public class ApartamentoService {
 			AlohAndesTM tm = new AlohAndesTM(getPath());
 			Operador op=tm.getOperadorById(operadorId);
 			if(op!=null){
-				
+
 				//TODO Crea la relacion
 				ArrayList<Apartamento> aptos=new ArrayList<>();
 				aptos.add(Apartamento);
@@ -113,13 +113,13 @@ public class ApartamentoService {
 			AlohAndesTM tm = new AlohAndesTM(getPath());
 			Operador op=tm.getOperadorById(operadorId);
 			if(op!=null){
-			ArrayList<Apartamento> habs=new ArrayList<>();
-			habs.add(Apartamento);
-			OperadorApartamento oh=new OperadorApartamento(op, habs);	
-			tm.deleteApartamento(Apartamento);
-			tm.deleteOperadorApartamento(oh);
-			//TODO borrar de la relacion
-			return Response.status(200).entity(Apartamento).build();
+				ArrayList<Apartamento> habs=new ArrayList<>();
+				habs.add(Apartamento);
+				OperadorApartamento oh=new OperadorApartamento(op, habs);	
+				tm.deleteApartamento(Apartamento);
+				tm.deleteOperadorApartamento(oh);
+				//TODO borrar de la relacion
+				return Response.status(200).entity(Apartamento).build();
 			}
 			else
 				return Response.status(404).entity("No existe el operador , por lo tanto no existen Apartamentoes de el").build();
@@ -128,7 +128,7 @@ public class ApartamentoService {
 			return Response.status(500).entity(doErrorMessage(e)).build();
 		}
 	}
-	
+
 
 	@PUT
 	@Path("/deshabilitar")
@@ -149,7 +149,7 @@ public class ApartamentoService {
 			return Response.status(500).entity(doErrorMessage(e)).build();
 		}
 	}
-	
+
 	@PUT
 	@Path("/habilitar")
 	@Consumes({ MediaType.APPLICATION_JSON })
@@ -168,5 +168,96 @@ public class ApartamentoService {
 			return Response.status(500).entity(doErrorMessage(e)).build();
 		}
 	}
+
+
+	//RFC1
+
+	@GET
+	@Path("/dineroProveedor")
+	@Produces({ MediaType.APPLICATION_JSON })
+	public Response getDineroProveedor(Apartamento apartamento, @PathParam("operadorId") Integer operadorId) {
+
+		try {
+			AlohAndesTM tm = new AlohAndesTM(getPath());
+			Operador op=tm.getOperadorById(operadorId);
+			if(op!=null){			
+				tm.dineroProveedor(apartamento);
+				return Response.status(200).entity(tm.dineroProveedor(apartamento)).build();
+
+			}
+			else
+				return Response.status(404).entity("No existe el operador").build();
+		} 
+		catch (Exception e) {
+			return Response.status(500).entity(doErrorMessage(e)).build();
+		}
+	}
 	
+	//RFC 2
+	
+	@GET
+	@Path("/ofertasMasPopulares")
+	@Produces({ MediaType.APPLICATION_JSON })
+	public Response getOfertasMasPopulares(@PathParam("operadorId") Integer operadorId) {
+
+		try {
+			AlohAndesTM tm = new AlohAndesTM(getPath());
+			Operador op=tm.getOperadorById(operadorId);
+			if(op!=null){			
+				tm.ofertasMasPopulares();
+				return Response.status(200).entity(tm.ofertasMasPopulares()).build();
+
+			}
+			else
+				return Response.status(404).entity("No existe el operador").build();
+		} 
+		catch (Exception e) {
+			return Response.status(500).entity(doErrorMessage(e)).build();
+		}
+	}
+	
+	//RFC3
+	
+	@GET
+	@Path("/indiceOcupamiento")
+	@Produces({ MediaType.APPLICATION_JSON })
+	public Response getIndiceOcupamiento(@PathParam("operadorId") Integer operadorId) {
+
+		try {
+			AlohAndesTM tm = new AlohAndesTM(getPath());
+			Operador op=tm.getOperadorById(operadorId);
+			if(op!=null){	
+				return Response.status(200).entity(tm.indiceOcupamiento()).build();
+			}
+			else
+				return Response.status(404).entity("No existe el operador").build();
+		} 
+		catch (Exception e) {
+			return Response.status(500).entity(doErrorMessage(e)).build();
+		}
+	}
+	
+	//RFC 9
+	
+	@GET
+	@Path("/menosDemanda")
+	@Produces({ MediaType.APPLICATION_JSON })
+	public Response getMenosDemanda(@PathParam("operadorId") Integer operadorId) {
+
+		try {
+			AlohAndesTM tm = new AlohAndesTM(getPath());
+			Operador op=tm.getOperadorById(operadorId);
+			if(op!=null){			
+				tm.ofertasMasPopulares();
+				return Response.status(200).entity(tm.menosDemanda()).build();
+
+			}
+			else
+				return Response.status(404).entity("No existe el operador").build();
+		} 
+		catch (Exception e) {
+			return Response.status(500).entity(doErrorMessage(e)).build();
+		}
+	}
+
 }
