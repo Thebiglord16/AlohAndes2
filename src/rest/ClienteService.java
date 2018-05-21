@@ -17,7 +17,7 @@ import javax.ws.rs.core.Response;
 import tm.AlohAndesTM;
 import vos.Cliente;
 
-@Path("clientes")
+@Path("/clientes")
 public class ClienteService {
 	
 	@Context
@@ -42,6 +42,22 @@ public class ClienteService {
 			List<Cliente> clientes;
 			clientes = tm.getAllClientes();
 			return Response.status(200).entity(clientes).build();
+		} 
+		catch (Exception e) {
+			return Response.status(500).entity(doErrorMessage(e)).build();
+		}
+	}
+	
+	@GET
+	@Path("/buenos" )
+	@Produces({ MediaType.APPLICATION_JSON })
+	public Response getBuenosClientes() {
+		
+		try {
+			AlohAndesTM tm = new AlohAndesTM(getPath());
+			
+			
+			return Response.status(200).entity(tm.buenosClientes()).build();
 		} 
 		catch (Exception e) {
 			return Response.status(500).entity(doErrorMessage(e)).build();

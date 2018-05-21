@@ -5,8 +5,10 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.List;
 
 import vos.Cliente;
+import vos.VOMejorCliente;
 
 public class DAOCliente {
 	
@@ -97,6 +99,28 @@ public class DAOCliente {
 		prepStmt.executeQuery();
 	}
 	
+	public ArrayList<VOMejorCliente> mejoresClientes() throws SQLException
+	{
+		ArrayList<VOMejorCliente> res=new ArrayList<>();
+		String sql=String.format("select nombre, correo, identificacion,habitacion_id, costo, tipo from %1$s.contrato_habitacion join (select * from %1$s.contrato join (select * from %1$s.cliente join %1$s.cliente_contrato on %1$s.cliente.id=%1$s.cliente_contrato.cliente_id)A on %1$s.contrato.id=A.contrato_id)B on B.contrato_id=%1$s.contrato_habitacion.CONTRATO_ID  where costo>=150 or tipo=0 andfecha_inicio='01-01-19';",USUARIO);
+		System.out.println(sql);
+		PreparedStatement prepStmt=conn.prepareStatement(sql);
+		recursos.add(prepStmt);
+		ResultSet rs=prepStmt.executeQuery();
+		while(rs.next())
+		{
+			Integer id=rs.getInt("CLIENTE_ID");
+			String nombre=rs.getString("NOMBRE");
+			String correo=rs.getString("CORREO");
+			Integer tipo=rs.getInt("TIPO");
+			Integer identificacion=rs.getInt("IDENTIFICACION");
+			Integer habitacion_id=rs.getInt("HABITACION_ID");
+			Double costo=rs.getDouble("COSTO");
+			res.add(new VOMejorCliente(id, identificacion, nombre, correo, tipo, habitacion_id, costo));
+		}
+		return res;
+	}
+	
 	public void setConn(Connection connection){
 		this.conn = connection;
 	}
@@ -119,7 +143,8 @@ public class DAOCliente {
 		String nombre=resultSet.getString("NOMBRE");
 		String correo=resultSet.getString("CORREO");
 		Integer tipo=resultSet.getInt("TIPO");
-		Cliente cliente=new Cliente(id, identificacion,correo,tipo,nombre);
+		String fechaIngreso=resultSet.getString("FECHA_INGRESO");
+		Cliente cliente=new Cliente(id, identificacion,correo,tipo,nombre, fechaIngreso);
 		return cliente;
 	}
 }

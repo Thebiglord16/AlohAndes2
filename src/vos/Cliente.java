@@ -24,13 +24,17 @@ public class Cliente {
 	@JsonProperty(value="tipo")
 	private Integer tipo;
 	
-	public Cliente(@JsonProperty(value="id") Integer id, @JsonProperty(value="identificacion") Integer identificacion, @JsonProperty(value="correo")String correo, @JsonProperty(value="tipo")Integer tipo, @JsonProperty("nombre")String nombre)
+	@JsonProperty(value="fecha_ingreso")
+	private String fechaIngreso;
+	
+	public Cliente(@JsonProperty(value="id") Integer id, @JsonProperty(value="identificacion") Integer identificacion, @JsonProperty(value="correo")String correo, @JsonProperty(value="tipo")Integer tipo, @JsonProperty("nombre")String nombre,@JsonProperty(value="fecha_ingreso")String fechaIngreso)
 	{
 		this.id=id;
 		this.identificacion=identificacion;
 		this.correo=correo;
 		this.tipo=tipo;
 		this.nombre=nombre;
+		this.fechaIngreso=fechaIngreso;
 	}
 
 	
@@ -77,6 +81,18 @@ public class Cliente {
 
 	public void setTipo(Integer tipo) {
 		this.tipo = tipo;
+	}
+
+
+
+	public String getFechaIngreso() {
+		return fechaIngreso;
+	}
+
+
+
+	public void setFechaIngreso(String fechaIngreso) {
+		this.fechaIngreso = fechaIngreso;
 	}
 	
 	
