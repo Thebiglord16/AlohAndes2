@@ -1,19 +1,6 @@
 
 package tm;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.IOException;
-import java.sql.Connection;
-import java.sql.Date;
-import java.sql.DriverManager;
-import java.sql.SQLException;
-import java.sql.Savepoint;
-import java.sql.Timestamp;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Properties;
-
 import javax.ws.rs.core.Response;
 
 import org.codehaus.jackson.annotate.JsonProperty;
@@ -110,13 +97,13 @@ public class AlohAndesTM {
 		}
 		catch( SQLException e)
 		{
-			System.err.println("[ExcepciÛn!] SQLException "+ e.getMessage());
+			System.err.println("[Excepci√≥n!] SQLException "+ e.getMessage());
 			e.printStackTrace();
 			throw e;
 		}
 		catch(Exception e)
 		{
-			System.err.println("[ExcepciÛn!] Exception "+ e.getMessage());
+			System.err.println("[Excepci√≥n!] Exception "+ e.getMessage());
 			e.printStackTrace();
 			throw e;
 		}
@@ -130,7 +117,7 @@ public class AlohAndesTM {
 			}
 			catch(SQLException e)
 			{
-				System.err.println(("[ExcepciÛn!] SQLException mientras se cerraban los recursos: "+e.getMessage()));
+				System.err.println(("[Excepci√≥n!] SQLException mientras se cerraban los recursos: "+e.getMessage()));
 				e.printStackTrace();
 				throw e;
 			}
@@ -150,13 +137,13 @@ public class AlohAndesTM {
 		}
 		catch( SQLException e)
 		{
-			System.err.println("[ExcepciÛn!] SQLException "+ e.getMessage());
+			System.err.println("[Excepci√≥n!] SQLException "+ e.getMessage());
 			e.printStackTrace();
 			throw e;
 		}
 		catch(Exception e)
 		{
-			System.err.println("[ExcepciÛn!] Exception "+ e.getMessage());
+			System.err.println("[Excepci√≥n!] Exception "+ e.getMessage());
 			e.printStackTrace();
 			throw e;
 		}
@@ -170,7 +157,7 @@ public class AlohAndesTM {
 			}
 			catch(SQLException e)
 			{
-				System.err.println(("[ExcepciÛn!] SQLException mientras se cerraban los recursos: "+e.getMessage()));
+				System.err.println(("[Excepci√≥n!] SQLException mientras se cerraban los recursos: "+e.getMessage()));
 				e.printStackTrace();
 				throw e;
 			}
@@ -189,13 +176,13 @@ public class AlohAndesTM {
 		}
 		catch( SQLException e)
 		{
-			System.err.println("[ExcepciÛn!] SQLException "+ e.getMessage());
+			System.err.println("[Excepci√≥n!] SQLException "+ e.getMessage());
 			e.printStackTrace();
 			throw e;
 		}
 		catch(Exception e)
 		{
-			System.err.println("[ExcepciÛn!] Exception "+ e.getMessage());
+			System.err.println("[Excepci√≥n!] Exception "+ e.getMessage());
 			e.printStackTrace();
 			throw e;
 		}
@@ -209,7 +196,7 @@ public class AlohAndesTM {
 			}
 			catch(SQLException e)
 			{
-				System.err.println(("[ExcepciÛn!] SQLException mientras se cerraban los recursos: "+e.getMessage()));
+				System.err.println(("[Excepci√≥n!] SQLException mientras se cerraban los recursos: "+e.getMessage()));
 				e.printStackTrace();
 				throw e;
 			}
@@ -227,13 +214,13 @@ public class AlohAndesTM {
 		}
 		catch( SQLException e)
 		{
-			System.err.println("[ExcepciÛn!] SQLException "+ e.getMessage());
+			System.err.println("[Excepci√≥n!] SQLException "+ e.getMessage());
 			e.printStackTrace();
 			throw e;
 		}
 		catch(Exception e)
 		{
-			System.err.println("[ExcepciÛn!] Exception "+ e.getMessage());
+			System.err.println("[Excepci√≥n!] Exception "+ e.getMessage());
 			e.printStackTrace();
 			throw e;
 		}
@@ -247,7 +234,7 @@ public class AlohAndesTM {
 			}
 			catch(SQLException e)
 			{
-				System.err.println(("[ExcepciÛn!] SQLException mientras se cerraban los recursos: "+e.getMessage()));
+				System.err.println(("[Excepci√≥n!] SQLException mientras se cerraban los recursos: "+e.getMessage()));
 				e.printStackTrace();
 				throw e;
 			}
@@ -269,13 +256,13 @@ public class AlohAndesTM {
 		}
 		catch( SQLException e)
 		{
-			System.err.println("[ExcepciÛn!] SQLException "+ e.getMessage());
+			System.err.println("[Excepci√≥n!] SQLException "+ e.getMessage());
 			e.printStackTrace();
 			throw e;
 		}
 		catch(Exception e)
 		{
-			System.err.println("[ExcepciÛn!] Exception "+ e.getMessage());
+			System.err.println("[Excepci√≥n!] Exception "+ e.getMessage());
 			e.printStackTrace();
 			throw e;
 		}
@@ -289,7 +276,7 @@ public class AlohAndesTM {
 			}
 			catch(SQLException e)
 			{
-				System.err.println(("[ExcepciÛn!] SQLException mientras se cerraban los recursos: "+e.getMessage()));
+				System.err.println(("[Excepci√≥n!] SQLException mientras se cerraban los recursos: "+e.getMessage()));
 				e.printStackTrace();
 				throw e;
 			}
@@ -309,13 +296,13 @@ public class AlohAndesTM {
 		}
 		catch( SQLException e)
 		{
-			System.err.println("[ExcepciÛn!] SQLException "+ e.getMessage());
+			System.err.println("[Excepci√≥n!] SQLException "+ e.getMessage());
 			e.printStackTrace();
 			throw e;
 		}
 		catch(Exception e)
 		{
-			System.err.println("[ExcepciÛn!] Exception "+ e.getMessage());
+			System.err.println("[Excepci√≥n!] Exception "+ e.getMessage());
 			e.printStackTrace();
 			throw e;
 		}
@@ -329,7 +316,7 @@ public class AlohAndesTM {
 			}
 			catch(SQLException e)
 			{
-				System.err.println(("[ExcepciÛn!] SQLException mientras se cerraban los recursos: "+e.getMessage()));
+				System.err.println(("[Excepci√≥n!] SQLException mientras se cerraban los recursos: "+e.getMessage()));
 				e.printStackTrace();
 				throw e;
 			}
@@ -349,13 +336,13 @@ public class AlohAndesTM {
 		}
 		catch( SQLException e)
 		{
-			System.err.println("[ExcepciÛn!] SQLException "+ e.getMessage());
+			System.err.println("[Excepci√≥n!] SQLException "+ e.getMessage());
 			e.printStackTrace();
 			throw e;
 		}
 		catch(Exception e)
 		{
-			System.err.println("[ExcepciÛn!] Exception "+ e.getMessage());
+			System.err.println("[Excepci√≥n!] Exception "+ e.getMessage());
 			e.printStackTrace();
 			throw e;
 		}
@@ -369,7 +356,7 @@ public class AlohAndesTM {
 			}
 			catch(SQLException e)
 			{
-				System.err.println(("[ExcepciÛn!] SQLException mientras se cerraban los recursos: "+e.getMessage()));
+				System.err.println(("[Excepci√≥n!] SQLException mientras se cerraban los recursos: "+e.getMessage()));
 				e.printStackTrace();
 				throw e;
 			}
@@ -388,13 +375,13 @@ public class AlohAndesTM {
 		}
 		catch( SQLException e)
 		{
-			System.err.println("[ExcepciÛn!] SQLException "+ e.getMessage());
+			System.err.println("[Excepci√≥n!] SQLException "+ e.getMessage());
 			e.printStackTrace();
 			throw e;
 		}
 		catch(Exception e)
 		{
-			System.err.println("[ExcepciÛn!] Exception "+ e.getMessage());
+			System.err.println("[Excepci√≥n!] Exception "+ e.getMessage());
 			e.printStackTrace();
 			throw e;
 		}
@@ -408,7 +395,7 @@ public class AlohAndesTM {
 			}
 			catch(SQLException e)
 			{
-				System.err.println(("[ExcepciÛn!] SQLException mientras se cerraban los recursos: "+e.getMessage()));
+				System.err.println(("[Excepci√≥n!] SQLException mientras se cerraban los recursos: "+e.getMessage()));
 				e.printStackTrace();
 				throw e;
 			}
@@ -426,13 +413,13 @@ public class AlohAndesTM {
 		}
 		catch( SQLException e)
 		{
-			System.err.println("[ExcepciÛn!] SQLException "+ e.getMessage());
+			System.err.println("[Excepci√≥n!] SQLException "+ e.getMessage());
 			e.printStackTrace();
 			throw e;
 		}
 		catch(Exception e)
 		{
-			System.err.println("[ExcepciÛn!] Exception "+ e.getMessage());
+			System.err.println("[Excepci√≥n!] Exception "+ e.getMessage());
 			e.printStackTrace();
 			throw e;
 		}
@@ -446,7 +433,7 @@ public class AlohAndesTM {
 			}
 			catch(SQLException e)
 			{
-				System.err.println(("[ExcepciÛn!] SQLException mientras se cerraban los recursos: "+e.getMessage()));
+				System.err.println(("[Excepci√≥n!] SQLException mientras se cerraban los recursos: "+e.getMessage()));
 				e.printStackTrace();
 				throw e;
 			}
@@ -468,13 +455,13 @@ public class AlohAndesTM {
 		}
 		catch( SQLException e)
 		{
-			System.err.println("[ExcepciÛn!] SQLException "+ e.getMessage());
+			System.err.println("[Excepci√≥n!] SQLException "+ e.getMessage());
 			e.printStackTrace();
 			throw e;
 		}
 		catch(Exception e)
 		{
-			System.err.println("[ExcepciÛn!] Exception "+ e.getMessage());
+			System.err.println("[Excepci√≥n!] Exception "+ e.getMessage());
 			e.printStackTrace();
 			throw e;
 		}
@@ -488,7 +475,7 @@ public class AlohAndesTM {
 			}
 			catch(SQLException e)
 			{
-				System.err.println(("[ExcepciÛn!] SQLException mientras se cerraban los recursos: "+e.getMessage()));
+				System.err.println(("[Excepci√≥n!] SQLException mientras se cerraban los recursos: "+e.getMessage()));
 				e.printStackTrace();
 				throw e;
 			}
@@ -509,13 +496,13 @@ public class AlohAndesTM {
 		}
 		catch( SQLException e)
 		{
-			System.err.println("[ExcepciÛn!] SQLException "+ e.getMessage());
+			System.err.println("[Excepci√≥n!] SQLException "+ e.getMessage());
 			e.printStackTrace();
 			throw e;
 		}
 		catch(Exception e)
 		{
-			System.err.println("[ExcepciÛn!] Exception "+ e.getMessage());
+			System.err.println("[Excepci√≥n!] Exception "+ e.getMessage());
 			e.printStackTrace();
 			throw e;
 		}
@@ -529,7 +516,7 @@ public class AlohAndesTM {
 			}
 			catch(SQLException e)
 			{
-				System.err.println(("[ExcepciÛn!] SQLException mientras se cerraban los recursos: "+e.getMessage()));
+				System.err.println(("[Excepci√≥n!] SQLException mientras se cerraban los recursos: "+e.getMessage()));
 				e.printStackTrace();
 				throw e;
 			}
@@ -549,13 +536,13 @@ public class AlohAndesTM {
 		}
 		catch( SQLException e)
 		{
-			System.err.println("[ExcepciÛn!] SQLException "+ e.getMessage());
+			System.err.println("[Excepci√≥n!] SQLException "+ e.getMessage());
 			e.printStackTrace();
 			throw e;
 		}
 		catch(Exception e)
 		{
-			System.err.println("[ExcepciÛn!] Exception "+ e.getMessage());
+			System.err.println("[Excepci√≥n!] Exception "+ e.getMessage());
 			e.printStackTrace();
 			throw e;
 		}
@@ -569,7 +556,7 @@ public class AlohAndesTM {
 			}
 			catch(SQLException e)
 			{
-				System.err.println(("[ExcepciÛn!] SQLException mientras se cerraban los recursos: "+e.getMessage()));
+				System.err.println(("[Excepci√≥n!] SQLException mientras se cerraban los recursos: "+e.getMessage()));
 				e.printStackTrace();
 				throw e;
 			}
@@ -589,13 +576,13 @@ public class AlohAndesTM {
 		}
 		catch( SQLException e)
 		{
-			System.err.println("[ExcepciÛn!] SQLException "+ e.getMessage());
+			System.err.println("[Excepci√≥n!] SQLException "+ e.getMessage());
 			e.printStackTrace();
 			throw e;
 		}
 		catch(Exception e)
 		{
-			System.err.println("[ExcepciÛn!] Exception "+ e.getMessage());
+			System.err.println("[Excepci√≥n!] Exception "+ e.getMessage());
 			e.printStackTrace();
 			throw e;
 		}
@@ -609,7 +596,7 @@ public class AlohAndesTM {
 			}
 			catch(SQLException e)
 			{
-				System.err.println(("[ExcepciÛn!] SQLException mientras se cerraban los recursos: "+e.getMessage()));
+				System.err.println(("[Excepci√≥n!] SQLException mientras se cerraban los recursos: "+e.getMessage()));
 				e.printStackTrace();
 				throw e;
 			}
@@ -628,13 +615,13 @@ public class AlohAndesTM {
 		}
 		catch( SQLException e)
 		{
-			System.err.println("[ExcepciÛn!] SQLException "+ e.getMessage());
+			System.err.println("[Excepci√≥n!] SQLException "+ e.getMessage());
 			e.printStackTrace();
 			throw e;
 		}
 		catch(Exception e)
 		{
-			System.err.println("[ExcepciÛn!] Exception "+ e.getMessage());
+			System.err.println("[Excepci√≥n!] Exception "+ e.getMessage());
 			e.printStackTrace();
 			throw e;
 		}
@@ -648,7 +635,7 @@ public class AlohAndesTM {
 			}
 			catch(SQLException e)
 			{
-				System.err.println(("[ExcepciÛn!] SQLException mientras se cerraban los recursos: "+e.getMessage()));
+				System.err.println(("[Excepci√≥n!] SQLException mientras se cerraban los recursos: "+e.getMessage()));
 				e.printStackTrace();
 				throw e;
 			}
@@ -666,13 +653,13 @@ public class AlohAndesTM {
 		}
 		catch( SQLException e)
 		{
-			System.err.println("[ExcepciÛn!] SQLException "+ e.getMessage());
+			System.err.println("[Excepci√≥n!] SQLException "+ e.getMessage());
 			e.printStackTrace();
 			throw e;
 		}
 		catch(Exception e)
 		{
-			System.err.println("[ExcepciÛn!] Exception "+ e.getMessage());
+			System.err.println("[Excepci√≥n!] Exception "+ e.getMessage());
 			e.printStackTrace();
 			throw e;
 		}
@@ -686,7 +673,7 @@ public class AlohAndesTM {
 			}
 			catch(SQLException e)
 			{
-				System.err.println(("[ExcepciÛn!] SQLException mientras se cerraban los recursos: "+e.getMessage()));
+				System.err.println(("[Excepci√≥n!] SQLException mientras se cerraban los recursos: "+e.getMessage()));
 				e.printStackTrace();
 				throw e;
 			}
@@ -708,13 +695,13 @@ public class AlohAndesTM {
 		}
 		catch( SQLException e)
 		{
-			System.err.println("[ExcepciÛn!] SQLException "+ e.getMessage());
+			System.err.println("[Excepci√≥n!] SQLException "+ e.getMessage());
 			e.printStackTrace();
 			throw e;
 		}
 		catch(Exception e)
 		{
-			System.err.println("[ExcepciÛn!] Exception "+ e.getMessage());
+			System.err.println("[Excepci√≥n!] Exception "+ e.getMessage());
 			e.printStackTrace();
 			throw e;
 		}
@@ -728,7 +715,7 @@ public class AlohAndesTM {
 			}
 			catch(SQLException e)
 			{
-				System.err.println(("[ExcepciÛn!] SQLException mientras se cerraban los recursos: "+e.getMessage()));
+				System.err.println(("[Excepci√≥n!] SQLException mientras se cerraban los recursos: "+e.getMessage()));
 				e.printStackTrace();
 				throw e;
 			}
@@ -749,13 +736,13 @@ public class AlohAndesTM {
 		}
 		catch( SQLException e)
 		{
-			System.err.println("[ExcepciÛn!] SQLException "+ e.getMessage());
+			System.err.println("[Excepci√≥n!] SQLException "+ e.getMessage());
 			e.printStackTrace();
 			throw e;
 		}
 		catch(Exception e)
 		{
-			System.err.println("[ExcepciÛn!] Exception "+ e.getMessage());
+			System.err.println("[Excepci√≥n!] Exception "+ e.getMessage());
 			e.printStackTrace();
 			throw e;
 		}
@@ -769,7 +756,7 @@ public class AlohAndesTM {
 			}
 			catch(SQLException e)
 			{
-				System.err.println(("[ExcepciÛn!] SQLException mientras se cerraban los recursos: "+e.getMessage()));
+				System.err.println(("[Excepci√≥n!] SQLException mientras se cerraban los recursos: "+e.getMessage()));
 				e.printStackTrace();
 				throw e;
 			}
@@ -858,13 +845,13 @@ public class AlohAndesTM {
 		}
 		catch( SQLException e)
 		{
-			System.err.println("[ExcepciÛn!] SQLException "+ e.getMessage());
+			System.err.println("[Excepci√≥n!] SQLException "+ e.getMessage());
 			e.printStackTrace();
 			throw e;
 		}
 		catch(Exception e)
 		{
-			System.err.println("[ExcepciÛn!] Exception "+ e.getMessage());
+			System.err.println("[Excepci√≥n!] Exception "+ e.getMessage());
 			e.printStackTrace();
 			throw e;
 		}
@@ -878,7 +865,7 @@ public class AlohAndesTM {
 			}
 			catch(SQLException e)
 			{
-				System.err.println(("[ExcepciÛn!] SQLException mientras se cerraban los recursos: "+e.getMessage()));
+				System.err.println(("[Excepci√≥n!] SQLException mientras se cerraban los recursos: "+e.getMessage()));
 				e.printStackTrace();
 				throw e;
 			}
@@ -897,13 +884,13 @@ public class AlohAndesTM {
 		}
 		catch( SQLException e)
 		{
-			System.err.println("[ExcepciÛn!] SQLException "+ e.getMessage());
+			System.err.println("[Excepci√≥n!] SQLException "+ e.getMessage());
 			e.printStackTrace();
 			throw e;
 		}
 		catch(Exception e)
 		{
-			System.err.println("[ExcepciÛn!] Exception "+ e.getMessage());
+			System.err.println("[Excepci√≥n!] Exception "+ e.getMessage());
 			e.printStackTrace();
 			throw e;
 		}
@@ -917,7 +904,7 @@ public class AlohAndesTM {
 			}
 			catch(SQLException e)
 			{
-				System.err.println(("[ExcepciÛn!] SQLException mientras se cerraban los recursos: "+e.getMessage()));
+				System.err.println(("[Excepci√≥n!] SQLException mientras se cerraban los recursos: "+e.getMessage()));
 				e.printStackTrace();
 				throw e;
 			}
@@ -935,13 +922,13 @@ public class AlohAndesTM {
 		}
 		catch( SQLException e)
 		{
-			System.err.println("[ExcepciÛn!] SQLException "+ e.getMessage());
+			System.err.println("[Excepci√≥n!] SQLException "+ e.getMessage());
 			e.printStackTrace();
 			throw e;
 		}
 		catch(Exception e)
 		{
-			System.err.println("[ExcepciÛn!] Exception "+ e.getMessage());
+			System.err.println("[Excepci√≥n!] Exception "+ e.getMessage());
 			e.printStackTrace();
 			throw e;
 		}
@@ -955,7 +942,7 @@ public class AlohAndesTM {
 			}
 			catch(SQLException e)
 			{
-				System.err.println(("[ExcepciÛn!] SQLException mientras se cerraban los recursos: "+e.getMessage()));
+				System.err.println(("[Excepci√≥n!] SQLException mientras se cerraban los recursos: "+e.getMessage()));
 				e.printStackTrace();
 				throw e;
 			}
@@ -977,13 +964,13 @@ public class AlohAndesTM {
 		}
 		catch( SQLException e)
 		{
-			System.err.println("[ExcepciÛn!] SQLException "+ e.getMessage());
+			System.err.println("[Excepci√≥n!] SQLException "+ e.getMessage());
 			e.printStackTrace();
 			throw e;
 		}
 		catch(Exception e)
 		{
-			System.err.println("[ExcepciÛn!] Exception "+ e.getMessage());
+			System.err.println("[Excepci√≥n!] Exception "+ e.getMessage());
 			e.printStackTrace();
 			throw e;
 		}
@@ -997,7 +984,7 @@ public class AlohAndesTM {
 			}
 			catch(SQLException e)
 			{
-				System.err.println(("[ExcepciÛn!] SQLException mientras se cerraban los recursos: "+e.getMessage()));
+				System.err.println(("[Excepci√≥n!] SQLException mientras se cerraban los recursos: "+e.getMessage()));
 				e.printStackTrace();
 				throw e;
 			}
@@ -1018,13 +1005,13 @@ public class AlohAndesTM {
 		}
 		catch( SQLException e)
 		{
-			System.err.println("[ExcepciÛn!] SQLException "+ e.getMessage());
+			System.err.println("[Excepci√≥n!] SQLException "+ e.getMessage());
 			e.printStackTrace();
 			throw e;
 		}
 		catch(Exception e)
 		{
-			System.err.println("[ExcepciÛn!] Exception "+ e.getMessage());
+			System.err.println("[Excepci√≥n!] Exception "+ e.getMessage());
 			e.printStackTrace();
 			throw e;
 		}
@@ -1038,7 +1025,7 @@ public class AlohAndesTM {
 			}
 			catch(SQLException e)
 			{
-				System.err.println(("[ExcepciÛn!] SQLException mientras se cerraban los recursos: "+e.getMessage()));
+				System.err.println(("[Excepci√≥n!] SQLException mientras se cerraban los recursos: "+e.getMessage()));
 				e.printStackTrace();
 				throw e;
 			}
@@ -1058,13 +1045,13 @@ public class AlohAndesTM {
 		}
 		catch( SQLException e)
 		{
-			System.err.println("[ExcepciÛn!] SQLException "+ e.getMessage());
+			System.err.println("[Excepci√≥n!] SQLException "+ e.getMessage());
 			e.printStackTrace();
 			throw e;
 		}
 		catch(Exception e)
 		{
-			System.err.println("[ExcepciÛn!] Exception "+ e.getMessage());
+			System.err.println("[Excepci√≥n!] Exception "+ e.getMessage());
 			e.printStackTrace();
 			throw e;
 		}
@@ -1078,7 +1065,7 @@ public class AlohAndesTM {
 			}
 			catch(SQLException e)
 			{
-				System.err.println(("[ExcepciÛn!] SQLException mientras se cerraban los recursos: "+e.getMessage()));
+				System.err.println(("[Excepci√≥n!] SQLException mientras se cerraban los recursos: "+e.getMessage()));
 				e.printStackTrace();
 				throw e;
 			}
@@ -1097,13 +1084,13 @@ public class AlohAndesTM {
 		}
 		catch( SQLException e)
 		{
-			System.err.println("[ExcepciÛn!] SQLException "+ e.getMessage());
+			System.err.println("[Excepci√≥n!] SQLException "+ e.getMessage());
 			e.printStackTrace();
 			throw e;
 		}
 		catch(Exception e)
 		{
-			System.err.println("[ExcepciÛn!] Exception "+ e.getMessage());
+			System.err.println("[Excepci√≥n!] Exception "+ e.getMessage());
 			e.printStackTrace();
 			throw e;
 		}
@@ -1117,7 +1104,7 @@ public class AlohAndesTM {
 			}
 			catch(SQLException e)
 			{
-				System.err.println(("[ExcepciÛn!] SQLException mientras se cerraban los recursos: "+e.getMessage()));
+				System.err.println(("[Excepci√≥n!] SQLException mientras se cerraban los recursos: "+e.getMessage()));
 				e.printStackTrace();
 				throw e;
 			}
@@ -1135,13 +1122,13 @@ public class AlohAndesTM {
 		}
 		catch( SQLException e)
 		{
-			System.err.println("[ExcepciÛn!] SQLException "+ e.getMessage());
+			System.err.println("[Excepci√≥n!] SQLException "+ e.getMessage());
 			e.printStackTrace();
 			throw e;
 		}
 		catch(Exception e)
 		{
-			System.err.println("[ExcepciÛn!] Exception "+ e.getMessage());
+			System.err.println("[Excepci√≥n!] Exception "+ e.getMessage());
 			e.printStackTrace();
 			throw e;
 		}
@@ -1155,7 +1142,7 @@ public class AlohAndesTM {
 			}
 			catch(SQLException e)
 			{
-				System.err.println(("[ExcepciÛn!] SQLException mientras se cerraban los recursos: "+e.getMessage()));
+				System.err.println(("[Excepci√≥n!] SQLException mientras se cerraban los recursos: "+e.getMessage()));
 				e.printStackTrace();
 				throw e;
 			}
@@ -1177,13 +1164,13 @@ public class AlohAndesTM {
 		}
 		catch( SQLException e)
 		{
-			System.err.println("[ExcepciÛn!] SQLException "+ e.getMessage());
+			System.err.println("[Excepci√≥n!] SQLException "+ e.getMessage());
 			e.printStackTrace();
 			throw e;
 		}
 		catch(Exception e)
 		{
-			System.err.println("[ExcepciÛn!] Exception "+ e.getMessage());
+			System.err.println("[Excepci√≥n!] Exception "+ e.getMessage());
 			e.printStackTrace();
 			throw e;
 		}
@@ -1197,7 +1184,7 @@ public class AlohAndesTM {
 			}
 			catch(SQLException e)
 			{
-				System.err.println(("[ExcepciÛn!] SQLException mientras se cerraban los recursos: "+e.getMessage()));
+				System.err.println(("[Excepci√≥n!] SQLException mientras se cerraban los recursos: "+e.getMessage()));
 				e.printStackTrace();
 				throw e;
 			}
@@ -1217,13 +1204,13 @@ public class AlohAndesTM {
 		}
 		catch( SQLException e)
 		{
-			System.err.println("[ExcepciÛn!] SQLException "+ e.getMessage());
+			System.err.println("[Excepci√≥n!] SQLException "+ e.getMessage());
 			e.printStackTrace();
 			throw e;
 		}
 		catch(Exception e)
 		{
-			System.err.println("[ExcepciÛn!] Exception "+ e.getMessage());
+			System.err.println("[Excepci√≥n!] Exception "+ e.getMessage());
 			e.printStackTrace();
 			throw e;
 		}
@@ -1237,7 +1224,7 @@ public class AlohAndesTM {
 			}
 			catch(SQLException e)
 			{
-				System.err.println(("[ExcepciÛn!] SQLException mientras se cerraban los recursos: "+e.getMessage()));
+				System.err.println(("[Excepci√≥n!] SQLException mientras se cerraban los recursos: "+e.getMessage()));
 				e.printStackTrace();
 				throw e;
 			}
@@ -1257,13 +1244,13 @@ public class AlohAndesTM {
 		}
 		catch( SQLException e)
 		{
-			System.err.println("[ExcepciÛn!] SQLException "+ e.getMessage());
+			System.err.println("[Excepci√≥n!] SQLException "+ e.getMessage());
 			e.printStackTrace();
 			throw e;
 		}
 		catch(Exception e)
 		{
-			System.err.println("[ExcepciÛn!] Exception "+ e.getMessage());
+			System.err.println("[Excepci√≥n!] Exception "+ e.getMessage());
 			e.printStackTrace();
 			throw e;
 		}
@@ -1277,7 +1264,7 @@ public class AlohAndesTM {
 			}
 			catch(SQLException e)
 			{
-				System.err.println(("[ExcepciÛn!] SQLException mientras se cerraban los recursos: "+e.getMessage()));
+				System.err.println(("[Excepci√≥n!] SQLException mientras se cerraban los recursos: "+e.getMessage()));
 				e.printStackTrace();
 				throw e;
 			}
@@ -1296,13 +1283,13 @@ public class AlohAndesTM {
 		}
 		catch( SQLException e)
 		{
-			System.err.println("[ExcepciÛn!] SQLException "+ e.getMessage());
+			System.err.println("[Excepci√≥n!] SQLException "+ e.getMessage());
 			e.printStackTrace();
 			throw e;
 		}
 		catch(Exception e)
 		{
-			System.err.println("[ExcepciÛn!] Exception "+ e.getMessage());
+			System.err.println("[Excepci√≥n!] Exception "+ e.getMessage());
 			e.printStackTrace();
 			throw e;
 		}
@@ -1316,7 +1303,7 @@ public class AlohAndesTM {
 			}
 			catch(SQLException e)
 			{
-				System.err.println(("[ExcepciÛn!] SQLException mientras se cerraban los recursos: "+e.getMessage()));
+				System.err.println(("[Excepci√≥n!] SQLException mientras se cerraban los recursos: "+e.getMessage()));
 				e.printStackTrace();
 				throw e;
 			}
@@ -1334,13 +1321,13 @@ public class AlohAndesTM {
 		}
 		catch( SQLException e)
 		{
-			System.err.println("[ExcepciÛn!] SQLException "+ e.getMessage());
+			System.err.println("[Excepci√≥n!] SQLException "+ e.getMessage());
 			e.printStackTrace();
 			throw e;
 		}
 		catch(Exception e)
 		{
-			System.err.println("[ExcepciÛn!] Exception "+ e.getMessage());
+			System.err.println("[Excepci√≥n!] Exception "+ e.getMessage());
 			e.printStackTrace();
 			throw e;
 		}
@@ -1354,7 +1341,7 @@ public class AlohAndesTM {
 			}
 			catch(SQLException e)
 			{
-				System.err.println(("[ExcepciÛn!] SQLException mientras se cerraban los recursos: "+e.getMessage()));
+				System.err.println(("[Excepci√≥n!] SQLException mientras se cerraban los recursos: "+e.getMessage()));
 				e.printStackTrace();
 				throw e;
 			}
@@ -1376,13 +1363,13 @@ public class AlohAndesTM {
 		}
 		catch( SQLException e)
 		{
-			System.err.println("[ExcepciÛn!] SQLException "+ e.getMessage());
+			System.err.println("[Excepci√≥n!] SQLException "+ e.getMessage());
 			e.printStackTrace();
 			throw e;
 		}
 		catch(Exception e)
 		{
-			System.err.println("[ExcepciÛn!] Exception "+ e.getMessage());
+			System.err.println("[Excepci√≥n!] Exception "+ e.getMessage());
 			e.printStackTrace();
 			throw e;
 		}
@@ -1396,7 +1383,7 @@ public class AlohAndesTM {
 			}
 			catch(SQLException e)
 			{
-				System.err.println(("[ExcepciÛn!] SQLException mientras se cerraban los recursos: "+e.getMessage()));
+				System.err.println(("[Excepci√≥n!] SQLException mientras se cerraban los recursos: "+e.getMessage()));
 				e.printStackTrace();
 				throw e;
 			}
@@ -1417,13 +1404,13 @@ public class AlohAndesTM {
 		}
 		catch( SQLException e)
 		{
-			System.err.println("[ExcepciÛn!] SQLException "+ e.getMessage());
+			System.err.println("[Excepci√≥n!] SQLException "+ e.getMessage());
 			e.printStackTrace();
 			throw e;
 		}
 		catch(Exception e)
 		{
-			System.err.println("[ExcepciÛn!] Exception "+ e.getMessage());
+			System.err.println("[Excepci√≥n!] Exception "+ e.getMessage());
 			e.printStackTrace();
 			throw e;
 		}
@@ -1437,7 +1424,7 @@ public class AlohAndesTM {
 			}
 			catch(SQLException e)
 			{
-				System.err.println(("[ExcepciÛn!] SQLException mientras se cerraban los recursos: "+e.getMessage()));
+				System.err.println(("[Excepci√≥n!] SQLException mientras se cerraban los recursos: "+e.getMessage()));
 				e.printStackTrace();
 				throw e;
 			}
@@ -1457,13 +1444,13 @@ public class AlohAndesTM {
 		}
 		catch( SQLException e)
 		{
-			System.err.println("[ExcepciÛn!] SQLException "+ e.getMessage());
+			System.err.println("[Excepci√≥n!] SQLException "+ e.getMessage());
 			e.printStackTrace();
 			throw e;
 		}
 		catch(Exception e)
 		{
-			System.err.println("[ExcepciÛn!] Exception "+ e.getMessage());
+			System.err.println("[Excepci√≥n!] Exception "+ e.getMessage());
 			e.printStackTrace();
 			throw e;
 		}
@@ -1477,7 +1464,7 @@ public class AlohAndesTM {
 			}
 			catch(SQLException e)
 			{
-				System.err.println(("[ExcepciÛn!] SQLException mientras se cerraban los recursos: "+e.getMessage()));
+				System.err.println(("[Excepci√≥n!] SQLException mientras se cerraban los recursos: "+e.getMessage()));
 				e.printStackTrace();
 				throw e;
 			}
@@ -1496,13 +1483,13 @@ public class AlohAndesTM {
 		}
 		catch( SQLException e)
 		{
-			System.err.println("[ExcepciÛn!] SQLException "+ e.getMessage());
+			System.err.println("[Excepci√≥n!] SQLException "+ e.getMessage());
 			e.printStackTrace();
 			throw e;
 		}
 		catch(Exception e)
 		{
-			System.err.println("[ExcepciÛn!] Exception "+ e.getMessage());
+			System.err.println("[Excepci√≥n!] Exception "+ e.getMessage());
 			e.printStackTrace();
 			throw e;
 		}
@@ -1516,7 +1503,7 @@ public class AlohAndesTM {
 			}
 			catch(SQLException e)
 			{
-				System.err.println(("[ExcepciÛn!] SQLException mientras se cerraban los recursos: "+e.getMessage()));
+				System.err.println(("[Excepci√≥n!] SQLException mientras se cerraban los recursos: "+e.getMessage()));
 				e.printStackTrace();
 				throw e;
 			}
@@ -1534,13 +1521,13 @@ public class AlohAndesTM {
 		}
 		catch( SQLException e)
 		{
-			System.err.println("[ExcepciÛn!] SQLException "+ e.getMessage());
+			System.err.println("[Excepci√≥n!] SQLException "+ e.getMessage());
 			e.printStackTrace();
 			throw e;
 		}
 		catch(Exception e)
 		{
-			System.err.println("[ExcepciÛn!] Exception "+ e.getMessage());
+			System.err.println("[Excepci√≥n!] Exception "+ e.getMessage());
 			e.printStackTrace();
 			throw e;
 		}
@@ -1554,7 +1541,7 @@ public class AlohAndesTM {
 			}
 			catch(SQLException e)
 			{
-				System.err.println(("[ExcepciÛn!] SQLException mientras se cerraban los recursos: "+e.getMessage()));
+				System.err.println(("[Excepci√≥n!] SQLException mientras se cerraban los recursos: "+e.getMessage()));
 				e.printStackTrace();
 				throw e;
 			}
@@ -1576,13 +1563,13 @@ public class AlohAndesTM {
 		}
 		catch( SQLException e)
 		{
-			System.err.println("[ExcepciÛn!] SQLException "+ e.getMessage());
+			System.err.println("[Excepci√≥n!] SQLException "+ e.getMessage());
 			e.printStackTrace();
 			throw e;
 		}
 		catch(Exception e)
 		{
-			System.err.println("[ExcepciÛn!] Exception "+ e.getMessage());
+			System.err.println("[Excepci√≥n!] Exception "+ e.getMessage());
 			e.printStackTrace();
 			throw e;
 		}
@@ -1596,7 +1583,7 @@ public class AlohAndesTM {
 			}
 			catch(SQLException e)
 			{
-				System.err.println(("[ExcepciÛn!] SQLException mientras se cerraban los recursos: "+e.getMessage()));
+				System.err.println(("[Excepci√≥n!] SQLException mientras se cerraban los recursos: "+e.getMessage()));
 				e.printStackTrace();
 				throw e;
 			}
@@ -1617,13 +1604,13 @@ public class AlohAndesTM {
 		}
 		catch( SQLException e)
 		{
-			System.err.println("[ExcepciÛn!] SQLException "+ e.getMessage());
+			System.err.println("[Excepci√≥n!] SQLException "+ e.getMessage());
 			e.printStackTrace();
 			throw e;
 		}
 		catch(Exception e)
 		{
-			System.err.println("[ExcepciÛn!] Exception "+ e.getMessage());
+			System.err.println("[Excepci√≥n!] Exception "+ e.getMessage());
 			e.printStackTrace();
 			throw e;
 		}
@@ -1637,7 +1624,7 @@ public class AlohAndesTM {
 			}
 			catch(SQLException e)
 			{
-				System.err.println(("[ExcepciÛn!] SQLException mientras se cerraban los recursos: "+e.getMessage()));
+				System.err.println(("[Excepci√≥n!] SQLException mientras se cerraban los recursos: "+e.getMessage()));
 				e.printStackTrace();
 				throw e;
 			}
@@ -1657,13 +1644,13 @@ public class AlohAndesTM {
 		}
 		catch( SQLException e)
 		{
-			System.err.println("[ExcepciÛn!] SQLException "+ e.getMessage());
+			System.err.println("[Excepci√≥n!] SQLException "+ e.getMessage());
 			e.printStackTrace();
 			throw e;
 		}
 		catch(Exception e)
 		{
-			System.err.println("[ExcepciÛn!] Exception "+ e.getMessage());
+			System.err.println("[Excepci√≥n!] Exception "+ e.getMessage());
 			e.printStackTrace();
 			throw e;
 		}
@@ -1677,7 +1664,7 @@ public class AlohAndesTM {
 			}
 			catch(SQLException e)
 			{
-				System.err.println(("[ExcepciÛn!] SQLException mientras se cerraban los recursos: "+e.getMessage()));
+				System.err.println(("[Excepci√≥n!] SQLException mientras se cerraban los recursos: "+e.getMessage()));
 				e.printStackTrace();
 				throw e;
 			}
@@ -1696,13 +1683,13 @@ public class AlohAndesTM {
 		}
 		catch( SQLException e)
 		{
-			System.err.println("[ExcepciÛn!] SQLException "+ e.getMessage());
+			System.err.println("[Excepci√≥n!] SQLException "+ e.getMessage());
 			e.printStackTrace();
 			throw e;
 		}
 		catch(Exception e)
 		{
-			System.err.println("[ExcepciÛn!] Exception "+ e.getMessage());
+			System.err.println("[Excepci√≥n!] Exception "+ e.getMessage());
 			e.printStackTrace();
 			throw e;
 		}
@@ -1716,7 +1703,7 @@ public class AlohAndesTM {
 			}
 			catch(SQLException e)
 			{
-				System.err.println(("[ExcepciÛn!] SQLException mientras se cerraban los recursos: "+e.getMessage()));
+				System.err.println(("[Excepci√≥n!] SQLException mientras se cerraban los recursos: "+e.getMessage()));
 				e.printStackTrace();
 				throw e;
 			}
@@ -1734,13 +1721,13 @@ public class AlohAndesTM {
 		}
 		catch( SQLException e)
 		{
-			System.err.println("[ExcepciÛn!] SQLException "+ e.getMessage());
+			System.err.println("[Excepci√≥n!] SQLException "+ e.getMessage());
 			e.printStackTrace();
 			throw e;
 		}
 		catch(Exception e)
 		{
-			System.err.println("[ExcepciÛn!] Exception "+ e.getMessage());
+			System.err.println("[Excepci√≥n!] Exception "+ e.getMessage());
 			e.printStackTrace();
 			throw e;
 		}
@@ -1754,7 +1741,7 @@ public class AlohAndesTM {
 			}
 			catch(SQLException e)
 			{
-				System.err.println(("[ExcepciÛn!] SQLException mientras se cerraban los recursos: "+e.getMessage()));
+				System.err.println(("[Excepci√≥n!] SQLException mientras se cerraban los recursos: "+e.getMessage()));
 				e.printStackTrace();
 				throw e;
 			}
@@ -1776,13 +1763,13 @@ public class AlohAndesTM {
 		}
 		catch( SQLException e)
 		{
-			System.err.println("[ExcepciÛn!] SQLException "+ e.getMessage());
+			System.err.println("[Excepci√≥n!] SQLException "+ e.getMessage());
 			e.printStackTrace();
 			throw e;
 		}
 		catch(Exception e)
 		{
-			System.err.println("[ExcepciÛn!] Exception "+ e.getMessage());
+			System.err.println("[Excepci√≥n!] Exception "+ e.getMessage());
 			e.printStackTrace();
 			throw e;
 		}
@@ -1796,7 +1783,7 @@ public class AlohAndesTM {
 			}
 			catch(SQLException e)
 			{
-				System.err.println(("[ExcepciÛn!] SQLException mientras se cerraban los recursos: "+e.getMessage()));
+				System.err.println(("[Excepci√≥n!] SQLException mientras se cerraban los recursos: "+e.getMessage()));
 				e.printStackTrace();
 				throw e;
 			}
@@ -1817,13 +1804,13 @@ public class AlohAndesTM {
 		}
 		catch( SQLException e)
 		{
-			System.err.println("[ExcepciÛn!] SQLException "+ e.getMessage());
+			System.err.println("[Excepci√≥n!] SQLException "+ e.getMessage());
 			e.printStackTrace();
 			throw e;
 		}
 		catch(Exception e)
 		{
-			System.err.println("[ExcepciÛn!] Exception "+ e.getMessage());
+			System.err.println("[Excepci√≥n!] Exception "+ e.getMessage());
 			e.printStackTrace();
 			throw e;
 		}
@@ -1837,7 +1824,7 @@ public class AlohAndesTM {
 			}
 			catch(SQLException e)
 			{
-				System.err.println(("[ExcepciÛn!] SQLException mientras se cerraban los recursos: "+e.getMessage()));
+				System.err.println(("[Excepci√≥n!] SQLException mientras se cerraban los recursos: "+e.getMessage()));
 				e.printStackTrace();
 				throw e;
 			}
@@ -1857,13 +1844,13 @@ public class AlohAndesTM {
 		}
 		catch( SQLException e)
 		{
-			System.err.println("[ExcepciÛn!] SQLException "+ e.getMessage());
+			System.err.println("[Excepci√≥n!] SQLException "+ e.getMessage());
 			e.printStackTrace();
 			throw e;
 		}
 		catch(Exception e)
 		{
-			System.err.println("[ExcepciÛn!] Exception "+ e.getMessage());
+			System.err.println("[Excepci√≥n!] Exception "+ e.getMessage());
 			e.printStackTrace();
 			throw e;
 		}
@@ -1877,7 +1864,7 @@ public class AlohAndesTM {
 			}
 			catch(SQLException e)
 			{
-				System.err.println(("[ExcepciÛn!] SQLException mientras se cerraban los recursos: "+e.getMessage()));
+				System.err.println(("[Excepci√≥n!] SQLException mientras se cerraban los recursos: "+e.getMessage()));
 				e.printStackTrace();
 				throw e;
 			}
@@ -1896,13 +1883,13 @@ public class AlohAndesTM {
 		}
 		catch( SQLException e)
 		{
-			System.err.println("[ExcepciÛn!] SQLException "+ e.getMessage());
+			System.err.println("[Excepci√≥n!] SQLException "+ e.getMessage());
 			e.printStackTrace();
 			throw e;
 		}
 		catch(Exception e)
 		{
-			System.err.println("[ExcepciÛn!] Exception "+ e.getMessage());
+			System.err.println("[Excepci√≥n!] Exception "+ e.getMessage());
 			e.printStackTrace();
 			throw e;
 		}
@@ -1916,7 +1903,7 @@ public class AlohAndesTM {
 			}
 			catch(SQLException e)
 			{
-				System.err.println(("[ExcepciÛn!] SQLException mientras se cerraban los recursos: "+e.getMessage()));
+				System.err.println(("[Excepci√≥n!] SQLException mientras se cerraban los recursos: "+e.getMessage()));
 				e.printStackTrace();
 				throw e;
 			}
@@ -1934,13 +1921,13 @@ public class AlohAndesTM {
 		}
 		catch( SQLException e)
 		{
-			System.err.println("[ExcepciÛn!] SQLException "+ e.getMessage());
+			System.err.println("[Excepci√≥n!] SQLException "+ e.getMessage());
 			e.printStackTrace();
 			throw e;
 		}
 		catch(Exception e)
 		{
-			System.err.println("[ExcepciÛn!] Exception "+ e.getMessage());
+			System.err.println("[Excepci√≥n!] Exception "+ e.getMessage());
 			e.printStackTrace();
 			throw e;
 		}
@@ -1954,7 +1941,7 @@ public class AlohAndesTM {
 			}
 			catch(SQLException e)
 			{
-				System.err.println(("[ExcepciÛn!] SQLException mientras se cerraban los recursos: "+e.getMessage()));
+				System.err.println(("[Excepci√≥n!] SQLException mientras se cerraban los recursos: "+e.getMessage()));
 				e.printStackTrace();
 				throw e;
 			}
@@ -1976,13 +1963,13 @@ public class AlohAndesTM {
 		}
 		catch( SQLException e)
 		{
-			System.err.println("[ExcepciÛn!] SQLException "+ e.getMessage());
+			System.err.println("[Excepci√≥n!] SQLException "+ e.getMessage());
 			e.printStackTrace();
 			throw e;
 		}
 		catch(Exception e)
 		{
-			System.err.println("[ExcepciÛn!] Exception "+ e.getMessage());
+			System.err.println("[Excepci√≥n!] Exception "+ e.getMessage());
 			e.printStackTrace();
 			throw e;
 		}
@@ -1996,7 +1983,7 @@ public class AlohAndesTM {
 			}
 			catch(SQLException e)
 			{
-				System.err.println(("[ExcepciÛn!] SQLException mientras se cerraban los recursos: "+e.getMessage()));
+				System.err.println(("[Excepci√≥n!] SQLException mientras se cerraban los recursos: "+e.getMessage()));
 				e.printStackTrace();
 				throw e;
 			}
@@ -2018,13 +2005,13 @@ public class AlohAndesTM {
 		}
 		catch( SQLException e)
 		{
-			System.err.println("[ExcepciÛn!] SQLException "+ e.getMessage());
+			System.err.println("[Excepci√≥n!] SQLException "+ e.getMessage());
 			e.printStackTrace();
 			throw e;
 		}
 		catch(Exception e)
 		{
-			System.err.println("[ExcepciÛn!] Exception "+ e.getMessage());
+			System.err.println("[Excepci√≥n!] Exception "+ e.getMessage());
 			e.printStackTrace();
 			throw e;
 		}
@@ -2038,7 +2025,7 @@ public class AlohAndesTM {
 			}
 			catch(SQLException e)
 			{
-				System.err.println(("[ExcepciÛn!] SQLException mientras se cerraban los recursos: "+e.getMessage()));
+				System.err.println(("[Excepci√≥n!] SQLException mientras se cerraban los recursos: "+e.getMessage()));
 				e.printStackTrace();
 				throw e;
 			}
@@ -2058,13 +2045,13 @@ public class AlohAndesTM {
 		}
 		catch( SQLException e)
 		{
-			System.err.println("[ExcepciÛn!] SQLException "+ e.getMessage());
+			System.err.println("[Excepci√≥n!] SQLException "+ e.getMessage());
 			e.printStackTrace();
 			throw e;
 		}
 		catch(Exception e)
 		{
-			System.err.println("[ExcepciÛn!] Exception "+ e.getMessage());
+			System.err.println("[Excepci√≥n!] Exception "+ e.getMessage());
 			e.printStackTrace();
 			throw e;
 		}
@@ -2078,7 +2065,7 @@ public class AlohAndesTM {
 			}
 			catch(SQLException e)
 			{
-				System.err.println(("[ExcepciÛn!] SQLException mientras se cerraban los recursos: "+e.getMessage()));
+				System.err.println(("[Excepci√≥n!] SQLException mientras se cerraban los recursos: "+e.getMessage()));
 				e.printStackTrace();
 				throw e;
 			}
@@ -2097,13 +2084,13 @@ public class AlohAndesTM {
 		}
 		catch( SQLException e)
 		{
-			System.err.println("[ExcepciÛn!] SQLException "+ e.getMessage());
+			System.err.println("[Excepci√≥n!] SQLException "+ e.getMessage());
 			e.printStackTrace();
 			throw e;
 		}
 		catch(Exception e)
 		{
-			System.err.println("[ExcepciÛn!] Exception "+ e.getMessage());
+			System.err.println("[Excepci√≥n!] Exception "+ e.getMessage());
 			e.printStackTrace();
 			throw e;
 		}
@@ -2117,7 +2104,7 @@ public class AlohAndesTM {
 			}
 			catch(SQLException e)
 			{
-				System.err.println(("[ExcepciÛn!] SQLException mientras se cerraban los recursos: "+e.getMessage()));
+				System.err.println(("[Excepci√≥n!] SQLException mientras se cerraban los recursos: "+e.getMessage()));
 				e.printStackTrace();
 				throw e;
 			}
@@ -2135,13 +2122,13 @@ public class AlohAndesTM {
 		}
 		catch( SQLException e)
 		{
-			System.err.println("[ExcepciÛn!] SQLException "+ e.getMessage());
+			System.err.println("[Excepci√≥n!] SQLException "+ e.getMessage());
 			e.printStackTrace();
 			throw e;
 		}
 		catch(Exception e)
 		{
-			System.err.println("[ExcepciÛn!] Exception "+ e.getMessage());
+			System.err.println("[Excepci√≥n!] Exception "+ e.getMessage());
 			e.printStackTrace();
 			throw e;
 		}
@@ -2155,7 +2142,7 @@ public class AlohAndesTM {
 			}
 			catch(SQLException e)
 			{
-				System.err.println(("[ExcepciÛn!] SQLException mientras se cerraban los recursos: "+e.getMessage()));
+				System.err.println(("[Excepci√≥n!] SQLException mientras se cerraban los recursos: "+e.getMessage()));
 				e.printStackTrace();
 				throw e;
 			}
@@ -2177,13 +2164,13 @@ public class AlohAndesTM {
 		}
 		catch( SQLException e)
 		{
-			System.err.println("[ExcepciÛn!] SQLException "+ e.getMessage());
+			System.err.println("[Excepci√≥n!] SQLException "+ e.getMessage());
 			e.printStackTrace();
 			throw e;
 		}
 		catch(Exception e)
 		{
-			System.err.println("[ExcepciÛn!] Exception "+ e.getMessage());
+			System.err.println("[Excepci√≥n!] Exception "+ e.getMessage());
 			e.printStackTrace();
 			throw e;
 		}
@@ -2197,7 +2184,7 @@ public class AlohAndesTM {
 			}
 			catch(SQLException e)
 			{
-				System.err.println(("[ExcepciÛn!] SQLException mientras se cerraban los recursos: "+e.getMessage()));
+				System.err.println(("[Excepci√≥n!] SQLException mientras se cerraban los recursos: "+e.getMessage()));
 				e.printStackTrace();
 				throw e;
 			}
@@ -2218,13 +2205,13 @@ public class AlohAndesTM {
 		}
 		catch( SQLException e)
 		{
-			System.err.println("[ExcepciÛn!] SQLException "+ e.getMessage());
+			System.err.println("[Excepci√≥n!] SQLException "+ e.getMessage());
 			e.printStackTrace();
 			throw e;
 		}
 		catch(Exception e)
 		{
-			System.err.println("[ExcepciÛn!] Exception "+ e.getMessage());
+			System.err.println("[Excepci√≥n!] Exception "+ e.getMessage());
 			e.printStackTrace();
 			throw e;
 		}
@@ -2238,7 +2225,7 @@ public class AlohAndesTM {
 			}
 			catch(SQLException e)
 			{
-				System.err.println(("[ExcepciÛn!] SQLException mientras se cerraban los recursos: "+e.getMessage()));
+				System.err.println(("[Excepci√≥n!] SQLException mientras se cerraban los recursos: "+e.getMessage()));
 				e.printStackTrace();
 				throw e;
 			}
@@ -2258,13 +2245,13 @@ public class AlohAndesTM {
 		}
 		catch( SQLException e)
 		{
-			System.err.println("[ExcepciÛn!] SQLException "+ e.getMessage());
+			System.err.println("[Excepci√≥n!] SQLException "+ e.getMessage());
 			e.printStackTrace();
 			throw e;
 		}
 		catch(Exception e)
 		{
-			System.err.println("[ExcepciÛn!] Exception "+ e.getMessage());
+			System.err.println("[Excepci√≥n!] Exception "+ e.getMessage());
 			e.printStackTrace();
 			throw e;
 		}
@@ -2278,7 +2265,7 @@ public class AlohAndesTM {
 			}
 			catch(SQLException e)
 			{
-				System.err.println(("[ExcepciÛn!] SQLException mientras se cerraban los recursos: "+e.getMessage()));
+				System.err.println(("[Excepci√≥n!] SQLException mientras se cerraban los recursos: "+e.getMessage()));
 				e.printStackTrace();
 				throw e;
 			}
@@ -2297,13 +2284,13 @@ public class AlohAndesTM {
 		}
 		catch( SQLException e)
 		{
-			System.err.println("[ExcepciÛn!] SQLException "+ e.getMessage());
+			System.err.println("[Excepci√≥n!] SQLException "+ e.getMessage());
 			e.printStackTrace();
 			throw e;
 		}
 		catch(Exception e)
 		{
-			System.err.println("[ExcepciÛn!] Exception "+ e.getMessage());
+			System.err.println("[Excepci√≥n!] Exception "+ e.getMessage());
 			e.printStackTrace();
 			throw e;
 		}
@@ -2317,7 +2304,7 @@ public class AlohAndesTM {
 			}
 			catch(SQLException e)
 			{
-				System.err.println(("[ExcepciÛn!] SQLException mientras se cerraban los recursos: "+e.getMessage()));
+				System.err.println(("[Excepci√≥n!] SQLException mientras se cerraban los recursos: "+e.getMessage()));
 				e.printStackTrace();
 				throw e;
 			}
@@ -2335,13 +2322,13 @@ public class AlohAndesTM {
 		}
 		catch( SQLException e)
 		{
-			System.err.println("[ExcepciÛn!] SQLException "+ e.getMessage());
+			System.err.println("[Excepci√≥n!] SQLException "+ e.getMessage());
 			e.printStackTrace();
 			throw e;
 		}
 		catch(Exception e)
 		{
-			System.err.println("[ExcepciÛn!] Exception "+ e.getMessage());
+			System.err.println("[Excepci√≥n!] Exception "+ e.getMessage());
 			e.printStackTrace();
 			throw e;
 		}
@@ -2355,7 +2342,7 @@ public class AlohAndesTM {
 			}
 			catch(SQLException e)
 			{
-				System.err.println(("[ExcepciÛn!] SQLException mientras se cerraban los recursos: "+e.getMessage()));
+				System.err.println(("[Excepci√≥n!] SQLException mientras se cerraban los recursos: "+e.getMessage()));
 				e.printStackTrace();
 				throw e;
 			}
@@ -2377,13 +2364,13 @@ public class AlohAndesTM {
 		}
 		catch( SQLException e)
 		{
-			System.err.println("[ExcepciÛn!] SQLException "+ e.getMessage());
+			System.err.println("[Excepci√≥n!] SQLException "+ e.getMessage());
 			e.printStackTrace();
 			throw e;
 		}
 		catch(Exception e)
 		{
-			System.err.println("[ExcepciÛn!] Exception "+ e.getMessage());
+			System.err.println("[Excepci√≥n!] Exception "+ e.getMessage());
 			e.printStackTrace();
 			throw e;
 		}
@@ -2397,7 +2384,7 @@ public class AlohAndesTM {
 			}
 			catch(SQLException e)
 			{
-				System.err.println(("[ExcepciÛn!] SQLException mientras se cerraban los recursos: "+e.getMessage()));
+				System.err.println(("[Excepci√≥n!] SQLException mientras se cerraban los recursos: "+e.getMessage()));
 				e.printStackTrace();
 				throw e;
 			}
@@ -2412,7 +2399,7 @@ public class AlohAndesTM {
 		this.conn=darConexion();
 		conn.setAutoCommit(false);
 
-			//capacidad del apartamento que ya no estar· habilitado
+			//capacidad del apartamento que ya no estar√° habilitado
 			int capacidad = apto.getCacpacidad();
 
 			//contratos del apartamento
@@ -2468,13 +2455,13 @@ public class AlohAndesTM {
 
 							else
 							{
-								//aquÌ se supone que el estado cambia a inconcluso (o una vaina asi)
+								//aqu√≠ se supone que el estado cambia a inconcluso (o una vaina asi)
 								contrato.setEstado(5);
 							}
 
 						}
 
-						//Hasta aquÌ reasigno el apartamento del contrato en contratoApartamento
+						//Hasta aqu√≠ reasigno el apartamento del contrato en contratoApartamento
 
 						apto.setHabilitada(false);
 						updateApartamento(apto);
@@ -2546,7 +2533,7 @@ public class AlohAndesTM {
 			}
 			catch(SQLException e)
 			{
-				System.err.println(("[ExcepciÛn!] SQLException mientras se cerraban los recursos: "+e.getMessage()));
+				System.err.println(("[Excepci√≥n!] SQLException mientras se cerraban los recursos: "+e.getMessage()));
 				e.printStackTrace();
 				throw e;
 			}
@@ -2596,7 +2583,7 @@ public class AlohAndesTM {
 			}
 			catch(SQLException e)
 			{
-				System.err.println(("[ExcepciÛn!] SQLException mientras se cerraban los recursos: "+e.getMessage()));
+				System.err.println(("[Excepci√≥n!] SQLException mientras se cerraban los recursos: "+e.getMessage()));
 				e.printStackTrace();
 				throw e;
 			}
@@ -2717,13 +2704,13 @@ public class AlohAndesTM {
 				}
 				catch( SQLException e)
 				{
-					System.err.println("[ExcepciÛn!] SQLException "+ e.getMessage());
+					System.err.println("[Excepci√≥n!] SQLException "+ e.getMessage());
 					e.printStackTrace();
 					throw e;
 				}
 				catch(Exception e)
 				{
-					System.err.println("[ExcepciÛn!] Exception "+ e.getMessage());
+					System.err.println("[Excepci√≥n!] Exception "+ e.getMessage());
 					e.printStackTrace();
 					throw e;
 				}
@@ -2739,7 +2726,7 @@ public class AlohAndesTM {
 					}
 					catch(SQLException e)
 					{
-						System.err.println(("[ExcepciÛn!] SQLException mientras se cerraban los recursos: "+e.getMessage()));
+						System.err.println(("[Excepci√≥n!] SQLException mientras se cerraban los recursos: "+e.getMessage()));
 						e.printStackTrace();
 						throw e;
 					}
@@ -2784,13 +2771,13 @@ public class AlohAndesTM {
 			}
 			catch( SQLException e)
 			{
-				System.err.println("[ExcepciÛn!] SQLException "+ e.getMessage());
+				System.err.println("[Excepci√≥n!] SQLException "+ e.getMessage());
 				e.printStackTrace();
 				throw e;
 			}
 			catch(Exception e)
 			{
-				System.err.println("[ExcepciÛn!] Exception "+ e.getMessage());
+				System.err.println("[Excepci√≥n!] Exception "+ e.getMessage());
 				e.printStackTrace();
 				throw e;
 			}
@@ -2804,7 +2791,7 @@ public class AlohAndesTM {
 				}
 				catch(SQLException e)
 				{
-					System.err.println(("[ExcepciÛn!] SQLException mientras se cerraban los recursos: "+e.getMessage()));
+					System.err.println(("[Excepci√≥n!] SQLException mientras se cerraban los recursos: "+e.getMessage()));
 					e.printStackTrace();
 					throw e;
 				}
@@ -2834,13 +2821,13 @@ public class AlohAndesTM {
 			}
 			catch( SQLException e)
 			{
-				System.err.println("[ExcepciÛn!] SQLException "+ e.getMessage());
+				System.err.println("[Excepci√≥n!] SQLException "+ e.getMessage());
 				e.printStackTrace();
 				throw e;
 			}
 			catch(Exception e)
 			{
-				System.err.println("[ExcepciÛn!] Exception "+ e.getMessage());
+				System.err.println("[Excepci√≥n!] Exception "+ e.getMessage());
 				e.printStackTrace();
 				throw e;
 			}
@@ -2854,7 +2841,7 @@ public class AlohAndesTM {
 				}
 				catch(SQLException e)
 				{
-					System.err.println(("[ExcepciÛn!] SQLException mientras se cerraban los recursos: "+e.getMessage()));
+					System.err.println(("[Excepci√≥n!] SQLException mientras se cerraban los recursos: "+e.getMessage()));
 					e.printStackTrace();
 					throw e;
 				}
@@ -2892,13 +2879,13 @@ public class AlohAndesTM {
 			}
 			catch( SQLException e)
 			{
-				System.err.println("[ExcepciÛn!] SQLException "+ e.getMessage());
+				System.err.println("[Excepci√≥n!] SQLException "+ e.getMessage());
 				e.printStackTrace();
 				throw e;
 			}
 			catch(Exception e)
 			{
-				System.err.println("[ExcepciÛn!] Exception "+ e.getMessage());
+				System.err.println("[Excepci√≥n!] Exception "+ e.getMessage());
 				e.printStackTrace();
 				throw e;
 			}
@@ -2914,7 +2901,7 @@ public class AlohAndesTM {
 				}
 				catch(SQLException e)
 				{
-					System.err.println(("[ExcepciÛn!] SQLException mientras se cerraban los recursos: "+e.getMessage()));
+					System.err.println(("[Excepci√≥n!] SQLException mientras se cerraban los recursos: "+e.getMessage()));
 					e.printStackTrace();
 					throw e;
 				}
@@ -2950,13 +2937,13 @@ public class AlohAndesTM {
 			}
 			catch( SQLException e)
 			{
-				System.err.println("[ExcepciÛn!] SQLException "+ e.getMessage());
+				System.err.println("[Excepci√≥n!] SQLException "+ e.getMessage());
 				e.printStackTrace();
 				throw e;
 			}
 			catch(Exception e)
 			{
-				System.err.println("[ExcepciÛn!] Exception "+ e.getMessage());
+				System.err.println("[Excepci√≥n!] Exception "+ e.getMessage());
 				e.printStackTrace();
 				throw e;
 			}
@@ -2972,7 +2959,7 @@ public class AlohAndesTM {
 				}
 				catch(SQLException e)
 				{
-					System.err.println(("[ExcepciÛn!] SQLException mientras se cerraban los recursos: "+e.getMessage()));
+					System.err.println(("[Excepci√≥n!] SQLException mientras se cerraban los recursos: "+e.getMessage()));
 					e.printStackTrace();
 					throw e;
 				}
@@ -3017,13 +3004,13 @@ public class AlohAndesTM {
 			}
 			catch( SQLException e)
 			{
-				System.err.println("[ExcepciÛn!] SQLException "+ e.getMessage());
+				System.err.println("[Excepci√≥n!] SQLException "+ e.getMessage());
 				e.printStackTrace();
 				throw e;
 			}
 			catch(Exception e)
 			{
-				System.err.println("[ExcepciÛn!] Exception "+ e.getMessage());
+				System.err.println("[Excepci√≥n!] Exception "+ e.getMessage());
 				e.printStackTrace();
 				throw e;
 			}
@@ -3037,7 +3024,7 @@ public class AlohAndesTM {
 				}
 				catch(SQLException e)
 				{
-					System.err.println(("[ExcepciÛn!] SQLException mientras se cerraban los recursos: "+e.getMessage()));
+					System.err.println(("[Excepci√≥n!] SQLException mientras se cerraban los recursos: "+e.getMessage()));
 					e.printStackTrace();
 					throw e;
 				}
@@ -3080,7 +3067,7 @@ public class AlohAndesTM {
 			}
 			catch(Exception e) 
 			{
-				System.err.println("[ExcepciÛn!] Exception "+ e.getMessage());
+				System.err.println("[Excepci√≥n!] Exception "+ e.getMessage());
 				e.printStackTrace();
 				throw e;
 			}
@@ -3094,7 +3081,7 @@ public class AlohAndesTM {
 				}
 				catch(SQLException e)
 				{
-					System.err.println(("[ExcepciÛn!] SQLException mientras se cerraban los recursos: "+e.getMessage()));
+					System.err.println(("[Excepci√≥n!] SQLException mientras se cerraban los recursos: "+e.getMessage()));
 					e.printStackTrace();
 					throw e;
 				}
@@ -3103,4 +3090,3 @@ public class AlohAndesTM {
 		}
 		
 }
-

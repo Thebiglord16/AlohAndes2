@@ -141,4 +141,30 @@ public class ContratoService {
 		}
 	}
 
+	@GET
+	@Path("usoAlohandes")
+	@Produces({ MediaType.APPLICATION_JSON })
+	public Response getUsoAlohandes(@PathParam("owner")String owner, @PathParam("id") Integer idOwner) {
+
+		try {
+			
+			if(owner.equals("clientes")){
+				AlohAndesTM tm = new AlohAndesTM(getPath());
+				Cliente cliente=tm.getClienteById(idOwner);
+				if(cliente!=null){
+					List<Contrato> Contratos;
+					Contratos = tm.usoAlohandes(cliente);
+					return Response.status(200).entity(Contratos).build();
+				}
+				else
+					return Response.status(404).entity("No existe el operador").build();
+			}
+			else
+				return Response.status(404).entity("Error").build();
+		} 
+		catch (Exception e) {
+			return Response.status(500).entity(doErrorMessage(e)).build();
+		}
+	}
+
 }

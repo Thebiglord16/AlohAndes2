@@ -125,4 +125,21 @@ public class ClienteService {
 			return Response.status(500).entity(doErrorMessage(e)).build();
 		}
 	}
+	
+	@GET
+	@Path("/clientesFrecuentes")
+	@Produces({ MediaType.APPLICATION_JSON })
+	public Response getClientesFrecuentes() {
+		
+		try {
+			AlohAndesTM tm = new AlohAndesTM(getPath());
+			
+			List<Cliente> clientes;
+			clientes = tm.clientesFrecuentes();
+			return Response.status(200).entity(clientes).build();
+		} 
+		catch (Exception e) {
+			return Response.status(500).entity(doErrorMessage(e)).build();
+		}
+	}
 }
