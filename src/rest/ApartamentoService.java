@@ -259,5 +259,45 @@ public class ApartamentoService {
 			return Response.status(500).entity(doErrorMessage(e)).build();
 		}
 	}
+	
+	
+	@GET
+	@Path("/consumo/{fechaInicio:\\d+}/{fechaFin:\\d+}")
+	@Produces({ MediaType.APPLICATION_JSON })
+	public Response getConsumo(@PathParam("operadorId") Integer operadorId, Apartamento apartamento, @PathParam("fechaInicio") String fechaInicio, @PathParam("fechaFin") String fechaFin) {
+		try {
+			AlohAndesTM tm = new AlohAndesTM(getPath());
+			Operador op=tm.getOperadorById(operadorId);
+			if(op!=null){			
+				tm.ofertasMasPopulares();
+				return Response.status(200).entity(tm.consumoEnAlohandes(apartamento, fechaInicio, fechaFin)).build();
 
+			}
+			else
+				return Response.status(404).entity("No existe el operador").build();
+		} 
+		catch (Exception e) {
+			return Response.status(500).entity(doErrorMessage(e)).build();
+		}
+	}
+
+	@GET
+	@Path("/consumo/{fechaInicio:\\d+}/{fechaFin:\\d+}")
+	@Produces({ MediaType.APPLICATION_JSON })
+	public Response getConsumoV2(@PathParam("operadorId") Integer operadorId, Apartamento apartamento, @PathParam("fechaInicio") String fechaInicio, @PathParam("fechaFin") String fechaFin) {
+		try {
+			AlohAndesTM tm = new AlohAndesTM(getPath());
+			Operador op=tm.getOperadorById(operadorId);
+			if(op!=null){			
+				tm.ofertasMasPopulares();
+				return Response.status(200).entity(tm.consumoEnAlohandesV2(apartamento, fechaInicio, fechaFin)).build();
+
+			}
+			else
+				return Response.status(404).entity("No existe el operador").build();
+		} 
+		catch (Exception e) {
+			return Response.status(500).entity(doErrorMessage(e)).build();
+		}
+	}
 }

@@ -534,7 +534,7 @@ public class AlohAndesTM {
 		}
 		return Contratos;
 	}
-	
+
 	public List<Contrato> getContratosDescrpcion(String descripcion) throws Exception
 	{
 		DAOContrato dao= new DAOContrato();
@@ -574,7 +574,7 @@ public class AlohAndesTM {
 		}
 		return Contratos;
 	}
-	
+
 	public Contrato getContratoById(Integer id) throws Exception
 	{
 		DAOContrato dao=new DAOContrato();
@@ -2365,7 +2365,7 @@ public class AlohAndesTM {
 		}
 	}
 
-	
+
 	//RF9
 
 	public void deshabilitarOfertaAlojamiento(Apartamento apto) throws Exception
@@ -2373,79 +2373,79 @@ public class AlohAndesTM {
 		this.conn=darConexion();
 		conn.setAutoCommit(false);
 
-			//capacidad del apartamento que ya no estará habilitado
-			int capacidad = apto.getCacpacidad();
+		//capacidad del apartamento que ya no estará habilitado
+		int capacidad = apto.getCacpacidad();
 
-			//contratos del apartamento
-			List<ContratoApartamento> contratoApartamentos = getAllContratoApartamentos();
+		//contratos del apartamento
+		List<ContratoApartamento> contratoApartamentos = getAllContratoApartamentos();
 
-			//Lista de contratos del apartamento
-			List<Contrato> contratos = new ArrayList<Contrato>();
+		//Lista de contratos del apartamento
+		List<Contrato> contratos = new ArrayList<Contrato>();
 
-			if(!contratoApartamentos.isEmpty()){
-				for (ContratoApartamento contratoApartamento : contratoApartamentos) 
+		if(!contratoApartamentos.isEmpty()){
+			for (ContratoApartamento contratoApartamento : contratoApartamentos) 
+			{
+
+				Apartamento apto2 = contratoApartamento.getApartamento();
+				if(apto2.getId()==apto.getId())
 				{
-
-					Apartamento apto2 = contratoApartamento.getApartamento();
-					if(apto2.getId()==apto.getId())
+					List<Contrato> con = contratoApartamento.getContratos();
+					for (Contrato contrato : con) 
 					{
-						List<Contrato> con = contratoApartamento.getContratos();
-						for (Contrato contrato : con) 
-						{
-							contratos.add(contrato);
-						}
-					}
-				}
-
-				//Hasta aqui saco los contratos del apto
-
-				for (Contrato contrato : contratos) 
-				{
-					//Fecha de inicio de los contratos que se deben modificar
-					String inicio = contrato.getFechaInicio();
-
-					//Apartamentos disponibles en esa fecha
-					List<Apartamento> aptosDisp = getAllAptosDisponibles(inicio);
-					if(!aptosDisp.isEmpty())
-					{
-						for (Apartamento apartamento : aptosDisp) 
-						{
-							if(apartamento.getCacpacidad()==capacidad)
-							{
-								int idContrato = contrato.getId();
-
-								for (ContratoApartamento conn : contratoApartamentos) {
-									List<Contrato> con = conn.getContratos();
-									for (Contrato contrato1 : con) 
-									{
-										if(idContrato==contrato1.getId())
-										{
-											conn.setApartamento(apartamento);
-											updateContratoApartamento(conn);
-										}
-									}
-								}
-							}
-
-							else
-							{
-								//aquí se supone que el estado cambia a inconcluso (o una vaina asi)
-								contrato.setEstado(5);
-							}
-
-						}
-
-						//Hasta aquí reasigno el apartamento del contrato en contratoApartamento
-
-						apto.setHabilitada(false);
-						updateApartamento(apto);
+						contratos.add(contrato);
 					}
 				}
 			}
-		
+
+			//Hasta aqui saco los contratos del apto
+
+			for (Contrato contrato : contratos) 
+			{
+				//Fecha de inicio de los contratos que se deben modificar
+				String inicio = contrato.getFechaInicio();
+
+				//Apartamentos disponibles en esa fecha
+				List<Apartamento> aptosDisp = getAllAptosDisponibles(inicio);
+				if(!aptosDisp.isEmpty())
+				{
+					for (Apartamento apartamento : aptosDisp) 
+					{
+						if(apartamento.getCacpacidad()==capacidad)
+						{
+							int idContrato = contrato.getId();
+
+							for (ContratoApartamento conn : contratoApartamentos) {
+								List<Contrato> con = conn.getContratos();
+								for (Contrato contrato1 : con) 
+								{
+									if(idContrato==contrato1.getId())
+									{
+										conn.setApartamento(apartamento);
+										updateContratoApartamento(conn);
+									}
+								}
+							}
+						}
+
+						else
+						{
+							//aquí se supone que el estado cambia a inconcluso (o una vaina asi)
+							contrato.setEstado(5);
+						}
+
+					}
+
+					//Hasta aquí reasigno el apartamento del contrato en contratoApartamento
+
+					apto.setHabilitada(false);
+					updateApartamento(apto);
+				}
+			}
+		}
+
 
 	}
-				
+
 	//RF10
 
 	public void habilitarOfertaAlojamiento(Apartamento apto) throws Exception
@@ -2479,15 +2479,15 @@ public class AlohAndesTM {
 				else
 					continue;
 			}
-				for(int i=0;i<sr.getCantidad(); i++)
-				{
-					Contrato con=new Contrato(i+sr.hashCode(), sr.getFechaInicio(), sr.getFechaFin(), sr.getDescipcion(), 0 , 25000.0);
-					generarRelacionContrato("apartamentos",aptos.get(i).getId(),sr.getClientes().get(i).getId(),con);
-					this.conn=darConexion();
+			for(int i=0;i<sr.getCantidad(); i++)
+			{
+				Contrato con=new Contrato(i+sr.hashCode(), sr.getFechaInicio(), sr.getFechaFin(), sr.getDescipcion(), 0 , 25000.0);
+				generarRelacionContrato("apartamentos",aptos.get(i).getId(),sr.getClientes().get(i).getId(),con);
+				this.conn=darConexion();
 
-				}
-				conn.commit();
-				conn.setAutoCommit(true);
+			}
+			conn.commit();
+			conn.setAutoCommit(true);
 		}
 		catch(Exception e)
 		{
@@ -2495,13 +2495,13 @@ public class AlohAndesTM {
 			conn.rollback();
 			throw e;
 		}
-		
-		
+
+
 	}
 	public Contrato generarRelacionContrato(String owner,Integer idOwner, Integer idUser, Contrato contrato) throws Exception
 	{
 		if(owner.equals("apartamentos")){
-			
+
 			Apartamento apto=getApartamentoById(idOwner);
 			Cliente cliente=getClienteById(idUser);
 			if(apto!=null&& cliente!=null){
@@ -2545,9 +2545,9 @@ public class AlohAndesTM {
 				throw new Exception("No existe el operador , por lo tanto no existen Contratos de el");
 		}
 
-		
-		
-		
+
+
+
 
 		else
 			throw new Exception("No existe el operador , por lo tanto no existen Contratos de el");
@@ -2560,73 +2560,73 @@ public class AlohAndesTM {
 			x.setEstado(5);
 			updateContrato(x);
 		}
-			
+
 
 	}
-	
+
 	//RFC 1
-	
-		public int dineroProveedor(Apartamento apartamento) throws Exception
-		{	
-			DAOApartamento dao = new DAOApartamento();
-			DAOContratoApartamento daoRel = new DAOContratoApartamento();
-			DAOContrato daoCon = new DAOContrato();
-			List<ContratoApartamento> contratoApartamento = daoRel.getContratoApartamentos();
-			int dinero = 0;
-			try 
-			{
-				this.conn=darConexion();
-				dao.setConn(conn);
-				daoRel.setConn(conn);
-				daoCon.setConn(conn);
-				for (ContratoApartamento contratoApto : contratoApartamento) {
-					if(contratoApto.getApartamento().equals(apartamento))
+
+	public int dineroProveedor(Apartamento apartamento) throws Exception
+	{	
+		DAOApartamento dao = new DAOApartamento();
+		DAOContratoApartamento daoRel = new DAOContratoApartamento();
+		DAOContrato daoCon = new DAOContrato();
+		List<ContratoApartamento> contratoApartamento = daoRel.getContratoApartamentos();
+		int dinero = 0;
+		try 
+		{
+			this.conn=darConexion();
+			dao.setConn(conn);
+			daoRel.setConn(conn);
+			daoCon.setConn(conn);
+			for (ContratoApartamento contratoApto : contratoApartamento) {
+				if(contratoApto.getApartamento().equals(apartamento))
+				{
+					List<Contrato> con = contratoApto.getContratos();	
+					for (int j=0; j<con.size(); j++)
 					{
-						List<Contrato> con = contratoApto.getContratos();	
-						for (int j=0; j<con.size(); j++)
-						{
-							dinero+=con.get(j).getCosto();
-						}
+						dinero+=con.get(j).getCosto();
 					}
-					
 				}
-				
+
 			}
-			catch( SQLException e)
-			{
-				System.err.println("[Excepción!] SQLException "+ e.getMessage());
-				e.printStackTrace();
-				throw e;
-			}
-			catch(Exception e)
-			{
-				System.err.println("[Excepción!] Exception "+ e.getMessage());
-				e.printStackTrace();
-				throw e;
-			}
-			finally
-			{
-				try
-				{
-					dao.cerrarRecursos();
-					daoRel.cerrarRecursos();
-					daoCon.cerrarRecursos();
-					if(this.conn!=null)
-						this.conn.close();
-				}
-				catch(SQLException e)
-				{
-					System.err.println(("[Excepción!] SQLException mientras se cerraban los recursos: "+e.getMessage()));
-					e.printStackTrace();
-					throw e;
-				}
-			}
-			return dinero;
+
 		}
-	
-	
+		catch( SQLException e)
+		{
+			System.err.println("[Excepción!] SQLException "+ e.getMessage());
+			e.printStackTrace();
+			throw e;
+		}
+		catch(Exception e)
+		{
+			System.err.println("[Excepción!] Exception "+ e.getMessage());
+			e.printStackTrace();
+			throw e;
+		}
+		finally
+		{
+			try
+			{
+				dao.cerrarRecursos();
+				daoRel.cerrarRecursos();
+				daoCon.cerrarRecursos();
+				if(this.conn!=null)
+					this.conn.close();
+			}
+			catch(SQLException e)
+			{
+				System.err.println(("[Excepción!] SQLException mientras se cerraban los recursos: "+e.getMessage()));
+				e.printStackTrace();
+				throw e;
+			}
+		}
+		return dinero;
+	}
+
+
 	//RFC 2
-	
+
 	public List<Apartamento> ofertasMasPopulares() throws Exception
 	{
 		DAOApartamento dao= new DAOApartamento();
@@ -2653,7 +2653,7 @@ public class AlohAndesTM {
 				apartamentos.set(i, menos);
 				apartamentos.set(menorPosicion, temp);
 			}
-			
+
 			for(int k=0; k<19; k++)
 			{
 				masPopulares.add(apartamentos.get(k));
@@ -2688,9 +2688,9 @@ public class AlohAndesTM {
 		}
 		return masPopulares;
 	}
-	
+
 	//RFC 3
-	
+
 	public int indiceOcupamiento() throws Exception
 	{
 		DAOApartamento dao= new DAOApartamento();
@@ -2740,21 +2740,21 @@ public class AlohAndesTM {
 	}
 
 	//RFC 6
-	
+
 	public List<Contrato> usoAlohandes(Cliente cliente) throws Exception
 	{
 		DAOCliente dao= new DAOCliente();
 		DAOContrato daoCon = new DAOContrato();
 		DAOClienteContrato daoCC = new DAOClienteContrato();
 		List<Contrato> contratosCliente = new ArrayList<>();
-		
+
 		try 
 		{
 			this.conn=darConexion();
 			dao.setConn(conn);
 			daoCon.setConn(conn);
 			daoCC.setConn(conn);
-			
+
 			List<ClienteContrato> clienteCon= daoCC.getClienteContratos();
 			for (ClienteContrato clienteContrato : clienteCon) {
 				if(clienteContrato.getCliente().equals(cliente))
@@ -2764,7 +2764,7 @@ public class AlohAndesTM {
 						contratosCliente.add(clienteContrato.getContratos().get(j));
 					}
 				}
-				
+
 			}
 		}
 		catch( SQLException e)
@@ -2798,31 +2798,31 @@ public class AlohAndesTM {
 		}
 		return contratosCliente;
 	}
-	
-	
+
+
 	//RFC 8
-	
+
 	public List<Cliente> clientesFrecuentes() throws Exception
 	{
 		DAOCliente dao= new DAOCliente();
 		DAOContrato daoCon = new DAOContrato();
 		DAOClienteContrato daoCC = new DAOClienteContrato();
 		List<Cliente> clientesFrecuentes = new ArrayList<>();
-		
+
 		try 
 		{
 			this.conn=darConexion();
 			dao.setConn(conn);
 			daoCon.setConn(conn);
 			daoCC.setConn(conn);
-			
+
 			List<ClienteContrato> clienteCon= daoCC.getClienteContratos();
 			for (ClienteContrato clienteContrato : clienteCon) {
 				if(clienteContrato.getContratos().size()>=2)
 				{
 					clientesFrecuentes.add(clienteContrato.getCliente());
 				}
-				
+
 			}
 		}
 		catch( SQLException e)
@@ -2856,10 +2856,10 @@ public class AlohAndesTM {
 		}
 		return clientesFrecuentes;
 	}
-	
-	
+
+
 	// RFC 9
-	
+
 	public List<Apartamento> menosDemanda() throws Exception
 	{
 		DAOApartamento dao= new DAOApartamento();
@@ -2886,7 +2886,7 @@ public class AlohAndesTM {
 				apartamentos.set(i, menos);
 				apartamentos.set(menorPosicion, temp);
 			}
-			
+
 			for(int k=apartamentos.size(); k==5; k--)
 			{
 				menosPopulares.add(apartamentos.get(k));
@@ -2921,8 +2921,207 @@ public class AlohAndesTM {
 		}
 		return menosPopulares;
 	}
-	
-	
+
+
+	//------------------------------------------------ RFC 10 -------------
+
+	public List<Contrato> consumoEnAlohandes(Apartamento apartamento, String fechaInicio, String fechaFin) throws Exception
+	{
+		DAOApartamento daoApto = new DAOApartamento();
+		DAOContratoApartamento daoCA = new DAOContratoApartamento();
+		DAOContrato daoCon = new DAOContrato();
+		DAOClienteContrato daoCC = new DAOClienteContrato();
+
+
+		//Respuesta
+		List<Contrato> contratos= new ArrayList<>();
+		//Contratos dentro del rango
+		List<Contrato> contratosFecha = new ArrayList<>();
+		try 
+		{
+			this.conn=darConexion();
+			daoApto.setConn(conn);
+			daoCA.setConn(conn);
+			daoCon.setConn(conn);
+			daoCC.setConn(conn);
+
+			List<ClienteContrato> clienteCon= daoCC.getClienteContratos();
+			List<ContratoApartamento> contratoApartamento = getAllContratoApartamentos();
+
+			for (ClienteContrato clienteContrato : clienteCon) {
+				for(int i=0; i<clienteContrato.getContratos().size(); i++)
+				{
+					if(clienteContrato.getContratos().get(i).getFechaInicio().equalsIgnoreCase(fechaInicio)||clienteContrato.getContratos().get(i).getFechaFin().equalsIgnoreCase(fechaInicio))
+					{
+						contratosFecha.add(clienteContrato.getContratos().get(i));
+					}
+				}
+			}
+
+			for (ContratoApartamento contrato : contratoApartamento) {
+				if(contrato.getApartamento().equals(apartamento))
+				{
+					for(int j=0; j<contrato.getContratos().size(); j++)
+					{
+						for(int k=0; k<contratosFecha.size(); k++)
+						{
+							if(contratosFecha.get(k).equals(contrato.getContratos().get(j))&&contratosFecha.get(k).getEstado()!=5&&contratosFecha.get(k).getEstado()!=3)
+							{
+								contratos.add(contratosFecha.get(k));
+							}
+						}
+					}
+				}
+			}
+
+			//ordenamiento por fecha de inicio
+			for (int i=0; i<contratos.size()-1; i++)
+			{
+				Contrato menos = contratos.get(i);
+				int menorPosicion = i;
+				for (int j=i+1; j<contratos.size(); j++)
+				{
+					if(contratos.get(j).getFechaInicio().compareTo(menos.getFechaInicio())<1)
+					{
+						menos = contratos.get(j);
+						menorPosicion = j;
+					}
+				}
+				Contrato temp = contratos.get(i);
+				contratos.set(i, menos);
+				contratos.set(menorPosicion, temp);
+			}
+		}
+		catch( SQLException e)
+		{
+			System.err.println("[Excepción!] SQLException "+ e.getMessage());
+			e.printStackTrace();
+			throw e;
+		}
+		catch(Exception e)
+		{
+			System.err.println("[Excepción!] Exception "+ e.getMessage());
+			e.printStackTrace();
+			throw e;
+		}
+		finally
+		{
+			try
+			{
+				daoCC.cerrarRecursos();
+				daoCon.cerrarRecursos();
+				daoApto.cerrarRecursos();
+				daoCA.cerrarRecursos();
+				if(this.conn!=null)
+					this.conn.close();
+			}
+			catch(SQLException e)
+			{
+				System.err.println(("[Excepción!] SQLException mientras se cerraban los recursos: "+e.getMessage()));
+				e.printStackTrace();
+				throw e;
+			}
+		}
+		return contratos;
+	}
+
+	//------------------------------------------------ RFC 11 -------------
+
+	public List<Contrato> consumoEnAlohandesV2(Apartamento apartamento, String fechaInicio, String fechaFin) throws Exception
+	{
+		DAOApartamento daoApto = new DAOApartamento();
+		DAOContratoApartamento daoCA = new DAOContratoApartamento();
+		DAOClienteContrato daoCC = new DAOClienteContrato();
+		//Respuesta
+		List<Contrato> contratos= new ArrayList<>();
+		//Contratos dentro del rango
+		List<Contrato> contratosFecha = new ArrayList<>();
+		try 
+		{
+			this.conn=darConexion();
+			daoApto.setConn(conn);
+			daoCA.setConn(conn);
+			daoCC.setConn(conn);
+
+			List<ClienteContrato> clienteCon= daoCC.getClienteContratos();
+			List<ContratoApartamento> contratoApartamento = getAllContratoApartamentos();
+
+			for (ClienteContrato clienteContrato : clienteCon) {
+				for(int i=0; i<clienteContrato.getContratos().size(); i++)
+				{
+					if(clienteContrato.getContratos().get(i).getFechaInicio().equalsIgnoreCase(fechaInicio)||clienteContrato.getContratos().get(i).getFechaFin().equalsIgnoreCase(fechaInicio))
+					{
+						contratosFecha.add(clienteContrato.getContratos().get(i));
+					}
+				}
+			}
+
+			for (ContratoApartamento contrato : contratoApartamento) {
+				if(contrato.getApartamento().equals(apartamento))
+				{
+					for(int j=0; j<contrato.getContratos().size(); j++)
+					{
+						for(int k=0; k<contratosFecha.size(); k++)
+						{
+							if(contratosFecha.get(k).equals(contrato.getContratos().get(j))&&(contratosFecha.get(k).getEstado()==5||contratosFecha.get(k).getEstado()==3))
+							{
+								contratos.add(contratosFecha.get(k));
+							}
+						}
+					}
+				}
+			}
+
+			//ordenamiento por fecha de inicio
+			for (int i=0; i<contratos.size()-1; i++)
+			{
+				Contrato menos = contratos.get(i);
+				int menorPosicion = i;
+				for (int j=i+1; j<contratos.size(); j++)
+				{
+					if(contratos.get(j).getFechaInicio().compareTo(menos.getFechaInicio())<1)
+					{
+						menos = contratos.get(j);
+						menorPosicion = j;
+					}
+				}
+				Contrato temp = contratos.get(i);
+				contratos.set(i, menos);
+				contratos.set(menorPosicion, temp);
+			}
+		}
+		catch( SQLException e)
+		{
+			System.err.println("[Excepción!] SQLException "+ e.getMessage());
+			e.printStackTrace();
+			throw e;
+		}
+		catch(Exception e)
+		{
+			System.err.println("[Excepción!] Exception "+ e.getMessage());
+			e.printStackTrace();
+			throw e;
+		}
+		finally
+		{
+			try
+			{
+				daoCC.cerrarRecursos();
+				daoCA.cerrarRecursos();
+				daoApto.cerrarRecursos();
+				if(this.conn!=null)
+					this.conn.close();
+			}
+			catch(SQLException e)
+			{
+				System.err.println(("[Excepción!] SQLException mientras se cerraban los recursos: "+e.getMessage()));
+				e.printStackTrace();
+				throw e;
+			}
+		}
+		return contratos;
+	}
+
 }
 
 
